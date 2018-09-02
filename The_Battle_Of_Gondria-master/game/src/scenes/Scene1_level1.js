@@ -25,34 +25,45 @@ class Scene1_level1 extends Phaser.Scene{
         const background = map.addTilesetImage('ceu','ceu');
         const midground = map.addTilesetImage('montanhas','montanhas')
         // Parameters: layer name (or index) from Tiled, tileset, x, y
-        map.createStaticLayer('background', background,0,0);
-        map.createStaticLayer('midground',midground,0,0);
-        let layer2= map.createDynamicLayer("foreground_2",blocos,0,0);
-        let layer1 = map.createDynamicLayer("foreground_1", blocos, 0, 0);
-        layer1.setCollisionBetween(1, 7);
-        layer2.setCollisionBetween(2,7);
-
-    //    const debugGraphics = this.add.graphics().setAlpha(0.75);
-    //     layer1.renderDebug(debugGraphics, {
+        map.createDynamicLayer('background', background,0,0);
+        map.createDynamicLayer('midground',midground,0,0);
+        this.layer2= map.createStaticLayer("foreground_2",blocos,0,0);
+        this.layer1 = map.createDynamicLayer("foreground_1", blocos, 0, 0);
+        this.layer1.setCollisionBetween(1, 7);
+        this.layer2.setCollisionBetween(1,7);
+        // }, context, tileX, tileY, width, height, filteringOptions, this.layer);
+        
+        //    const debugGraphics = this.add.graphics().setAlpha(0.75);
+        //     layer1.renderDebug(debugGraphics, {
     //     tileColor: null, // Color of non-colliding tiles
     //     collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
     //     faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
     //   });
-        let player = this.physics.add.sprite(20,350,'dude');
-      
-        player.setBounce(0.1);
+    let player = this.physics.add.sprite(20,350,'dude');
     
-        player.setCollideWorldBounds(true);
-        this.player = player;
-        this.physics.add.collider(player, layer1);
-        this.physics.add.collider(player, layer2);
-        // this.cameras.main.startFollow(this.player);
+    player.setBounce(0.1);
+    
+    player.setCollideWorldBounds(false);
+    this.physics.add.collider(player, this.layer1);
+    this.c_layer2= this.physics.add.collider(player, this.layer2);
+    // set workd bounds to allow camera to follow the player
+    this.cameras.main.setBounds(0, 0, 6048, 480);
+    this.c_layer2.active=false;
+    console.log(this.c_layer2);
 
-        // this.cameras.main.roundPixels = true;
+        // making the camera follow the player
+        this.player = player;
+        this.cameras.main.startFollow(this.player);
+        
     }
     update() {
         let cursors = this.input.keyboard.createCursorKeys();
-        if(cursors.left.isDown){
+        if(!this.player.body.onFloor()){
+            this.c_layer2.active=true;
+        }else{
+            this.c_layer2.active=false;
+        }
+        if(cursors.left.isDown&&this.player.x-16>0){
             this.player.setVelocityX(-160);
             // this.player.anims.play('left',true);
         }else if(cursors.right.isDown){
@@ -62,10 +73,12 @@ class Scene1_level1 extends Phaser.Scene{
             // this.player.anims.play('turn',true);
             this.player.setVelocityX(0);
         }
-        if(cursors.up.isDown && this.player.body.onFloor()){
-        this.player.setVelocityY(-230);
-    }
-    }
+        if ( cursors.up.isDown &&this.player.body.onFloor()){
+            
 
+                this.player.setVelocityY(-230);
+            
+        }
+    }
 }
 export default Scene1_level1;
