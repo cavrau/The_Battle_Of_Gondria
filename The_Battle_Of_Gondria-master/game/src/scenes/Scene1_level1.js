@@ -7,7 +7,8 @@ class Scene1_level1 extends Phaser.Scene{
     }
 
     preload(){
-        
+        this.load.image('btnVoltar' , 'assets/images/botoes/btnVoltar.png');
+        this.load.image('btnVoltarPress', 'assets/images/botoes/btnVoltarPress.png');
         this.load.image("tileset", "assets/tilesets/fase1_tileset.png");
         this.load.image('ceu', 'assets/background/sky_fase1.png');
         this.load.image('montanhas','assets/background/background_1.png');
@@ -39,6 +40,16 @@ class Scene1_level1 extends Phaser.Scene{
     //     collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
     //     faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
     //   });
+    this.voltar = this.add.image(780,40,'btnVoltar').setInteractive();
+    this.voltar.setScale(0.6);
+    this.voltar.on('pointerdown',function() {
+        let btn = this;
+        btn.setTexture("btnVoltarPress");
+        setTimeout(()=> {
+            btn.setTexture("btnVoltar");
+            this.scene.scene.start('MenuFases');
+        },150);
+    })
     let player = this.physics.add.sprite(20,350,'dude');
     
     player.setBounce(0.1);
