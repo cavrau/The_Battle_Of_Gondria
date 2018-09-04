@@ -15,11 +15,15 @@ preload(){
     this.load.image('btnVoltarPress', 'assets/images/botoes/btnVoltarPress.png');
 }
 create(){
-    this.fase1 = this.add.image(432,80,'btnFase1').setInteractive();
-    this.fase2 = this.add.image(432,197.5,'btnFase2Press').setInteractive();
-    this.fase3 = this.add.image(432,315,'btnFase3Press').setInteractive();
-    this.fase4 = this.add.image(432,432.5,'btnFase4Press').setInteractive();
-    this.voltar = this.add.image(780,40,'btnVoltar').setInteractive();
+    this.fase1 = this.add.image(140,350,'btnFase1').setScale(0.7);
+    this.fase1.setInteractive();
+    this.fase2 = this.add.image(335,350,'btnFase2').setScale(0.7);
+    this.fase2.setInteractive();
+    this.fase3 = this.add.image(515,350,'btnFase3').setScale(0.7);
+    this.fase3.setInteractive();
+    this.fase4 = this.add.image(705,350,'btnFase4').setScale(0.7);
+    this.fase4.setInteractive();
+    this.voltar = this.add.image(790,40,'btnVoltar').setInteractive();
     this.voltar.setScale(0.6);
 
     this.fase1.on('pointerdown',function(){
@@ -30,6 +34,34 @@ create(){
             this.scene.scene.start('Scene1_level1');
         },150);
     });
+
+    this.fase2.on('pointerdown',function(){
+        let btn = this;
+        btn.setTexture("btnFase2Press");
+        setTimeout(()=> {
+            btn.setTexture("btnFase2");
+            this.scene.scene.start('Scene1_level1');
+        },150);
+    });
+
+    this.fase3.on('pointerdown',function(){
+        let btn = this;
+        btn.setTexture("btnFase3Press");
+        setTimeout(()=> {
+            btn.setTexture("btnFase3");
+            this.scene.scene.start('Scene1_level1');
+        },150);
+    });
+
+    this.fase4.on('pointerdown',function(){
+        let btn = this;
+        btn.setTexture("btnFase4Press");
+        setTimeout(()=> {
+            btn.setTexture("btnFase4");
+            this.scene.scene.start('Scene1_level1');
+        },150);
+    });
+
     this.voltar.on('pointerdown',function() {
         let btn = this;
         btn.setTexture("btnVoltarPress");
