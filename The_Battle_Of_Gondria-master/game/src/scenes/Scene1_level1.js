@@ -7,6 +7,9 @@ class Scene1_level1 extends Phaser.Scene{
     }
 
     preload(){
+        this.player_vidas = 3;
+        this.load.image('coracao_cheio', 'assets/images/coracao_cheio.png');
+        this.load.image('coracao_vazio', 'assets/images/coracao_vazio.png');
         this.load.image('btnVoltar' , 'assets/images/botoes/btnVoltar.png');
         this.load.image('btnVoltarPress', 'assets/images/botoes/btnVoltarPress.png');
         this.load.image("tileset", "assets/tilesets/fase1_tileset.png");
@@ -26,6 +29,11 @@ class Scene1_level1 extends Phaser.Scene{
         
     
     }
+    createHUD() {
+        
+
+    }
+
     create(){
         const map = this.make.tilemap({key:"map"});
         // Parameters are the name you gave the tileset in Tiled and then the key of the tileset image in
@@ -111,36 +119,89 @@ class Scene1_level1 extends Phaser.Scene{
     this.physics.add.collider(this.slimes_azul,this.layer1);
     this.physics.add.collider(this.slimes_vermelho,this.layer1);
     console.log(this.slimes_verde.children);
+    this.life_1 = this.add.image(720,40,'coracao_cheio');
+    this.life_2 = this.add.image(770,40,'coracao_cheio');
+    this.life_3 = this.add.image(820,40,'coracao_cheio');
+    this.timer = 0;
+    this.parado = true;
+    this.colisao =false;
+    this.scoreText = this.add.text(16,16, '0', {fontSize: '16px',
+    fill: '#000'});
 }
 
 slimeHit(player,slime){
+    if(slime.body.velocity.x==0){
+        player.setVelocityX(-100);
+    }else{
+        player.setVelocityX(slime.body.velocity.x*4);
+    }
     player.setVelocityY(-150);
-    player.body.velocity.x= slime.body.velocity.x;
-    slime.setVelocityX(slime.body.velocity.x*-1);
+    slime.setVelocityX((slime.body.velocity.x)*-1);
     slime.setVelocityY(-200);
+    this.player_vidas -=1; 
+    this.colisao = true;
 }
 
+
 update() {
+
+    if(this.player.body.x<432){
+    }else{
+        this.life_1.x = this.player.body.x+300;
+        this.life_2.x = this.player.body.x+350;
+        this.life_3.x = this.player.body.x+400;
+    }
+    if(this.player_vidas == 2){
+        this.life_1.setTexture("coracao_vazio");
+    }else if(this.player_vidas == 1){
+        this.life_1.setTexture("coracao_vazio");
+        this.life_2.setTexture("coracao_vazio");
+    }else if(this.player_vidas == 0){
+        this.life_1.setTexture("coracao_vazio");
+        this.life_2.setTexture("coracao_vazio");
+        this.life_3.setTexture("coracao_vazio");
+    }else if(this.player_vidas == 3){
+        this.life_1.setTexture("coracao_cheio");
+        this.life_2.setTexture("coracao_cheio");
+        this.life_3.setTexture("coracao_cheio");
+    }
+    if (this.player.body.y>500){
+        this.player_vidas =0;
+    }
     let cursors = this.input.keyboard.createCursorKeys();
     if(!this.player.body.onFloor()&&this.player.body.velocity.y>0){
         this.c_layer2.active=true;
     }else{
         this.c_layer2.active=false;
     }
-    if(cursors.left.isDown&&this.player.x-16>0){
-        this.player.setVelocityX(-160);
-        // this.player.anims.play('left',true);
-    }else if(cursors.right.isDown){
-        this.player.setVelocityX(160);
-        // this.player.anims.play('right',true);
-    }else{
-        // this.player.anims.play('turn',true);
-        this.player.setVelocityX(0);
+    if(this.colisao==false){
+        if(cursors.left.isDown&&this.player.x-16>0){
+            this.player.setVelocityX(-120);
+            this.parado = false;
+            // this.player.anims.play('left',true);
+        }else if(cursors.right.isDown){
+            this.player.setVelocityX(120);
+            this.parado = false;
+            // this.player.anims.play('right',true);
+        }else if(this.colisao==false){
+            this.player.setVelocityX(0);
+            // this.player.anims.play('turn',true);
+        }
+    }
+    if(this.colisao==true){
+        setTimeout(()=>{
+            if(this.player.body.onFloor()){
+                this.colisao=false;
+            }
+        },100)
     }
     if ( cursors.up.isDown &&this.player.body.onFloor()){
                 this.player.setVelocityY(-230);
     }
     for(let i = 0 ; i<this.slimes_verde.children.entries.length;i++){
+        if(this.slimes_verde.children.entries[i].y>490){
+            this.slimes_verde.children.entries[i].destroy();
+        }
         if(this.slimes_verde.children.entries[i].x-this.player.x<150&&this.slimes_verde.children.entries[i].x-this.player.x>0){
             if(this.slimes_verde.children.entries[i].body.onFloor()){
             this.slimes_verde.children.entries[i].setVelocityX(-80);
@@ -156,6 +217,9 @@ update() {
         }
     }
     for(let i = 0 ; i<this.slimes_azul.children.entries.length;i++){
+        if(this.slimes_azul.children.entries[i].y>490){
+            this.slimes_azul.children.entries[i].destroy();
+        }
         if(this.slimes_azul.children.entries[i].x-this.player.x<150&&this.slimes_azul.children.entries[i].x-this.player.x>0){
             if(this.slimes_azul.children.entries[i].body.onFloor()){
             this.slimes_azul.children.entries[i].setVelocityX(-80);
@@ -171,6 +235,9 @@ update() {
         }
     }
     for(let i = 0 ; i<this.slimes_vermelho.children.entries.length;i++){
+        if(this.slimes_vermelho.children.entries[i].y>490){
+            this.slimes_vermelho.children.entries[i].destroy();
+        }
         if(this.slimes_vermelho.children.entries[i].x-this.player.x<150&&this.slimes_vermelho.children.entries[i].x-this.player.x>0){
             if(this.slimes_vermelho.children.entries[i].body.onFloor()){
             this.slimes_vermelho.children.entries[i].setVelocityX(-80);
