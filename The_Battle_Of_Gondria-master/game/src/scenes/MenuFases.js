@@ -1,79 +1,151 @@
-class MenuFases extends Phaser.Scene{
-constructor(){
-    super({key:"MenuFases"})
-}
-preload(){
-    this.load.image('btnFase1' , 'assets/images/botoes/btnFase1.png');
-    this.load.image('btnFase1Press', 'assets/images/botoes/btnFase1Press.png');
-    this.load.image('btnFase2' , 'assets/images/botoes/btnFase2.png');
-    this.load.image('btnFase2Press', 'assets/images/botoes/btnFase2Press.png');
-    this.load.image('btnFase3' , 'assets/images/botoes/btnFase3.png');
-    this.load.image('btnFase3Press', 'assets/images/botoes/btnFase3Press.png');
-    this.load.image('btnFase4' , 'assets/images/botoes/btnFase4.png');
-    this.load.image('btnFase4Press', 'assets/images/botoes/btnFase4Press.png');
-    this.load.image('btnVoltar' , 'assets/images/botoes/btnVoltar.png');
-    this.load.image('btnVoltarPress', 'assets/images/botoes/btnVoltarPress.png');
-}
-create(){
-    this.fase1 = this.add.image(140,350,'btnFase1').setScale(0.7);
-    this.fase1.setInteractive();
-    this.fase2 = this.add.image(335,350,'btnFase2').setScale(0.7);
-    this.fase2.setInteractive();
-    this.fase3 = this.add.image(515,350,'btnFase3').setScale(0.7);
-    this.fase3.setInteractive();
-    this.fase4 = this.add.image(705,350,'btnFase4').setScale(0.7);
-    this.fase4.setInteractive();
-    this.voltar = this.add.image(790,40,'btnVoltar').setInteractive();
-    this.voltar.setScale(0.6);
+class MenuFases extends Phaser.Scene {
 
-    this.fase1.on('pointerdown',function(){
-        let btn = this;
-        btn.setTexture("btnFase1Press");
-        setTimeout(()=> {
-            btn.setTexture("btnFase1");
-            this.scene.scene.start('Scene1_level1');
-        },150);
-    });
+    constructor() {
+        super({ key: "MenuFases" })
+    }
 
-    this.fase2.on('pointerdown',function(){
-        let btn = this;
-        btn.setTexture("btnFase2Press");
-        setTimeout(()=> {
-            btn.setTexture("btnFase2");
-            this.scene.scene.start('Scene1_level1');
-        },150);
-    });
+    preload() {
 
-    this.fase3.on('pointerdown',function(){
-        let btn = this;
-        btn.setTexture("btnFase3Press");
-        setTimeout(()=> {
-            btn.setTexture("btnFase3");
-            this.scene.scene.start('Scene1_level1');
-        },150);
-    });
+        let faseDisponivel = 0;
 
-    this.fase4.on('pointerdown',function(){
-        let btn = this;
-        btn.setTexture("btnFase4Press");
-        setTimeout(()=> {
-            btn.setTexture("btnFase4");
-            this.scene.scene.start('Scene1_level1');
-        },150);
-    });
+        this.load.image('bgFases', 'assets/background/scene_menus.png');
 
-    this.voltar.on('pointerdown',function() {
-        let btn = this;
-        btn.setTexture("btnVoltarPress");
-        setTimeout(()=> {
-            btn.setTexture("btnVoltar");
-            this.scene.scene.start('MainMenu');
-        },150);
-    })
+        this.load.image('btnFase1', 'assets/images/botoes/btnFase1.png');
+        this.load.image('btnFase1Press', 'assets/images/botoes/btnFase1Press.png');
+        this.load.image('btnFase2', 'assets/images/botoes/btnFase2.png');
+        this.load.image('btnFase2Press', 'assets/images/botoes/btnFase2Press.png');
+        this.load.image('btnFase3', 'assets/images/botoes/btnFase3.png');
+        this.load.image('btnFase3Press', 'assets/images/botoes/btnFase3Press.png');
+        this.load.image('btnFase4', 'assets/images/botoes/btnFase4.png');
+        this.load.image('btnFase4Press', 'assets/images/botoes/btnFase4Press.png');
+        this.load.image('btnVoltar', 'assets/images/botoes/btnVoltar.png');
+        this.load.image('btnVoltarPress', 'assets/images/botoes/btnVoltarPress.png');
 
-}
-update(){
-    
-}
+        this.load.image('fase_1_cor', 'assets/images/menus/screenTBOG.png');
+        this.load.image('fase_2_cor', 'assets/images/menus/screenTBOG.png');
+        this.load.image('fase_2_pb', 'assets/images/menus/screenTBOGpreta.png');
+        this.load.image('fase_3_cor', 'assets/images/menus/screenTBOG.png');
+        this.load.image('fase_3_pb', 'assets/images/menus/screenTBOGpreta.png');
+        this.load.image('fase_4_cor', 'assets/images/menus/screenTBOG.png');
+        this.load.image('fase_4_pb', 'assets/images/menus/screenTBOGpreta.png');
+
+        this.load.audio('menusMusic', 'assets/musics/scenesMusics/menuMusic.mp3');
+    }
+    create() {
+
+        var music = this.sound.add('menusMusic');
+
+        // music.play();
+
+        this.add.image(432, 240, 'bgFases');
+
+        this.voltar = this.add.image(785, 35, 'btnVoltar').setInteractive();
+        this.voltar.setScale(0.6);
+
+        this.voltar.on('pointerdown', function () {
+            let btn = this;
+            btn.setTexture("btnVoltarPress");
+            setTimeout(() => {
+                btn.setTexture("btnVoltar");
+                this.scene.scene.start('MainMenu');
+            }, 150);
+        });
+
+        this.faseDisponivel = 1;
+
+        //Fase 1
+        if ((this.faseDisponivel == 1) || (this.faseDisponivel >= 1)) {
+
+            this.fase1 = this.add.image(140, 300, 'btnFase1').setScale(0.7);
+            this.fase1.setInteractive();
+
+            this.fase1.on('pointerdown', function () {
+                let btn = this;
+                btn.setTexture("btnFase1Press");
+                setTimeout(() => {
+                    btn.setTexture("btnFase1");
+                    this.scene.scene.start('Level_1');
+                }, 150);
+            });
+
+            this.add.image(143, 230, 'fase_1_cor').setScale(0.170);
+        }
+
+        //Fase 2
+        if (this.faseDisponivel < 2) {
+
+            this.fase2 = this.add.image(335, 300, 'btnFase2Press').setScale(0.7);
+            this.add.image(335, 230, 'fase_2_pb').setScale(0.170);
+
+        } else if (this.faseDisponivel >= 2) {
+
+            this.fase2 = this.add.image(335, 300, 'btnFase2').setScale(0.7);
+            this.fase2.setInteractive();
+
+            this.fase2.on('pointerdown', function () {
+                let btn = this;
+                btn.setTexture("btnFase2Press");
+                setTimeout(() => {
+                    btn.setTexture("btnFase2");
+                    this.scene.scene.start('Level_1');
+                }, 150);
+            });
+
+            this.add.image(335, 230, 'fase_2_cor').setScale(0.170);
+        }
+
+        //Fase 3
+        if (this.faseDisponivel < 3) {
+
+            this.fase3 = this.add.image(515, 300, 'btnFase3Press').setScale(0.7);
+            this.add.image(515, 230, 'fase_3_pb').setScale(0.170);
+
+        } else if (this.faseDisponivel >= 3) {
+
+            this.fase3 = this.add.image(515, 300, 'btnFase3').setScale(0.7);
+            this.fase3.setInteractive();
+
+            this.fase3.on('pointerdown', function () {
+                let btn = this;
+                btn.setTexture("btnFase3Press");
+                setTimeout(() => {
+                    btn.setTexture("btnFase3");
+                    this.scene.scene.start('Level_1');
+                }, 150);
+            });
+
+            this.add.image(515, 230, 'fase_3_cor').setScale(0.170);
+        }
+
+        //Fase 4
+        if (this.faseDisponivel < 4) {
+
+            this.fase4 = this.add.image(705, 300, 'btnFase4Press').setScale(0.7);
+            this.add.image(705, 230, 'fase_4_pb').setScale(0.170);
+
+        } else if (this.faseDisponivel == 4) {
+
+            this.fase4 = this.add.image(705, 300, 'btnFase4').setScale(0.7);
+            this.fase4.setInteractive();
+
+            this.fase4.on('pointerdown', function () {
+                let btn = this;
+                btn.setTexture("btnFase4Press");
+                setTimeout(() => {
+                    btn.setTexture("btnFase4");
+                    this.scene.scene.start('Level_1');
+                }, 150);
+            });
+
+            this.add.image(705, 230, 'fase_4_cor').setScale(0.170);
+        }
+
+        
+
+    }
+
+    update() {
+
+    }
 }
 export default MenuFases;
