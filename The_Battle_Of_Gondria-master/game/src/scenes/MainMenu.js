@@ -12,27 +12,32 @@ class MainMenu extends Phaser.Scene {
         this.load.image('btnAjuda', 'assets/images/botoes/btnAjuda.png');
         this.load.image('btnAjudaPress', 'assets/images/botoes/btnAjudaPress.png');
 
-        this.load.tilemapTiledJSON("map", "assets/tilemap/mainMenuMap.json");
-        this.load.image("chaoBlocos", "assets/tilesets/fase1_tileset.png");
-        this.load.image('montanhas', 'assets/background/background_1.png');
-        this.load.image('ceu', 'assets/background/sky_fase1.png');
-        this.load.image('arvore1', 'assets/images/arvores/arvore1.png');
+        this.load.tilemapTiledJSON("map_mainMenu", "assets/tilemap/map_mainMenu.json");
 
-        // this.load.animation('moedaJson', 'assets/images/itensCenario/moeda.json');
-        // this.load.atlas('moeda', 'assets/images/itensCenario/moeda.png', 'assets/images/itensCenario/moeda.json');
+        this.load.image("chaoBlocos", "assets/tilesets/fase_1_tileset.png");
+        this.load.image('montanhas', 'assets/background/fase_1_montanhas.png');
+        this.load.image('ceu', 'assets/background/fase_1_sky.png');
+        this.load.image('arvore1', 'assets/images/itensCenario/arvore1.png');
 
-        this.load.spritesheet('hero', 'assets/images/mobs/playerFrente.png', { frameWidth: 78, frameHeight: 84 });
+        this.load.spritesheet({ 
+            key: 'hero', 
+            url: 'assets/images/mobs/heroi.png', 
+            frameConfig: { 
+                frameWidth: 60, 
+                frameHeight: 84
+            }
+        });
 
         this.load.image('logo', 'assets/images/logo.png');
 
-        // this.load.audio('tema', ['assets/musics/Menu.wav']);
+        this.load.audio('menusMusic', 'assets/musics/scenesMusics/menuMusic.mp3');
     }
 
 
     create() {
 
         const map = this.make.tilemap({
-            key: 'map'
+            key: 'map_mainMenu'
         });
 
         let foreground = map.addTilesetImage('ground', 'chaoBlocos');
@@ -45,19 +50,16 @@ class MainMenu extends Phaser.Scene {
         map.createStaticLayer('backforeground', backforeground, 0, 0);
         map.createStaticLayer('foreground', foreground, 0, 0);
 
-        var config = {
-            key: 'mexendose',
-            frames: this.anims.generateFrameNumbers('hero'),
+        let config = {
+            key: 'move',
+            frames: this.anims.generateFrameNumbers('hero', { start: 4, end: 5 }),
             frameRate: 6,
-            yoyo: true,
             repeat: -1
         };
 
-        let anim = this.anims.create(config);
-        let sprite = this.add.sprite(85, 375, 'hero');
-        sprite.anims.play('mexendose');
-
-        // this.add.sprite(700, 100, 'moeda').play();
+        this.anims.create(config);
+        let hero = this.add.sprite(85, 375, 'hero');
+        hero.anims.play('move');
 
         let logo = this.add.image(432, 200, 'logo');
         logo.setScale(0.13);
@@ -68,33 +70,28 @@ class MainMenu extends Phaser.Scene {
         let ajudaBtn = this.add.image(535, 310, "btnAjuda").setInteractive();
         ajudaBtn.setScale(0.65);
 
-        var music = this.sound.add('tema');
+        var music = this.sound.add('menusMusic');
 
         // music.play();
 
         jogarBtn.on("pointerdown", function () {
             let btn = this;
             btn.setTexture("btnJogarPress");
-            setTimeout(() => {
+            setTimeout(()=> {
                 btn.setTexture("btnJogar");
                 this.scene.scene.start('MenuFases');
-            }, 150)
+            },150)
         });
 
         ajudaBtn.on("pointerdown", function () {
             let btn = this;
             btn.setTexture("btnAjudaPress");
-            setTimeout(() => {
+            setTimeout(()=> {
                 btn.setTexture("btnAjuda");
-                this.scene.scene.start('MenuFases');
-            }, 150)
+                this.scene.scene.start('AjudaScene');
+            },150)
         });
-
-
-    }
-
-    update() {
-
+        
     }
 
 }

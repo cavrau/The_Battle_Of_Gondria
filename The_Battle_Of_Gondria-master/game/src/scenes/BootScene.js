@@ -14,7 +14,17 @@ class BootScene extends Phaser.Scene{
         
         this.load.on('complete',() =>{
             progress.destroy();
-            this.scene.start('Scene1_level1');
+            this.scene.start('AjudaScene');
+        })
+
+        this.load.on('complete',() =>{
+            progress.destroy();
+            this.scene.start('MainMenu');
+        })
+
+        this.load.on('complete',() =>{
+            progress.destroy();
+            this.scene.start('Level_1');
         })
         // this.load.on('complete', () => {
         //     // prepare all animations, defined in a separate file
