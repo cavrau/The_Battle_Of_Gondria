@@ -1,6 +1,7 @@
-class Hero extends Phaser.GameObjects.Sprite {
-  constructor(){
-    super({key: 'hero'});
+class Hero{
+  constructor(conf){
+   this.scene = conf.scene;
+   this.sprite = this.scene.physics.add.sprite(conf.x,conf.y,conf.texture);
     
   }
 
@@ -20,36 +21,36 @@ class Hero extends Phaser.GameObjects.Sprite {
   create() {
 
     let anims, config;
-
+    anims = this.scene.anims;
     this.config = {
-      key: 'rightWalk',
-      frames: this.anims.generateFrameNumbers('heroi', { start: 0, end: 3 }),
+      key: 'right-walk',
+      frames:this.scene.anims.generateFrameNumbers('hero', { start: 0, end: 3 }),
       frameRate: 12,
       repeat: -1
     }
 
     this.config = {
       key: 'stoped',
-      frames: this.anims.generateFrameNumbers('heroi', { start: 4, end: 5 }),
+      frames: this.scene.anims.generateFrameNumbers('hero', { start: 4, end: 5 }),
       frameRate: 12,
       repeat: -1
     }
 
     this.config = {
-      key: 'leftWalk',
-      frames: this.anims.generateFrameNumbers('heroi', { start: 6, end: 9 }),
+      key: 'left-walk',
+      frames: this.scene.anims.generateFrameNumbers('hero', { start: 6, end: 9 }),
       frameRate: 12,
       repeat: -1
     }
 
     this.config = {
-      key: 'atack',
-      frames: this.anims.generateFrameNumbers('heroi', { start: 10, end: 13 }),
+      key: 'attack',
+      frames: this.scene.anims.generateFrameNumbers('hero', { start: 10, end: 13 }),
       frameRate: 12,
       repeat: -1
     }
 
-    this.anims.create(config);
+    this.scene.anims.create(config);
     console.log(config);
 
     // this.hero.add.image(300, 400, 'hero');
