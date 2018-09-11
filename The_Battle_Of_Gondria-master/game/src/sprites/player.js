@@ -1,6 +1,7 @@
 export default class Player {
 
   constructor(scene, x, y) {
+    this.isAttacking=false;
     this.scene = scene;
 
     // Criação das animações apartir da spritesheet
@@ -28,7 +29,8 @@ export default class Player {
     anims.create({
       key: 'sprite_hero_z',
       frames: anims.generateFrameNumbers('sprite_hero', { start: 10, end: 13 }),
-      frameRate: 1,
+      frameRate: 6,
+      repeat:1
     });
 
     //Animação - interagir
@@ -52,6 +54,7 @@ export default class Player {
       atack: Z
     });
     
+    console.log(this.sprite.anims)
   }
   
   
@@ -83,22 +86,28 @@ export default class Player {
     if (keys.left.isDown) {
       
       sprite.setVelocityX(-120);
-      sprite.anims.play("sprite_hero_left", true);
+      if(this.isAttacking==false){
+        sprite.anims.play("sprite_hero_left", true);
+      }
       
       /*Ao apertar a seta a direita o personagem se move a direção
       e ativa o método de animção coerente com a direção */
     } else if (keys.right.isDown) {
 
       sprite.setVelocityX(120);
-      sprite.anims.play("sprite_hero_right", true);
-      
+      if(this.isAttacking==false){
+        sprite.anims.play("sprite_hero_right", true);
+      }
+
       /*Se nenhum botão for precionado, o personagem fica
       parado e seta uma textura de parado*/
     } else {
 
       sprite.setVelocityX(0);
-      // sprite.setTexture("sprite_hero", 5);
-      sprite.anims.play("sprite_hero_z", true);
+      if(this.isAttacking==false){
+        sprite.setTexture("sprite_hero", 5);
+      }
+      // sprite.anims.play("sprite_hero_z", true);
       
     }
     
@@ -110,22 +119,26 @@ export default class Player {
     }
 
     /*Caso o botão de Z seja ativado o ataque do heroi é ativado */
-    if (keys.atack.isDown) {
-      this.checkHit(enemies.array);
+    if (keys.atack.isDown&&this.isAttacking==false) {
       sprite.anims.play("sprite_hero_z", true);
+      this.checkHit(enemies.array);
+      this.isAttacking=true;
+      setTimeout(()=>{
+        this.isAttacking=false;
+      },400)
     }
     
   }
   // método que checa se o jogabor bateu em algum inimigo
   checkHit(enemies) {
-    console.log(enemies);
     for (let i = 0; i < enemies.children.entries.length; i++) {
         let enemy = enemies.children.entries[i];
         let xdistance = enemy.x - this.sprite.body.x;
         let ydistance = enemy.y - this.sprite.body.y;
         if ((ydistance < 72)) {
             if (xdistance < 75 && xdistance > 0) {
-                enemy.lives--;
+              console.log(enemy.lifes);
+                enemy.lifes--;
                 enemy.setVelocityX(140);
                 enemy.setVelocityY(-130);
             } else if (xdistance < 0 && xdistance > -75) {
