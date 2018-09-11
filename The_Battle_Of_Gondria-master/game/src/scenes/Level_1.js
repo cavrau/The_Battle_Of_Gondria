@@ -1,4 +1,5 @@
-import Player from "../sprites/Player.js";
+import Player from "../sprites/player.js";
+import Slimes from "../sprites/enemies/slimes.js";
 class Level_1 extends Phaser.Scene {
 
     constructor(test) {
@@ -79,6 +80,7 @@ class Level_1 extends Phaser.Scene {
 
         //Seta o bounce do player
         this.player.sprite.setBounce(0.1);
+        this.player.sprite.setScale(0.5);
 
         //Seta a colisão do player com a layer 1
         this.physics.add.collider(this.player.sprite, this.layer1);
@@ -114,30 +116,14 @@ class Level_1 extends Phaser.Scene {
 
         let spawnLayer = map.getObjectLayer("spawns");
         this.spawns = spawnLayer.objects;
-        this.slimes = this.physics.add.group();
-        for (let i = 0; i < this.spawns.length; i++) {
-            if (this.spawns[i].name === "Spawn_Slime_Verde") {
-                let slime = this.slimes.create(this.spawns[i].x, this.spawns[i].y, 'slime_verde');
-                slime.setScale(1.5);
-                slime.lives = 2;
-            }
-            if (this.spawns[i].name === "Spawn_Slime_Azul") {
-                let slime = this.slimes.create(this.spawns[i].x, this.spawns[i].y, 'slime_azul');
-                slime.lives = 3;
-                // slime.setScale(1.7);
-            }
-            if (this.spawns[i].name === "Spawn_Slime_Vermelho") {
-                let slime = this.slimes.create(this.spawns[i].x, this.spawns[i].y, 'slime_vermelho');
-                slime.lives = 4;
-                // slime.setScale(2.0);
-            }
-            if (this.spawns[i].name === "Spawn_Flag") {
-                //this.physics.add.sprite(this.spawns[i].x,this.spawns[i].y,"flag_branca")
-            }
-        }
 
-        //Cria a colisão do slime com a layer 1
-        this.physics.add.collider(this.slimes, this.layer1);
+        this.parado = true;
+        this.slimes = new Slimes(this);
+        // if (this.spawns[i].name === "Spawn_Flag") {
+        //     //this.physics.add.sprite(this.spawns[i].x,this.spawns[i].y,"flag_branca")
+        // }
+
+        
 
         //     this.c_slimes = this.physics.add.collider(this.player, this.slimes, this.slimeHit, null, this);
         //     this.life_1 = this.add.image(720, 40, 'coracao_cheio');
@@ -145,8 +131,6 @@ class Level_1 extends Phaser.Scene {
         //     this.life_3 = this.add.image(820, 40, 'coracao_cheio');
         //     this.timer = 0;
 
-        this.parado = true;
-        this.colisao = false;
 
         //     this.scoreText = this.add.text(16, 16, '0', {
         //         fontSize: '16px',
@@ -154,53 +138,20 @@ class Level_1 extends Phaser.Scene {
         //     });
         // }
 
-        // slimeHit(player, slime) {
-        //     if (player.x - slime.x <= 0) {
-        //         slime.setVelocityX(200);
-        //     } else {
-        //         slime.setVelocityX(-200);
-        //     }
-        //     slime.setVelocityY(-200);
-        //     player.setVelocityX(0);
-        //     if (slime.body.velocity.x <= 0) {
-        //         player.setVelocityX(200);
-        //     } else {
-        //         player.setVelocityX(-200);
-        //     }
-        //     player.setVelocityY(-150);
-        //     this.player_vidas -= 1;
-        //     this.colisao = true;
-        // }
-
-        // checkHit(player) {
-        //     for (let i = 0; i < this.slimes.children.entries.length; i++) {
-        //         let slime = this.slimes.children.entries[i];
-        //         let xdistance = slime.x - player.body.x;
-        //         let ydistance = slime.y - player.body.y;
-        //         if ((ydistance < 72)) {
-        //             if (xdistance < 75 && xdistance > 0) {
-        //                 slime.lives--;
-        //                 slime.setVelocityX(140);
-
-        //                 slime.setVelocityY(-130);
-        //             } else if (xdistance < 0 && xdistance > -75) {
-        //                 slime.setVelocityX(-140);
-        //                 slime.setVelocityY(-130);
-        //             }
-        //         }
-        //     }
-        // }    
+        
+        
     }
-
+    
     update() {
-        this.player.update();
+        this.player.update(this.slimes,this);
+        this.slimes.update(this.player.sprite,this.slimes);
         // if (this.player.body.x < 432) {
         // } else {
         //     this.life_1.x = this.player.body.x + 300;
         //     this.life_2.x = this.player.body.x + 350;
         //     this.life_3.x = this.player.body.x + 400;
         // }
-        const cam = this.cameras.main;
+        // const cam = this.cameras.main;
 
         // if (this.player_vidas == 2) {
         //     this.life_1.setTexture("coracao_vazio");
@@ -221,17 +172,10 @@ class Level_1 extends Phaser.Scene {
         // }
 
 
-        // this.z = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z)
-        // if (this.z.isDown) {
-        //     this.checkHit(this.player);
 
         // }
 
-        if (!this.player.sprite.body.onFloor() && this.player.sprite.body.velocity.y > 0) {
-            this.c_layer2.active = true;
-        } else {
-            this.c_layer2.active = false;
-        }
+        
 
         // if (this.colisao == false) {
         //     if (cursors.left.isDown && this.player.x - 16 > 0) {
@@ -266,24 +210,7 @@ class Level_1 extends Phaser.Scene {
         //     this.player.sprite.setVelocityY(-230);
         // }
 
-        // for (let i = 0; i < this.slimes.children.entries.length; i++) {
-        //     if (this.slimes.children.entries[i].x - this.player.x < 150 && this.slimes.children.entries[i].x - this.player.x > 0) {
-        //         if (this.slimes.children.entries[i].body.onFloor()) {
-        //             this.slimes.children.entries[i].setVelocityX(-80);
-        //             this.slimes.children.entries[i].setVelocityY(-200);
-        //         }
-        //     } else if (this.slimes.children.entries[i].x - this.player.x > -150 && this.slimes.children.entries[i].x - this.player.x < 0) {
-        //         if (this.slimes.children.entries[i].body.onFloor()) {
-        //             this.slimes.children.entries[i].setVelocityX(80);
-        //             this.slimes.children.entries[i].setVelocityY(-200);
-        //         }
-        //     } else {
-        //         this.slimes.children.entries[i].setVelocityX(0);
-        //     }
-        //     if (this.slimes.children.entries[i].lifes == 0) {
-        //         this.slimes.children.entries[i].kill();
-        //     }
-        // }
+       
 
     }
 
