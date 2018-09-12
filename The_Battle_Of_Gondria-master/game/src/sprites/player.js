@@ -3,10 +3,9 @@ export default class Player {
   constructor(scene, x, y) {
     this.isAttacking=false;
     this.scene = scene;
-
     // Criação das animações apartir da spritesheet
     const anims = scene.anims;
-
+    
     //Animação - andar para esquerda
     anims.create({
       key: 'sprite_hero_left',
@@ -15,7 +14,7 @@ export default class Player {
       yoyo: true,
       repeat: -1
     });
-
+    
     //Animação - andar para direita
     anims.create({
       key: 'sprite_hero_right',
@@ -24,7 +23,7 @@ export default class Player {
       yoyo: true,
       repeat: -1
     });
-
+    
     //Animação - atacar
     anims.create({
       key: 'sprite_hero_z',
@@ -32,7 +31,7 @@ export default class Player {
       frameRate: 8,
       repeat:1
     });
-
+    
     //Animação - interagir
     anims.create({
       key: 'sprite_hero_c',
@@ -41,10 +40,11 @@ export default class Player {
       yoyo: true,
       repeat: -1
     });
-
+    
     // Criação da física que a sprite terá na fase
     this.sprite = scene.physics.add.sprite(x, y, "sprite_hero", 0);
-
+    this.vidas=4;
+    
     //Criação dos botões que irão fazer a movimentação da sprite
     const { LEFT, RIGHT, UP, Z, C } = Phaser.Input.Keyboard.KeyCodes;
     this.keys = scene.input.keyboard.addKeys({
@@ -54,15 +54,19 @@ export default class Player {
       atack: Z,
       action: C
     });
-    
-    console.log(this.sprite.anims)
+    this.createHUD();
+    console.log(this.scene)
   }
   
-  
+  createHUD(){
+   this.scene.hud_1 = this.scene.add.image(150,40,'hud_principal');
+   this.scene.hud_1.fixedToCamera = true;
+  }
+
   update(enemies,scene,objectInteraction) {
-
+    
     // console.log(objectInteraction);
-
+    this.updateHUD();
     let colisao = scene.colisao;
     const { keys, sprite } = this;
 
@@ -96,7 +100,7 @@ export default class Player {
       
       /*Ao apertar a seta a direita o personagem se move a direção
       e ativa o método de animção coerente com a direção */
-    } else if (keys.right.isDown) {
+    } else if (keys.right.isDown&&sprite.x<6040) {
 
       sprite.setVelocityX(120);
       if(this.isAttacking==false){
@@ -171,7 +175,9 @@ export default class Player {
         }
     }
 } 
-
+updateHUD(){
+  
+}
   
 
 }

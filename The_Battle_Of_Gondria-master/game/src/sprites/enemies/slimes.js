@@ -123,7 +123,7 @@ slimeHit(player,slime){
         player.setVelocityX(-200);
     }
     player.setVelocityY(-150);
-    player.vidas -= 1;
+    this.player.vidas -= 1;
     this.colisao = true;
 }
 

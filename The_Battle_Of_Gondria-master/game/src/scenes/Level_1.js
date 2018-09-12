@@ -1,5 +1,6 @@
 import Player from "../sprites/player.js";
 import Slimes from "../sprites/enemies/slimes.js";
+import Bandeira from "../sprites/objects/bandeira.js";
 class Level_1 extends Phaser.Scene {
 
     constructor(test) {
@@ -19,14 +20,18 @@ class Level_1 extends Phaser.Scene {
             }
         });
 
-        this.player_vidas = 3;
 
+        this.load.spritesheet('bandeira_branca', 'assets/images/itensCenario/bandeira_branca.png',
+        { frameWidth: 36, frameHeight: 60 });
+        this.load.spritesheet('bandeira_verde', 'assets/images/itensCenario/bandeira_verde.png',
+        { frameWidth: 36, frameHeight: 60 });
+        
         this.load.spritesheet('sprite_alavanca', 'assets/images/itensCenario/alavanca.png',
         { frameWidth: 32, frameHeight: 32 });
 
         this.load.image('coracao_cheio', 'assets/images/huds/coracao_cheio.png');
         this.load.image('coracao_vazio', 'assets/images/huds/coracao_vazio.png');
-
+        this.load.image('hud_principal', 'assets/images/huds/hud_score_vida.png')
         this.load.image('btnVoltar', 'assets/images/botoes/btnVoltar.png');
         this.load.image('btnVoltarPress', 'assets/images/botoes/btnVoltarPress.png');
 
@@ -130,9 +135,13 @@ class Level_1 extends Phaser.Scene {
 
         this.parado = true;
         this.slimes = new Slimes(this);
-        // if (this.spawns[i].name === "Spawn_Flag") {
-        //     //this.physics.add.sprite(this.spawns[i].x,this.spawns[i].y,"flag_branca")
-        // }
+        for(let i =0 ;i<this.spawns.length;i++){
+            if (this.spawns[i].name === "Spawn_Flag") {
+                this.bandeira = new Bandeira(this,this.spawns[i].x,this.spawns[i].y);
+            }
+        }
+        this.physics.add.collider(this.bandeira.sprite, this.layer1);
+            
 
         //Criação da alavanca
         map.createFromObjects('itensInteracao', 27, { key:'sprite_alavanca'}),
@@ -163,7 +172,7 @@ class Level_1 extends Phaser.Scene {
     update() {
         this.player.update(this.slimes,this,this.objectInteraction);
         this.slimes.update(this.player.sprite,this.slimes);
-
+        
 
         // if (this.player.body.x < 432) {
         // } else {
