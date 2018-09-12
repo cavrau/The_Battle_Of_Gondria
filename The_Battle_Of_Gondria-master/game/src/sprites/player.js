@@ -29,7 +29,7 @@ export default class Player {
     anims.create({
       key: 'sprite_hero_z',
       frames: anims.generateFrameNumbers('sprite_hero', { start: 10, end: 13 }),
-      frameRate: 6,
+      frameRate: 8,
       repeat:1
     });
 
@@ -88,8 +88,7 @@ export default class Player {
   if(colisao == false){
     /*Ao apertar a seta a esquerda o personagem se move a direção
     e ativa o método de animção coerente com a direção */
-    if (keys.left.isDown) {
-      
+    if (keys.left.isDown&&sprite.x>8) {
       sprite.setVelocityX(-120);
       if(this.isAttacking==false){
         sprite.anims.play("sprite_hero_left", true);
@@ -111,9 +110,6 @@ export default class Player {
       sprite.setVelocityX(0);
       if(this.isAttacking==false){
         sprite.setTexture("sprite_hero", 5);
-        setTimeout(()=>{
-          this.isAttacking=false;
-        },400)
       }
       
     }
@@ -132,10 +128,10 @@ export default class Player {
       this.isAttacking=true;
       setTimeout(()=>{
         this.isAttacking=false;
-      },400)
+      },500)
     }
 
-    if(keys.action.isDown){
+    if(keys.action.isDown&&colisao==false){
       this.interaction(objectInteraction);
       if(this.isAttacking==false){
         sprite.anims.play("sprite_hero_c", true);
@@ -160,15 +156,17 @@ export default class Player {
         let xdistance = enemy.x - this.sprite.body.x;
         let ydistance = enemy.y - this.sprite.body.y;
 
-        if ((ydistance < 72)) {
-            if (xdistance < 75 && xdistance > 0) {
-              console.log(enemy.lifes);
-                enemy.lifes--;
-                enemy.setVelocityX(140);
-                enemy.setVelocityY(-130);
-            } else if (xdistance < 0 && xdistance > -75) {
-                enemy.setVelocityX(-140);
-                enemy.setVelocityY(-130);
+        if ((ydistance < 45)) {
+            if (xdistance < 65 && xdistance > 0) {
+              enemy.lifes--;
+              enemy.setVelocityX(140);
+              enemy.setVelocityY(-130);
+              enemy.isHit.left = true;
+            } else if (xdistance < 0 && xdistance > -65) {
+              enemy.lifes--;
+              enemy.setVelocityX(-140);
+              enemy.setVelocityY(-130);
+              enemy.isHit.right = true;
             }
         }
     }

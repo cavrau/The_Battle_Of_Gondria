@@ -9,23 +9,97 @@ constructor(scene){
             let slime = this.array.create(spawns[i].x,spawns[i].y, 'slime_verde');
             slime.setScale(1.5);
             slime.lifes = 2;
+            slime.cor = "verde";
+            slime.isHit = {right:false, left: false};
         }
         if (spawns[i].name === "Spawn_Slime_Azul") {
             let slime = this.array.create(spawns[i].x, spawns[i].y, 'slime_azul');
             slime.lifes = 3;
+            slime.cor = "azul";
+            slime.isHit = {right:false, left: false};
             // slime.setScale(1.7);
         }
         if (spawns[i].name === "Spawn_Slime_Vermelho") {
             let slime = this.array.create(spawns[i].x, spawns[i].y, 'slime_vermelho');
             slime.lifes = 4;
+            slime.cor = "vermelho";
             // slime.setScale(2.0);
+            slime.isHit = {right:false, left: false};
         }
-        
     }
     //animacao pular esquerda
     anims.create({
-        key:"slime_jump_left",
+        key:"slime_verde_jump_left",
         frames: anims.generateFrameNumbers('slime_verde',{start:0, end:19}),
+        frameRate:15,
+        repeat:-1
+    })
+    anims.create({
+        key:"slime_azul_jump_left",
+        frames: anims.generateFrameNumbers('slime_azul',{start:0, end:19}),
+        frameRate:15,
+        repeat:-1
+    })
+    anims.create({
+        key:"slime_vermelho_jump_left",
+        frames: anims.generateFrameNumbers('slime_vermelho',{start:0, end:19}),
+        frameRate:15,
+        repeat:-1
+    })
+    //animacoes andar pra direita
+    anims.create({
+        key:"slime_verde_jump_right",
+        frames: anims.generateFrameNumbers('slime_verde',{start:20, end:39}),
+        frameRate:15,
+        repeat:-1
+    })
+    anims.create({
+        key:"slime_azul_jump_right",
+        frames: anims.generateFrameNumbers('slime_azul',{start:20, end:39}),
+        frameRate:15,
+        repeat:-1
+    })
+    anims.create({
+        key:"slime_vermelho_jump_right",
+        frames: anims.generateFrameNumbers('slime_vermelho',{start:20, end:39}),
+        frameRate:15,
+        repeat:-1
+    })
+    //anims hit esquerda
+    anims.create({
+        key:"slime_verde_hit_left",
+        frames: anims.generateFrameNumbers('slime_verde_hit',{start:0, end:6}),
+        frameRate:15,
+        repeat:-1
+    })
+    anims.create({
+        key:"slime_azul_hit_left",
+        frames: anims.generateFrameNumbers('slime_azul_hit',{start:0, end:6}),
+        frameRate:15,
+        repeat:-1
+    })
+    anims.create({
+        key:"slime_vermelho_hit_left",
+        frames: anims.generateFrameNumbers('slime_vermelho_hit',{start:0, end:6}),
+        frameRate:15,
+        repeat:-1
+    })
+    //anims hit direita
+    anims.create({
+        key:"slime_verde_hit_right",
+        frames: anims.generateFrameNumbers('slime_verde_hit',{start:7, end:13}),
+        frameRate:15,
+        repeat:-1
+    })
+    anims.create({
+        key:"slime_azul_hit_right",
+        frames: anims.generateFrameNumbers('slime_azul_hit',{start:7, end:13}),
+        frameRate:15,
+        repeat:-1
+    })
+    anims.create({
+        key:"slime_vermelho_hit_right",
+        frames: anims.generateFrameNumbers('slime_vermelho_hit',{start:7, end:13}),
         frameRate:15,
         repeat:-1
     })
@@ -55,26 +129,45 @@ slimeHit(player,slime){
 
 update(player){
     for (let i = 0; i < this.array.children.entries.length; i++) {
-        if (this.array.children.entries[i].x - player.x < 150 && this.array.children.entries[i].x - player.x > 0) {
-            if (this.array.children.entries[i].body.onFloor()) {
-                this.array.children.entries[i].anims.play('slime_jump_left',true);
-                this.array.children.entries[i].setVelocityX(-80);
-                this.array.children.entries[i].setVelocityY(-200);
+        let slime = this.array.children.entries[i];
+        if(slime.isHit.left&&slime.lifes>0){
+            slime.anims.play("slime_"+slime.cor+"_hit_left",true);
+            setTimeout(()=>{
+                slime.isHit.left = false;
+            },466)
+        }else if (slime.isHit.right){
+            slime.anims.play("slime_"+slime.cor+"_hit_right",true);
+            setTimeout(()=>{
+                slime.isHit.right = false;
+            },466)
+        }else if (slime.x - player.x < 150 && slime.x - player.x > 0) {
+            if (slime.body.onFloor()) {
+                slime.anims.play('slime_'+slime.cor+'_jump_left',true);
+                slime.setVelocityX(-80);
+                slime.setVelocityY(-200);
             }
-        } else if (this.array.children.entries[i].x - player.x > -150 && this.array.children.entries[i].x - player.x < 0) {
-            if (this.array.children.entries[i].body.onFloor()) {
-                this.array.children.entries[i].setVelocityX(80);
-                this.array.children.entries[i].setVelocityY(-200);
+        } else if (slime.x - player.x > -150 && slime.x - player.x < 0) {
+            if (slime.body.onFloor()) {
+                slime.anims.play('slime_'+slime.cor+'_jump_right',true);
+                slime.setVelocityX(80);
+                slime.setVelocityY(-200);
             }
         } else {
-            this.array.children.entries[i].setTexture('slime_verde',0)
-            this.array.children.entries[i].setVelocityX(0);
+            slime.setTexture('slime_'+slime.cor,0)
+            slime.setVelocityX(0);
         }
-        if (this.array.children.entries[i].lifes == 0) {
-            this.array.children.entries[i].destroy();
+        if (slime.lifes == 0) {
+            if(slime.isHit.left){
+                slime.anims.play("slime_"+slime.cor+"_hit_left",true);
+            }else if (slime.isHit.right){
+                slime.anims.play("slime_"+slime.cor+"_hit_right",true);
+            }
+            setTimeout(()=>{
+                slime.destroy();
+            },466)
         }
-        if(this.array.children.entries[i].y>490){
-            this.array.children.entries[i].destroy();
+        if(slime.y>490){
+            slime.destroy();
         }
     }
 }
