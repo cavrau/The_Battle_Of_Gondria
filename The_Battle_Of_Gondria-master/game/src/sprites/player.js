@@ -37,7 +37,7 @@ export default class Player {
     anims.create({
       key: 'sprite_hero_c',
       frames: anims.generateFrameNumbers('sprite_hero', { start: 4, end: 5 }),
-      frameRate: 2,
+      frameRate: 1,
       yoyo: true,
       repeat: -1
     });
@@ -46,21 +46,26 @@ export default class Player {
     this.sprite = scene.physics.add.sprite(x, y, "sprite_hero", 0);
 
     //Criação dos botões que irão fazer a movimentação da sprite
-    const { LEFT, RIGHT, UP, Z } = Phaser.Input.Keyboard.KeyCodes;
+    const { LEFT, RIGHT, UP, Z, C } = Phaser.Input.Keyboard.KeyCodes;
     this.keys = scene.input.keyboard.addKeys({
       left: LEFT,
       right: RIGHT,
       up: UP,
-      atack: Z
+      atack: Z,
+      action: C
     });
     
     console.log(this.sprite.anims)
   }
   
   
-  update(enemies,scene,slimes) {
+  update(enemies,scene,objectInteraction) {
+
+    // console.log(objectInteraction);
+
     let colisao = scene.colisao;
     const { keys, sprite } = this;
+
     // Checa a colisão com a layer 2 de blocos
           if (colisao == true) {
               enemies.c_player.active = false;
@@ -106,8 +111,10 @@ export default class Player {
       sprite.setVelocityX(0);
       if(this.isAttacking==false){
         sprite.setTexture("sprite_hero", 5);
+        setTimeout(()=>{
+          this.isAttacking=false;
+        },400)
       }
-      // sprite.anims.play("sprite_hero_z", true);
       
     }
     
@@ -127,14 +134,32 @@ export default class Player {
         this.isAttacking=false;
       },400)
     }
+
+    if(keys.action.isDown){
+      this.interaction(objectInteraction);
+      if(this.isAttacking==false){
+        sprite.anims.play("sprite_hero_c", true);
+      }
+    }
     
   }
+
+  interaction(objectInteraction){
+
+    // if(){
+
+    // }
+
+  }
+
   // método que checa se o jogabor bateu em algum inimigo
   checkHit(enemies) {
     for (let i = 0; i < enemies.children.entries.length; i++) {
+
         let enemy = enemies.children.entries[i];
         let xdistance = enemy.x - this.sprite.body.x;
         let ydistance = enemy.y - this.sprite.body.y;
+
         if ((ydistance < 72)) {
             if (xdistance < 75 && xdistance > 0) {
               console.log(enemy.lifes);
@@ -147,7 +172,9 @@ export default class Player {
             }
         }
     }
-}    
+} 
+
+  
 
 }
 

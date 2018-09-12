@@ -34,6 +34,7 @@ constructor(scene){
     this.c_player = this.scene.physics.add.collider(this.array, this.scene.player.sprite,this.slimeHit,null,this.scene);
     this.scene.colisao=false;
 }
+
 slimeHit(player,slime){
     if (player.x - slime.x <= 0) {
         slime.setVelocityX(200);
@@ -51,6 +52,7 @@ slimeHit(player,slime){
     player.vidas -= 1;
     this.colisao = true;
 }
+
 update(player){
     for (let i = 0; i < this.array.children.entries.length; i++) {
         if (this.array.children.entries[i].x - player.x < 150 && this.array.children.entries[i].x - player.x > 0) {

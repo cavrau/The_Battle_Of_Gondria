@@ -21,6 +21,9 @@ class Level_1 extends Phaser.Scene {
 
         this.player_vidas = 3;
 
+        this.load.spritesheet('sprite_alavanca', 'assets/images/itensCenario/alavanca.png',
+        { frameWidth: 32, frameHeight: 32 });
+
         this.load.image('coracao_cheio', 'assets/images/huds/coracao_cheio.png');
         this.load.image('coracao_vazio', 'assets/images/huds/coracao_vazio.png');
 
@@ -76,7 +79,7 @@ class Level_1 extends Phaser.Scene {
         this.layer2.setCollisionBetween(1, 6);
 
         //Cria um player dentro da cena da fase, com coordenadas x e y
-        this.player = new Player(this, 20, 300);
+        this.player = new Player(this, 4270, 300);
 
         //Seta o bounce do player
         this.player.sprite.setBounce(0.1);
@@ -123,7 +126,14 @@ class Level_1 extends Phaser.Scene {
         //     //this.physics.add.sprite(this.spawns[i].x,this.spawns[i].y,"flag_branca")
         // }
 
-        
+        //Criação da alavanca
+        map.createFromObjects('itensInteracao', 27, { key:'sprite_alavanca'}),
+        this.objectInteraction ={
+            objeto: 'alavanca',
+            ativada: false
+        }; 
+        console.log(this.objectInteraction);
+        console.log(this.objectInteraction.objeto);
 
         //     this.c_slimes = this.physics.add.collider(this.player, this.slimes, this.slimeHit, null, this);
         //     this.life_1 = this.add.image(720, 40, 'coracao_cheio');
@@ -143,8 +153,10 @@ class Level_1 extends Phaser.Scene {
     }
     
     update() {
-        this.player.update(this.slimes,this);
+        this.player.update(this.slimes,this,this.objectInteraction);
         this.slimes.update(this.player.sprite,this.slimes);
+
+
         // if (this.player.body.x < 432) {
         // } else {
         //     this.life_1.x = this.player.body.x + 300;
