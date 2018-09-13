@@ -1,5 +1,6 @@
 import Player from "../sprites/player.js";
 import Slimes from "../sprites/enemies/slimes.js";
+import Bandeira from "../sprites/objects/bandeira.js";
 class Level_1 extends Phaser.Scene {
 
     constructor(test) {
@@ -19,14 +20,18 @@ class Level_1 extends Phaser.Scene {
             }
         });
 
-        this.player_vidas = 3;
 
+        this.load.spritesheet('bandeira_branca', 'assets/images/itensCenario/bandeira_branca.png',
+        { frameWidth: 36, frameHeight: 60 });
+        this.load.spritesheet('bandeira_verde', 'assets/images/itensCenario/bandeira_verde.png',
+        { frameWidth: 36, frameHeight: 60 });
+        
         this.load.spritesheet('sprite_alavanca', 'assets/images/itensCenario/alavanca.png',
         { frameWidth: 32, frameHeight: 32 });
 
         this.load.image('coracao_cheio', 'assets/images/huds/coracao_cheio.png');
         this.load.image('coracao_vazio', 'assets/images/huds/coracao_vazio.png');
-
+        this.load.image('hud_principal', 'assets/images/huds/hud_score_vida.png')
         this.load.image('btnVoltar', 'assets/images/botoes/btnVoltar.png');
         this.load.image('btnVoltarPress', 'assets/images/botoes/btnVoltarPress.png');
 
@@ -46,6 +51,14 @@ class Level_1 extends Phaser.Scene {
 
         this.load.spritesheet('slime_vermelho', 'assets/images/mobs/slime_vermelho_walk.png',
             { frameWidth: 18, frameHeight: 21 });
+        this.load.spritesheet('slime_verde_hit', 'assets/images/mobs/slime_verde_hit.png',
+            { frameWidth: 16, frameHeight: 12 });
+
+        this.load.spritesheet('slime_azul_hit', 'assets/images/mobs/slime_azul_hit.png',
+            { frameWidth: 16, frameHeight: 12 });
+
+        this.load.spritesheet('slime_vermelho_hit', 'assets/images/mobs/slime_vermelho_hit.png',
+            { frameWidth: 16, frameHeight: 12 });
 
 
     }
@@ -82,7 +95,7 @@ class Level_1 extends Phaser.Scene {
         this.layer2.setCollisionBetween(1, 6);
 
         //Cria um player dentro da cena da fase, com coordenadas x e y
-        this.player = new Player(this, 4270, 300);
+        this.player = new Player(this, 20, 320);
 
         //Seta o bounce do player
         this.player.sprite.setBounce(0.1);
@@ -99,8 +112,8 @@ class Level_1 extends Phaser.Scene {
         preferencia pular em cima a colisão é ativada no update() */
         this.c_layer2.active = false;
 
-        /*INICIO - Debug para colisão */
-        const debugGraphics = this.add.graphics().setAlpha(0.75);
+        // /*INICIO - Debug para colisão */
+        // const debugGraphics = this.add.graphics().setAlpha(0.75);
 
         // this.layer1.renderDebug(debugGraphics, {
         //     tileColor: null, // Color of non-colliding tiles
@@ -113,7 +126,11 @@ class Level_1 extends Phaser.Scene {
         //     collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
         //     faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
         // });
+<<<<<<< HEAD
         /*FIM - Debug para colisão */
+=======
+        // /*FIM - Debug para colisão */
+>>>>>>> 80200fe0b8e351ec2839e85548e062331c0af89c
 
         //Cria uma camera que seguira o player
         this.cameras.main.startFollow(this.player.sprite);
@@ -125,9 +142,13 @@ class Level_1 extends Phaser.Scene {
 
         this.parado = true;
         this.slimes = new Slimes(this);
-        // if (this.spawns[i].name === "Spawn_Flag") {
-        //     //this.physics.add.sprite(this.spawns[i].x,this.spawns[i].y,"flag_branca")
-        // }
+        for(let i =0 ;i<this.spawns.length;i++){
+            if (this.spawns[i].name === "Spawn_Flag") {
+                this.bandeira = new Bandeira(this,this.spawns[i].x,this.spawns[i].y);
+            }
+        }
+        this.physics.add.collider(this.bandeira.sprite, this.layer1);
+            
 
         //Criação da alavanca
         this.alavanca = map.createFromObjects('itensInteracao', 27, { key:'sprite_alavanca'});
@@ -156,7 +177,7 @@ class Level_1 extends Phaser.Scene {
     update() {
         this.player.update(this.slimes,this,this.alavanca,this.ponte,this.aldeao,this.casa);
         this.slimes.update(this.player.sprite,this.slimes);
-
+        
 
         // if (this.player.body.x < 432) {
         // } else {

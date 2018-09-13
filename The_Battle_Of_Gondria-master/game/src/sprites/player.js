@@ -5,10 +5,9 @@ export default class Player {
     this.isInteracting = false;
     this.hasInteracted = false;
     this.scene = scene;
-
     // Criação das animações apartir da spritesheet
     const anims = scene.anims;
-
+    
     //Animação - andar para esquerda
     anims.create({
       key: 'sprite_hero_left',
@@ -17,7 +16,7 @@ export default class Player {
       yoyo: true,
       repeat: -1
     });
-
+    
     //Animação - andar para direita
     anims.create({
       key: 'sprite_hero_right',
@@ -26,15 +25,20 @@ export default class Player {
       yoyo: true,
       repeat: -1
     });
-
+    
     //Animação - atacar
     anims.create({
       key: 'sprite_hero_z',
       frames: anims.generateFrameNumbers('sprite_hero', { start: 10, end: 13 }),
+<<<<<<< HEAD
       frameRate: 6,
       repeat: 1
+=======
+      frameRate: 8,
+      repeat:1
+>>>>>>> 80200fe0b8e351ec2839e85548e062331c0af89c
     });
-
+    
     //Animação - interagir
     anims.create({
       key: 'sprite_hero_c',
@@ -43,6 +47,7 @@ export default class Player {
       yoyo: true,
       repeat: -1
     });
+<<<<<<< HEAD
 
     /*Animações de interação */
     anims.create({
@@ -51,9 +56,13 @@ export default class Player {
       frameRate: 4
     });
 
+=======
+    
+>>>>>>> 80200fe0b8e351ec2839e85548e062331c0af89c
     // Criação da física que a sprite terá na fase
     this.sprite = scene.physics.add.sprite(x, y, "sprite_hero", 0);
-
+    this.vidas=4;
+    
     //Criação dos botões que irão fazer a movimentação da sprite
     const { LEFT, RIGHT, UP, Z, C } = Phaser.Input.Keyboard.KeyCodes;
     this.keys = scene.input.keyboard.addKeys({
@@ -63,15 +72,28 @@ export default class Player {
       atack: Z,
       action: C
     });
+<<<<<<< HEAD
 
     // console.log(this.sprite.anims);
   }
 
 
   update(enemies, scene, alavanca, ponte, aldeao, casa) {
+=======
+    this.createHUD();
+    console.log(this.scene)
+  }
+  
+  createHUD(){
+   this.scene.hud_1 = this.scene.add.image(150,40,'hud_principal');
+   this.scene.hud_1.fixedToCamera = true;
+  }
+>>>>>>> 80200fe0b8e351ec2839e85548e062331c0af89c
 
+  update(enemies,scene,objectInteraction) {
+    
     // console.log(objectInteraction);
-
+    this.updateHUD();
     let colisao = scene.colisao;
     const { keys, sprite } = this;
 
@@ -94,12 +116,28 @@ export default class Player {
       this.scene.c_layer2.active = false;
     } else {
       this.scene.c_layer2.active = true;
+<<<<<<< HEAD
     }
 
     if (colisao == false) {
       /*Ao apertar a seta a esquerda o personagem se move a direção
       e ativa o método de animção coerente com a direção */
       if (keys.left.isDown) {
+=======
+  }
+  if(colisao == false){
+    /*Ao apertar a seta a esquerda o personagem se move a direção
+    e ativa o método de animção coerente com a direção */
+    if (keys.left.isDown&&sprite.x>8) {
+      sprite.setVelocityX(-120);
+      if(this.isAttacking==false){
+        sprite.anims.play("sprite_hero_left", true);
+      }
+      
+      /*Ao apertar a seta a direita o personagem se move a direção
+      e ativa o método de animção coerente com a direção */
+    } else if (keys.right.isDown&&sprite.x<6040) {
+>>>>>>> 80200fe0b8e351ec2839e85548e062331c0af89c
 
         sprite.setVelocityX(-120);
         if (this.isAttacking == false) {
@@ -128,6 +166,12 @@ export default class Player {
           }, 400)
         }
 
+<<<<<<< HEAD
+=======
+      sprite.setVelocityX(0);
+      if(this.isAttacking==false){
+        sprite.setTexture("sprite_hero", 5);
+>>>>>>> 80200fe0b8e351ec2839e85548e062331c0af89c
       }
 
     }
@@ -141,6 +185,7 @@ export default class Player {
     if (keys.atack.isDown && this.isAttacking == false) {
       sprite.anims.play("sprite_hero_z", true);
       this.checkHit(enemies.array);
+<<<<<<< HEAD
       this.isAttacking = true;
       setTimeout(() => {
         this.isAttacking = false;
@@ -149,6 +194,17 @@ export default class Player {
 
     if (keys.action.isDown) {
       setTimeout(() => {
+=======
+      this.isAttacking=true;
+      setTimeout(()=>{
+        this.isAttacking=false;
+      },500)
+    }
+
+    if(keys.action.isDown&&colisao==false){
+      this.interaction(objectInteraction);
+      if(this.isAttacking==false){
+>>>>>>> 80200fe0b8e351ec2839e85548e062331c0af89c
         sprite.anims.play("sprite_hero_c", true);
       }, 400);
       setTimeout(() => {
@@ -192,6 +248,7 @@ export default class Player {
   checkHit(enemies) {
     for (let i = 0; i < enemies.children.entries.length; i++) {
 
+<<<<<<< HEAD
       let enemy = enemies.children.entries[i];
       let xdistance = enemy.x - this.sprite.body.x;
       let ydistance = enemy.y - this.sprite.body.y;
@@ -205,12 +262,38 @@ export default class Player {
         } else if (xdistance < 0 && xdistance > -75) {
           enemy.setVelocityX(-140);
           enemy.setVelocityY(-130);
+=======
+        let enemy = enemies.children.entries[i];
+        let xdistance = enemy.x - this.sprite.body.x;
+        let ydistance = enemy.y - this.sprite.body.y;
+
+        if ((ydistance < 45)) {
+            if (xdistance < 65 && xdistance > 0) {
+              enemy.lifes--;
+              enemy.setVelocityX(140);
+              enemy.setVelocityY(-130);
+              enemy.isHit.left = true;
+            } else if (xdistance < 0 && xdistance > -65) {
+              enemy.lifes--;
+              enemy.setVelocityX(-140);
+              enemy.setVelocityY(-130);
+              enemy.isHit.right = true;
+            }
+>>>>>>> 80200fe0b8e351ec2839e85548e062331c0af89c
         }
       }
     }
+<<<<<<< HEAD
   }
 
 
+=======
+} 
+updateHUD(){
+  
+}
+  
+>>>>>>> 80200fe0b8e351ec2839e85548e062331c0af89c
 
 }
 
