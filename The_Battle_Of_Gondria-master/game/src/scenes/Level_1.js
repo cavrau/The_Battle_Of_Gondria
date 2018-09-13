@@ -35,7 +35,7 @@ class Level_1 extends Phaser.Scene {
         this.load.image("fase_1_tileset", "assets/tilesets/fase_1_tileset.png");
         this.load.image('fase_1_sky', 'assets/background/fase_1_sky.png');
         this.load.image('fase_1_montanhas', 'assets/background/fase_1_montanhas.png');
-        // this.load.image('ponte', 'assets/images/ponte.png');
+        this.load.image('fase_1_ponte', 'assets/images/itensCenario/ponte.png');
 
 
         this.load.spritesheet('slime_verde', 'assets/images/mobs/slime_verde_walk.png',
@@ -60,20 +60,23 @@ class Level_1 extends Phaser.Scene {
         const blocos = map.addTilesetImage("blocos", "fase_1_tileset");
         const background = map.addTilesetImage('ceu', 'fase_1_sky');
         const midground = map.addTilesetImage('montanhas', 'fase_1_montanhas');
+        // const ponte = map.addTilesetImage('ponte', ' fase_1_ponte');
+        
+        console.log(blocos);
 
         //Cria layers não colidivel
         map.createDynamicLayer('background', background, 0, 0);
         map.createDynamicLayer('midground', midground, 0, 0);
 
         //Cria e seta os blocos do tileset da layer 1
-        this.layer1 = map.createDynamicLayer("foreground_1", blocos, 0, 0);
+        this.layer1 = map.createDynamicLayer("foreground_1", blocos);
 
         //Cria e seta os blocos do tileset da layer 2
         this.layer2 = map.createStaticLayer("foreground_2", blocos, 0, 0);
 
 
         //Seta os blocos que serão colidiveis na layer 1
-        this.layer1.setCollisionBetween(1, 6);
+        this.layer1.setCollision([1,2,3,4,5,6,10]);
 
         //Seta os blocos que serão colidiveis na layer 2
         this.layer2.setCollisionBetween(1, 6);
@@ -99,17 +102,17 @@ class Level_1 extends Phaser.Scene {
         /*INICIO - Debug para colisão */
         const debugGraphics = this.add.graphics().setAlpha(0.75);
 
-        this.layer1.renderDebug(debugGraphics, {
-            tileColor: null, // Color of non-colliding tiles
-            collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-            faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-        });
+        // this.layer1.renderDebug(debugGraphics, {
+        //     tileColor: null, // Color of non-colliding tiles
+        //     collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
+        //     faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
+        // });
 
-        this.layer2.renderDebug(debugGraphics, {
-            tileColor: null, // Color of non-colliding tiles
-            collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-            faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-        });
+        // this.layer2.renderDebug(debugGraphics, {
+        //     tileColor: null, // Color of non-colliding tiles
+        //     collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
+        //     faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
+        // });
         /*FIM - Debug para colisão */
 
         //Cria uma camera que seguira o player
@@ -127,13 +130,12 @@ class Level_1 extends Phaser.Scene {
         // }
 
         //Criação da alavanca
-        map.createFromObjects('itensInteracao', 27, { key:'sprite_alavanca'}),
-        this.objectInteraction ={
-            objeto: 'alavanca',
-            ativada: false
-        }; 
-        console.log(this.objectInteraction);
-        console.log(this.objectInteraction.objeto);
+        this.alavanca = map.createFromObjects('itensInteracao', 27, { key:'sprite_alavanca'});
+
+        /*ponte recebe layer1 para que this.ponte seja setado como
+        parâmetro do player.update(), método que que executa a interação
+        e criação da ponte na fase*/
+        this.ponte = this.layer1;
 
         //     this.c_slimes = this.physics.add.collider(this.player, this.slimes, this.slimeHit, null, this);
         //     this.life_1 = this.add.image(720, 40, 'coracao_cheio');
@@ -147,13 +149,12 @@ class Level_1 extends Phaser.Scene {
         //         fill: '#000'
         //     });
         // }
-
         
         
     }
     
     update() {
-        this.player.update(this.slimes,this,this.objectInteraction);
+        this.player.update(this.slimes,this,this.alavanca,this.ponte,this.aldeao,this.casa);
         this.slimes.update(this.player.sprite,this.slimes);
 
 
