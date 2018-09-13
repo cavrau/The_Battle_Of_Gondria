@@ -128,8 +128,14 @@ slimeHit(player,slime){
 }
 
 update(player){
-    for (let i = 0; i < this.array.children.entries.length; i++) {
-        let slime = this.array.children.entries[i];
+    if(this.scene.player.isDead==true){
+        for (let i = 0; i < this.array.children.entries.length; i++) {
+            let slime = this.array.children.entries[i];
+            slime.setTexture('slime_'+slime.cor,0)
+        }
+    }else{    
+        for (let i = 0; i < this.array.children.entries.length; i++) {
+            let slime = this.array.children.entries[i];
         if(slime.isHit.left&&slime.lifes>0){
             slime.anims.play("slime_"+slime.cor+"_hit_left",true);
             setTimeout(()=>{
@@ -170,6 +176,7 @@ update(player){
             slime.destroy();
         }
     }
+}
 }
 }
 export default Slimes;
