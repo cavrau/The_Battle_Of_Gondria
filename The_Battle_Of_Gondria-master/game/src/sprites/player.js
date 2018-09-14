@@ -64,20 +64,19 @@ export default class Player {
       action: C
     });
 
-    // console.log(this.sprite.anims);
   }
 
 
-
+  //Método que cria os huds de visualização de vida, pontuação e tempo
   createHUD() {
-    this.scene.hud_1 = this.scene.add.image(150, 40, 'hud_principal');
-    this.scene.hud_1.fixedToCamera = true;
+    
+    this.scene.hud_1 = this.scene.add.image(150, 40, 'hud_primario').setScrollFactor(0);
+    this.scene.hud_1 = this.scene.add.image(794, 40, 'hud_secundario').setScrollFactor(0);
   }
 
   update(enemies, scene, alavanca, ponte, aldeao, casa) {
 
     // console.log(objectInteraction);
-    this.updateHUD();
     let colisao = scene.colisao;
     const { keys, sprite } = this;
 
@@ -149,8 +148,9 @@ export default class Player {
       }
 
       if (keys.action.isDown && colisao == false) {
+        this.interaction(alavanca, ponte, aldeao, casa);
         setTimeout(() => {
-          this.interaction(alavanca, ponte, aldeao, casa);
+          sprite.anims.play('sprite_hero_c');
         }, 400);
 
       }
@@ -158,11 +158,15 @@ export default class Player {
     }
   }
 
+  //Método que faz a interação com as alavancas, com as portas e os aldeoes
   interaction(alavanca, ponte, aldeao, casa) {
 
+    /*Pega a diferença da distancia entre o player e a alavanca */
     let alavancaX = alavanca[0].x - this.sprite.body.x;
     let alavancaY = alavanca[0].y - this.sprite.body.y;
 
+    /*Caso a diferença da distância seja Y < 52 e X < 50 e X > 0
+    a alavanca é atavida e é feita a construção da ponte */
     if ((alavancaY < 72)) {
       if ((alavancaX < 50 && alavancaX > 0) && this.hasInteracted == false) {
         this.hasInteracted = true;

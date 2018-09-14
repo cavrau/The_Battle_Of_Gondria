@@ -31,7 +31,8 @@ class Level_1 extends Phaser.Scene {
 
         this.load.image('coracao_cheio', 'assets/images/huds/coracao_cheio.png');
         this.load.image('coracao_vazio', 'assets/images/huds/coracao_vazio.png');
-        this.load.image('hud_principal', 'assets/images/huds/hud_score_vida.png')
+        this.load.image('hud_primario', 'assets/images/huds/hud_score_vida.png')
+        this.load.image('hud_secundario', 'assets/images/huds/hud_tempo.png');
         this.load.image('btnVoltar', 'assets/images/botoes/btnVoltar.png');
         this.load.image('btnVoltarPress', 'assets/images/botoes/btnVoltarPress.png');
 
@@ -95,7 +96,7 @@ class Level_1 extends Phaser.Scene {
         this.layer2.setCollisionBetween(1, 6);
 
         //Cria um player dentro da cena da fase, com coordenadas x e y
-        this.player = new Player(this, 4300, 320);
+        this.player = new Player(this, 20, 320);
 
         //Seta o bounce do player
         this.player.sprite.setBounce(0.1);
@@ -167,7 +168,10 @@ class Level_1 extends Phaser.Scene {
         //     });
         // }
         
+        // Chama o método que cria o hud do player
+        this.player.createHUD();
         
+
     }
     
     update() {
