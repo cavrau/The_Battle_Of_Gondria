@@ -31,8 +31,10 @@ class Level_1 extends Phaser.Scene {
 
         this.load.image('coracao_cheio', 'assets/images/huds/coracao_cheio.png');
         this.load.image('coracao_vazio', 'assets/images/huds/coracao_vazio.png');
+      
         this.load.image('hud_primario', 'assets/images/huds/hud_score_vida.png')
         this.load.image('hud_secundario', 'assets/images/huds/hud_tempo.png');
+      
         this.load.image('btnVoltar', 'assets/images/botoes/btnVoltar.png');
         this.load.image('btnVoltarPress', 'assets/images/botoes/btnVoltarPress.png');
 
