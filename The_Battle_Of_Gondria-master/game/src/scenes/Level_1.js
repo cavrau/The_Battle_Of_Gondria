@@ -70,12 +70,12 @@ class Level_1 extends Phaser.Scene {
     create() {
 
         //Cria o mapa apartir do arquivos JSON que veio do Tiled
-        const map = this.make.tilemap({ key: "map_fase_1" });
+        let map = this.make.tilemap({ key: "map_fase_1" });
 
         /* Parametros para tileset: const blocos = map.addTilesetImage("nome do tileset que está no tiled", "nome da key que foi carregada no phaser");*/
-        const blocos = map.addTilesetImage("blocos", "fase_1_tileset");
-        const background = map.addTilesetImage('ceu', 'fase_1_sky');
-        const midground = map.addTilesetImage('montanhas', 'fase_1_montanhas');
+        let blocos = map.addTilesetImage("blocos", "fase_1_tileset");
+        let background = map.addTilesetImage('ceu', 'fase_1_sky');
+        let midground = map.addTilesetImage('montanhas', 'fase_1_montanhas');
         // const ponte = map.addTilesetImage('ponte', ' fase_1_ponte');
         
         console.log(blocos);
@@ -179,74 +179,6 @@ class Level_1 extends Phaser.Scene {
     update() {
         this.player.update(this.slimes,this,this.alavanca,this.ponte,this.aldeao,this.casa);
         this.slimes.update(this.player.sprite,this.slimes);
-        
-
-        // if (this.player.body.x < 432) {
-        // } else {
-        //     this.life_1.x = this.player.body.x + 300;
-        //     this.life_2.x = this.player.body.x + 350;
-        //     this.life_3.x = this.player.body.x + 400;
-        // }
-        // const cam = this.cameras.main;
-
-        // if (this.player_vidas == 2) {
-        //     this.life_1.setTexture("coracao_vazio");
-        // } else if (this.player_vidas == 1) {
-        //     this.life_1.setTexture("coracao_vazio");
-        //     this.life_2.setTexture("coracao_vazio");
-        // } else if (this.player_vidas == 0) {
-        //     this.life_1.setTexture("coracao_vazio");
-        //     this.life_2.setTexture("coracao_vazio");
-        //     this.life_3.setTexture("coracao_vazio");
-        // } else if (this.player_vidas == 3) {
-        //     this.life_1.setTexture("coracao_cheio");
-        //     this.life_2.setTexture("coracao_cheio");
-        //     this.life_3.setTexture("coracao_cheio");
-        // }
-        // if (this.player.body.y > 500) {
-        //     this.player_vidas = 0;
-        // }
-
-
-
-        // }
-
-        
-
-        // if (this.colisao == false) {
-        //     if (cursors.left.isDown && this.player.x - 16 > 0) {
-        //         this.player.sprite.setVelocityX(120);
-        //         this.parado = false;
-        //         // this.player.anims.play('left',true);
-        //     } else if (cursors.right.isDown) {
-        //         this.player.sprite.setVelocityX(-120);
-        //         this.parado = false;
-        //         // this.player.anims.play('right',true);
-        //     } else if (this.colisao == false) {
-        //         this.player.sprite.setVelocityX(0);
-        //         // this.player.anims.play('turn',true);
-        //     }
-        // }
-
-        // if (this.colisao == true) {
-        //     // this.c_slimes.active = false;
-        // } else {
-        //     // this.c_slimes.active = true;
-        // }
-
-        // if (this.colisao == true) {
-        //     setTimeout(() => {
-        //         if (this.player.body.onFloor()) {
-        //             this.colisao = false;
-        //         }
-        //     }, 500)
-        // }
-
-        // if (cursors.up.isDown && this.player.sprite.body.onFloor()) {
-        //     this.player.sprite.setVelocityY(-230);
-        // }
-
-       
 
     }
 
