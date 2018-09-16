@@ -1,6 +1,9 @@
 import Player from "../sprites/player.js";
 import Slimes from "../sprites/enemies/slimes.js";
 import Bandeira from "../sprites/objects/bandeira.js";
+import Moeda from "../sprites/objects/moeda.js";
+import Anims from '../sprites/Anims.js';
+import Chave from "../sprites/objects/Chave.js";
 class Level_1 extends Phaser.Scene {
 
     constructor(test) {
@@ -22,23 +25,32 @@ class Level_1 extends Phaser.Scene {
 
 
         this.load.spritesheet('bandeira_branca', 'assets/images/itensCenario/bandeira_branca.png',
-        { frameWidth: 36, frameHeight: 60 });
+            { frameWidth: 36, frameHeight: 60 });
         this.load.spritesheet('bandeira_verde', 'assets/images/itensCenario/bandeira_verde.png',
-        { frameWidth: 36, frameHeight: 60 });
-        
+            { frameWidth: 36, frameHeight: 60 });
+
         this.load.spritesheet('sprite_alavanca', 'assets/images/itensCenario/alavanca.png',
-        { frameWidth: 32, frameHeight: 32 });
+            { frameWidth: 32, frameHeight: 32 });
+
+        this.load.spritesheet('sprite_chave', 'assets/images/itensCenario/chave.png',
+            { frameWidth: 16, frameHeight: 16 });
+
+        this.load.spritesheet('sprite_moeda', 'assets/images/itensCenario/moeda.png',
+            { frameWidth: 32, frameHeight: 32 });
+
+        this.load.image('hud_primario', 'assets/images/huds/hud_score_vida.png');
+        this.load.image('hud_secundario', 'assets/images/huds/hud_tempo.png');
 
         this.load.image('coracao_cheio', 'assets/images/huds/coracao_cheio.png');
         this.load.image('coracao_vazio', 'assets/images/huds/coracao_vazio.png');
-        this.load.image('hud_primario', 'assets/images/huds/hud_score_vida.png')
-        this.load.image('hud_secundario', 'assets/images/huds/hud_tempo.png');
+
         this.load.image('btnVoltar', 'assets/images/botoes/btnVoltar.png');
         this.load.image('btnVoltarPress', 'assets/images/botoes/btnVoltarPress.png');
 
         this.load.tilemapTiledJSON("map_fase_1", "assets/tilemap/map_fase_1.json");
 
         this.load.image("fase_1_tileset", "assets/tilesets/fase_1_tileset.png");
+        this.load.image('fase_1_casa', 'assets/tilesets/fase_1_casa.png');
         this.load.image('fase_1_sky', 'assets/background/fase_1_sky.png');
         this.load.image('fase_1_montanhas', 'assets/background/fase_1_montanhas.png');
         this.load.image('fase_1_ponte', 'assets/images/itensCenario/ponte.png');
@@ -74,9 +86,7 @@ class Level_1 extends Phaser.Scene {
         const blocos = map.addTilesetImage("blocos", "fase_1_tileset");
         const background = map.addTilesetImage('ceu', 'fase_1_sky');
         const midground = map.addTilesetImage('montanhas', 'fase_1_montanhas');
-        // const ponte = map.addTilesetImage('ponte', ' fase_1_ponte');
-        
-        console.log(blocos);
+        const casa = map.addTilesetImage('casa', 'fase_1_casa');
 
         //Cria layers não colidivel
         map.createDynamicLayer('background', background, 0, 0);
@@ -88,15 +98,17 @@ class Level_1 extends Phaser.Scene {
         //Cria e seta os blocos do tileset da layer 2
         this.layer2 = map.createStaticLayer("foreground_2", blocos, 0, 0);
 
+        //Cria a layer da casa do aldeão
+        this.hauseLayer = map.createDynamicLayer('casa', casa, 0, 0);
 
         //Seta os blocos que serão colidiveis na layer 1
-        this.layer1.setCollision([1,2,3,4,5,6,10]);
+        this.layer1.setCollision([1, 2, 3, 4, 5, 6, 10]);
 
         //Seta os blocos que serão colidiveis na layer 2
         this.layer2.setCollisionBetween(1, 6);
 
         //Cria um player dentro da cena da fase, com coordenadas x e y
-        this.player = new Player(this, 20, 320);
+        this.player = new Player(this, 3055, 320);
 
         //Seta o bounce do player
         this.player.sprite.setBounce(0.1);
@@ -131,53 +143,66 @@ class Level_1 extends Phaser.Scene {
 
         //Cria uma camera que seguira o player
         this.cameras.main.startFollow(this.player.sprite);
+
         //Seta os limites do mapa que a camera acompanhará
         this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
         let spawnLayer = map.getObjectLayer("spawns");
         this.spawns = spawnLayer.objects;
+        // console.log(this.spawns);
 
         this.parado = true;
         this.slimes = new Slimes(this);
-        for(let i =0 ;i<this.spawns.length;i++){
+        for (let i = 0; i < this.spawns.length; i++) {
             if (this.spawns[i].name === "Spawn_Flag") {
-                this.bandeira = new Bandeira(this,this.spawns[i].x,this.spawns[i].y);
+                this.bandeira = new Bandeira(this, this.spawns[i].x, this.spawns[i].y);
             }
         }
         this.physics.add.collider(this.bandeira.sprite, this.layer1);
-            
+
 
         //Criação da alavanca
-        this.alavanca = map.createFromObjects('itensInteracao', 27, { key:'sprite_alavanca'});
+        this.alavanca = map.createFromObjects('itensInteracao', 27, { key: 'sprite_alavanca' });
 
         /*ponte recebe layer1 para que this.ponte seja setado como
         parâmetro do player.update(), método que que executa a interação
         e criação da ponte na fase*/
         this.ponte = this.layer1;
 
-        //     this.c_slimes = this.physics.add.collider(this.player, this.slimes, this.slimeHit, null, this);
-        //     this.life_1 = this.add.image(720, 40, 'coracao_cheio');
-        //     this.life_2 = this.add.image(770, 40, 'coracao_cheio');
-        //     this.life_3 = this.add.image(820, 40, 'coracao_cheio');
-        //     this.timer = 0;
+        this.anims = new Anims(this);
 
+        /*Cria as moedas */
+        let coinLayer = map.getObjectLayer("moedas");
+        this.moedasObjetos = coinLayer.objects;
 
-        //     this.scoreText = this.add.text(16, 16, '0', {
-        //         fontSize: '16px',
-        //         fill: '#000'
-        //     });
-        // }
-        
+        for (let i = 0; i < this.moedasObjetos.length; i++) {
+            this.moeda = new Moeda(this, this.moedasObjetos[i].x, this.moedasObjetos[i].y);
+            this.moeda.sprite.anims.play('giraMoeda');
+        }
+
+        /*Cria a chave */
+        this.layerObjetos = map.getObjectLayer('itensInteracao');
+        this.chave;
+
+        for(let i = 0; i < this.layerObjetos.objects.length; i++ ){
+            if(this.layerObjetos.objects[i].name == 'chave'){
+                this.chave = new Chave(this, this.layerObjetos.objects[i].x, this.layerObjetos.objects[i].y);
+            }
+        }
+        console.log(this.player);
+
         // Chama o método que cria o hud do player
         this.player.createHUD();
-        
-
     }
-    
+
     update() {
-        this.player.update(this.slimes,this,this.alavanca,this.ponte,this.aldeao,this.casa);
-        this.slimes.update(this.player.sprite,this.slimes);
-        
+        this.player.update(this.slimes, this, this.alavanca, this.ponte, this.aldeao, this.casa, this.moedas);
+        this.player.updateHUD();
+        this.slimes.update(this.player.sprite, this.slimes);
+
+
+
+
 
         // if (this.player.body.x < 432) {
         // } else {
@@ -201,6 +226,7 @@ class Level_1 extends Phaser.Scene {
         //     this.life_2.setTexture("coracao_cheio");
         //     this.life_3.setTexture("coracao_cheio");
         // }
+
         // if (this.player.body.y > 500) {
         //     this.player_vidas = 0;
         // }
@@ -209,7 +235,7 @@ class Level_1 extends Phaser.Scene {
 
         // }
 
-        
+
 
         // if (this.colisao == false) {
         //     if (cursors.left.isDown && this.player.x - 16 > 0) {
@@ -244,8 +270,8 @@ class Level_1 extends Phaser.Scene {
         //     this.player.sprite.setVelocityY(-230);
         // }
 
-       
+
 
     }
 
-}export default Level_1;
+} export default Level_1;

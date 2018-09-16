@@ -5,6 +5,8 @@ class BootScene extends Phaser.Scene{
         });
     }
     preload() {
+        
+        
         const progress = this.add.graphics();
         this.load.on('progress', (value) => {
             progress.clear();
@@ -12,26 +14,27 @@ class BootScene extends Phaser.Scene{
             progress.fillRect(0, this.sys.game.config.height / 2, this.sys.game.config.width * value, 60);
         });
         
-        this.load.on('complete',() =>{
-            progress.destroy();
-            this.scene.start('AjudaScene');
-        })
+        // this.load.on('complete',() =>{
+        //     progress.destroy();
+        //     this.scene.start('AjudaScene');
+        // })
 
         this.load.on('complete',() =>{
             progress.destroy();
             this.scene.start('MainMenu');
         })
-
-        this.load.on('complete',() =>{
-            progress.destroy();
-            this.scene.start('Level_1');
-        })
+        
+        // this.load.on('complete',() =>{
+        //     progress.destroy();
+        //     this.scene.start('Level_1');
+        // })
+        this.load.bitmapFont('myfont', 'assets/fonts/font.png', 'assets/fonts/font.fnt');
         // this.load.on('complete', () => {
         //     // prepare all animations, defined in a separate file
         //     makeAnimations(this);
         //     progress.destroy();
         // });
-
+        
         // this.load.image('background-clouds', 'assets/images/clouds.png'); // 16-bit later
 
         // // Tilemap with a lot of objects and tile-properties tricks

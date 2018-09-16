@@ -5,6 +5,8 @@ export default class Player {
     this.isInteracting = false;
     this.hasInteracted = false;
     this.scene = scene;
+
+
     // Criação das animações apartir da spritesheet
     const anims = scene.anims;
 
@@ -50,9 +52,11 @@ export default class Player {
       frameRate: 4
     });
 
-    // Criação da física que a sprite terá na fase
-    this.sprite = scene.physics.add.sprite(x, y, "sprite_hero", 0);
-    this.vidas = 4;
+    // Criação da sprite na fase aplicando fisíca, vidas e pontuação
+    this.sprite = this.scene.physics.add.sprite(x, y, "sprite_hero", 0);
+    this.lifes = 4;
+    this.sprite.score = 0;
+    this.sprite.chave = 0;
 
     //Criação dos botões que irão fazer a movimentação da sprite
     const { LEFT, RIGHT, UP, Z, C } = Phaser.Input.Keyboard.KeyCodes;
@@ -69,15 +73,20 @@ export default class Player {
 
   //Método que cria os huds de visualização de vida, pontuação e tempo
   createHUD() {
-    
+
     this.scene.hud_1 = this.scene.add.image(150, 40, 'hud_primario').setScrollFactor(0);
+
+    // this.scoreText = this.scene.add.bitmapText(0, 0, 'myfont', '' + this.scoreText);
+
+    this.scene.scoreLabel = this.scene.add.bitmapText(120, 5, 'myfont', '' + this.sprite.score, 32).setScrollFactor(0);
+
     this.scene.hud_1 = this.scene.add.image(794, 40, 'hud_secundario').setScrollFactor(0);
   }
 
-  update(enemies, scene, alavanca, ponte, aldeao, casa) {
-
+  update(enemies, scene, alavanca, ponte, aldeao, casa, moedas) {
     // console.log(objectInteraction);
     let colisao = scene.colisao;
+
     const { keys, sprite } = this;
 
     // Checa a colisão com a layer 2 de blocos
@@ -155,6 +164,14 @@ export default class Player {
 
       }
 
+
+      // this.scene.physics.add.overlap(this.sprite, moedas, coletarMoedas(), null, this ); 
+
+      // function coletarMoedas(player, moeda){
+      //   moeda.disableBody(true, true);
+      //   console.log(moeda);
+      // };
+
     }
   }
 
@@ -211,9 +228,46 @@ export default class Player {
     }
   }
 
+  //Método que atualiza a quantidade de vidas do jogador
   updateHUD() {
 
+    /*Atualiza a pontuação do jogador */
+    this.scene.scoreLabel.text = this.sprite.score; 
+    /*Verifica a vida do jogador */
+    if (this.lifes == 3) {
+      this.scene.life_1 = this.scene.add.image(137, 57, 'coracao_cheio').setScrollFactor(0);
+      this.scene.life_2 = this.scene.add.image(173, 57, 'coracao_cheio').setScrollFactor(0);
+      this.scene.life_3 = this.scene.add.image(209, 57, 'coracao_cheio').setScrollFactor(0);
+      this.scene.life_4 = this.scene.add.image(246, 57, 'coracao_vazio').setScrollFactor(0);
+    } else if (this.lifes == 2) {
+      this.scene.life_1 = this.scene.add.image(137, 57, 'coracao_cheio').setScrollFactor(0);
+      this.scene.life_2 = this.scene.add.image(173, 57, 'coracao_cheio').setScrollFactor(0);
+      this.scene.life_3 = this.scene.add.image(209, 57, 'coracao_vazio').setScrollFactor(0);
+      this.scene.life_4 = this.scene.add.image(246, 57, 'coracao_vazio').setScrollFactor(0);
+    } else if (this.lifes == 1) {
+      this.scene.life_1 = this.scene.add.image(137, 57, 'coracao_cheio').setScrollFactor(0);
+      this.scene.life_2 = this.scene.add.image(173, 57, 'coracao_vazio').setScrollFactor(0);
+      this.scene.life_3 = this.scene.add.image(209, 57, 'coracao_vazio').setScrollFactor(0);
+      this.scene.life_4 = this.scene.add.image(246, 57, 'coracao_vazio').setScrollFactor(0);
+    } else if (this.lifes == 0) {
+      this.scene.life_1 = this.scene.add.image(137, 57, 'coracao_vazio').setScrollFactor(0);
+      this.scene.life_2 = this.scene.add.image(173, 57, 'coracao_vazio').setScrollFactor(0);
+      this.scene.life_3 = this.scene.add.image(209, 57, 'coracao_vazio').setScrollFactor(0);
+      this.scene.life_4 = this.scene.add.image(246, 57, 'coracao_vazio').setScrollFactor(0);
+    } else if (this.lifes == 4) {
+      this.scene.life_1 = this.scene.add.image(137, 57, 'coracao_cheio').setScrollFactor(0);
+      this.scene.life_2 = this.scene.add.image(173, 57, 'coracao_cheio').setScrollFactor(0);
+      this.scene.life_3 = this.scene.add.image(209, 57, 'coracao_cheio').setScrollFactor(0);
+      this.scene.life_4 = this.scene.add.image(246, 57, 'coracao_cheio').setScrollFactor(0);
+    }
+
+
+
   }
+
+
+
+
 }//FIM DA CLASSE PLAYER
 
 
