@@ -64,7 +64,7 @@ class MenuFases extends Phaser.Scene {
                 btn.setTexture("btnFase1Press");
                 setTimeout(() => {
                     btn.setTexture("btnFase1");
-                    this.scene.scene.start('Level_1_2');
+                    this.scene.scene.start('Level_1');
                 }, 150);
             });
 

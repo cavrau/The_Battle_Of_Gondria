@@ -4,8 +4,9 @@ export default class Player {
     this.isAttacking = false;
     this.isInteracting = false;
     this.hasInteracted = false;
-    this.isDead = false;
     this.scene = scene;
+
+
     // Criação das animações apartir da spritesheet
     const anims = scene.anims;
 
@@ -51,9 +52,11 @@ export default class Player {
       frameRate: 4
     });
 
-    // Criação da física que a sprite terá na fase
-    this.sprite = scene.physics.add.sprite(x, y, "sprite_hero", 0);
-    this.vidas = 4;
+    // Criação da sprite na fase aplicando fisíca, vidas e pontuação
+    this.sprite = this.scene.physics.add.sprite(x, y, "sprite_hero", 0);
+    this.lifes = 4;
+    this.sprite.score = 0;
+    this.sprite.chave = 0;
 
     //Criação dos botões que irão fazer a movimentação da sprite
     const { LEFT, RIGHT, UP, Z, C } = Phaser.Input.Keyboard.KeyCodes;
@@ -64,20 +67,23 @@ export default class Player {
       atack: Z,
       action: C
     });
-    this.createHUD();
 
   }
 
 
   //Método que cria os huds de visualização de vida, pontuação e tempo
   createHUD() {
+
     this.scene.hud_1 = this.scene.add.image(150, 40, 'hud_primario').setScrollFactor(0);
+
+    // this.scoreText = this.scene.add.bitmapText(0, 0, 'myfont', '' + this.scoreText);
+
+    this.scene.scoreLabel = this.scene.add.bitmapText(120, 5, 'myfont', '' + this.sprite.score, 32).setScrollFactor(0);
+
     this.scene.hud_1 = this.scene.add.image(794, 40, 'hud_secundario').setScrollFactor(0);
   }
 
-  update(enemies, scene, alavanca, ponte, aldeao, casa) {
-
-    // console.log(objectInteraction);
+  update(enemies, scene, alavanca, ponte, aldeao, casa, moedas) {
 
     let colisao = scene.colisao;
     const { keys, sprite } = this;
@@ -177,7 +183,6 @@ export default class Player {
     }
     }
   }
-
   //Método que faz a interação com as alavancas, com as portas e os aldeoes
   interaction(alavanca, ponte, aldeao, casa) {
 
@@ -187,12 +192,11 @@ export default class Player {
 
     /*Caso a diferença da distância seja Y < 52 e X < 50 e X > 0
     a alavanca é atavida e é feita a construção da ponte */
-
     if ((alavancaY < 72)) {
       if ((alavancaX < 50 && alavancaX > 0) && this.hasInteracted == false) {
         this.hasInteracted = true;
         alavanca[0].anims.play('alavanca_ativa');
-        
+
         let i;
         let j = 2;
         for (i = 145; i <= 151; i++) {
@@ -220,11 +224,11 @@ export default class Player {
 
       if ((ydistance < 72)) {
         if (xdistance < 75 && xdistance > 0) {
+          console.log(enemy.lifes);
           enemy.lifes--;
           enemy.setVelocityX(140);
           enemy.setVelocityY(-130);
         } else if (xdistance < 0 && xdistance > -75) {
-          enemy.lifes--;
           enemy.setVelocityX(-140);
           enemy.setVelocityY(-130);
         }
@@ -232,10 +236,46 @@ export default class Player {
     }
   }
 
+  //Método que atualiza a quantidade de vidas do jogador
   updateHUD() {
-    // this.scene.hud_1.x = this.meio.x-282;
-    // this.scene.hud_2.x = this.meio.x+362;
+
+    /*Atualiza a pontuação do jogador */
+    this.scene.scoreLabel.text = this.sprite.score;
+    /*Verifica a vida do jogador */
+    if (this.lifes == 3) {
+      this.scene.life_1 = this.scene.add.image(137, 57, 'coracao_cheio').setScrollFactor(0);
+      this.scene.life_2 = this.scene.add.image(173, 57, 'coracao_cheio').setScrollFactor(0);
+      this.scene.life_3 = this.scene.add.image(209, 57, 'coracao_cheio').setScrollFactor(0);
+      this.scene.life_4 = this.scene.add.image(246, 57, 'coracao_vazio').setScrollFactor(0);
+    } else if (this.lifes == 2) {
+      this.scene.life_1 = this.scene.add.image(137, 57, 'coracao_cheio').setScrollFactor(0);
+      this.scene.life_2 = this.scene.add.image(173, 57, 'coracao_cheio').setScrollFactor(0);
+      this.scene.life_3 = this.scene.add.image(209, 57, 'coracao_vazio').setScrollFactor(0);
+      this.scene.life_4 = this.scene.add.image(246, 57, 'coracao_vazio').setScrollFactor(0);
+    } else if (this.lifes == 1) {
+      this.scene.life_1 = this.scene.add.image(137, 57, 'coracao_cheio').setScrollFactor(0);
+      this.scene.life_2 = this.scene.add.image(173, 57, 'coracao_vazio').setScrollFactor(0);
+      this.scene.life_3 = this.scene.add.image(209, 57, 'coracao_vazio').setScrollFactor(0);
+      this.scene.life_4 = this.scene.add.image(246, 57, 'coracao_vazio').setScrollFactor(0);
+    } else if (this.lifes == 0) {
+      this.scene.life_1 = this.scene.add.image(137, 57, 'coracao_vazio').setScrollFactor(0);
+      this.scene.life_2 = this.scene.add.image(173, 57, 'coracao_vazio').setScrollFactor(0);
+      this.scene.life_3 = this.scene.add.image(209, 57, 'coracao_vazio').setScrollFactor(0);
+      this.scene.life_4 = this.scene.add.image(246, 57, 'coracao_vazio').setScrollFactor(0);
+    } else if (this.lifes == 4) {
+      this.scene.life_1 = this.scene.add.image(137, 57, 'coracao_cheio').setScrollFactor(0);
+      this.scene.life_2 = this.scene.add.image(173, 57, 'coracao_cheio').setScrollFactor(0);
+      this.scene.life_3 = this.scene.add.image(209, 57, 'coracao_cheio').setScrollFactor(0);
+      this.scene.life_4 = this.scene.add.image(246, 57, 'coracao_cheio').setScrollFactor(0);
+    }
+
+
+
   }
+
+
+
+
 }//FIM DA CLASSE PLAYER
 
 

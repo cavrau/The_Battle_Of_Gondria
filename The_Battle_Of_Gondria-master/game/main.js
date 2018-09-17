@@ -19,6 +19,7 @@ const config = {
         }
     },
     scene: [
+        BootScene,
         MainMenu,
         MenuFases,
         Level_1,

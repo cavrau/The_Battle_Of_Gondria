@@ -17,7 +17,7 @@ class MainMenu extends Phaser.Scene {
         this.load.image("chaoBlocos", "assets/tilesets/fase_1_tileset.png");
         this.load.image('montanhas', 'assets/background/fase_1_montanhas.png');
         this.load.image('ceu', 'assets/background/fase_1_sky.png');
-        this.load.image('arvore1', 'assets/images/itensCenario/arvore1.png');
+        this.load.image('arvore1', 'assets/images/arvores/arvore1.png');
 
         this.load.spritesheet({ 
             key: 'hero', 
