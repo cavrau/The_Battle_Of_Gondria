@@ -10,47 +10,7 @@ export default class Player {
     // Criação das animações apartir da spritesheet
     const anims = scene.anims;
 
-    //Animação - andar para esquerda
-    anims.create({
-      key: 'sprite_hero_left',
-      frames: anims.generateFrameNumbers('sprite_hero', { start: 6, end: 9 }),
-      frameRate: 4,
-      yoyo: true,
-      repeat: -1
-    });
-
-    //Animação - andar para direita
-    anims.create({
-      key: 'sprite_hero_right',
-      frames: anims.generateFrameNumbers('sprite_hero', { start: 0, end: 3 }),
-      frameRate: 4,
-      yoyo: true,
-      repeat: -1
-    });
-
-    //Animação - atacar
-    anims.create({
-      key: 'sprite_hero_z',
-      frames: anims.generateFrameNumbers('sprite_hero', { start: 10, end: 13 }),
-      frameRate: 8,
-      repeat: 1
-    });
-
-    //Animação - interagir
-    anims.create({
-      key: 'sprite_hero_c',
-      frames: anims.generateFrameNumbers('sprite_hero', { start: 4, end: 5 }),
-      frameRate: 1,
-      yoyo: true,
-      repeat: -1
-    });
-
-    /*Animações de interação */
-    anims.create({
-      key: 'alavanca_ativa',
-      frames: anims.generateFrameNumbers('sprite_alavanca', { start: 0, end: 4 }),
-      frameRate: 4
-    });
+    
 
     // Criação da sprite na fase aplicando fisíca, vidas e pontuação
     this.sprite = this.scene.physics.add.sprite(x, y, "sprite_hero", 0);
@@ -86,8 +46,9 @@ export default class Player {
   update(enemies, scene, alavanca, ponte, aldeao, casa, moedas) {
 
     let colisao = scene.colisao;
+    
     const { keys, sprite } = this;
-    if(this.vidas==0){
+    if(this.lifes==0){
       this.isDead = true;
     }else if(this.sprite.y>540){
       this.isDead = true;
@@ -99,6 +60,7 @@ export default class Player {
       let jogarBtn = this.scene.add.image(this.scene.cameras.main.midPoint.x, 310, "btnJogar").setInteractive();
       jogarBtn.setScale(0.65);
       jogarBtn.on("pointerdown",()=>{
+        alert("hi there")
         this.scene.scene.restart();
       })
       // this.scene.

@@ -50,16 +50,16 @@ class MainMenu extends Phaser.Scene {
         map.createStaticLayer('backforeground', backforeground, 0, 0);
         map.createStaticLayer('foreground', foreground, 0, 0);
 
-        let config = {
-            key: 'move',
-            frames: this.anims.generateFrameNumbers('hero', { start: 4, end: 5 }),
-            frameRate: 6,
-            repeat: -1
-        };
+        // let config = {
+        //     key: 'move',
+        //     frames: this.anims.generateFrameNumbers('hero', { start: 4, end: 5 }),
+        //     frameRate: 6,
+        //     repeat: -1
+        // };
 
-        this.anims.create(config);
+        // this.anims.create(config);
         let hero = this.add.sprite(85, 375, 'hero');
-        hero.anims.play('move');
+        // hero.anims.play('move');
 
         let logo = this.add.image(432, 200, 'logo');
         logo.setScale(0.13);

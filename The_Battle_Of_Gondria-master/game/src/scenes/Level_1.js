@@ -126,36 +126,39 @@ class Level_1 extends Phaser.Scene {
 
         //Cria e seta os blocos do tileset da layer 2
         this.c_layer2 = this.physics.add.collider(this.player.sprite, this.layer2);
-
+        
         /*Desativa a colisão temporáriamente, pois o player poderá passar
         entre os blocos dessa layer sem precisar pular, mas caso seja sua 
         preferencia pular em cima a colisão é ativada no update() */
         this.c_layer2.active = false;
-
+        
         // /*INICIO - Debug para colisão */
         // const debugGraphics = this.add.graphics().setAlpha(0.75);
-
+        
         // this.layer1.renderDebug(debugGraphics, {
-        //     tileColor: null, // Color of non-colliding tiles
-        //     collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-        //     faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-        // });
-
-        // this.layer2.renderDebug(debugGraphics, {
-        //     tileColor: null, // Color of non-colliding tiles
-        //     collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-        //     faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-        // });
-        /*FIM - Debug para colisão */
-
-        //Cria uma camera que seguira o player
-        this.cameras.main.startFollow(this.player.sprite);
-
-        //Seta os limites do mapa que a camera acompanhará
-        this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-
-        let spawnLayer = map.getObjectLayer("spawns");
-        this.spawns = spawnLayer.objects;
+            //     tileColor: null, // Color of non-colliding tiles
+            //     collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
+            //     faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
+            // });
+            
+            // this.layer2.renderDebug(debugGraphics, {
+                //     tileColor: null, // Color of non-colliding tiles
+                //     collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
+                //     faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
+                // });
+                /*FIM - Debug para colisão */
+                
+                //Cria uma camera que seguira o player
+            this.cameras.main.startFollow(this.player.sprite);
+                
+                //Seta os limites do mapa que a camera acompanhará
+            this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+                
+            let Anim = new Anims(this);
+            this.anims = Anim.criaAnims(this.anims);
+            console.log(this.anims);
+            let spawnLayer = map.getObjectLayer("spawns");
+            this.spawns = spawnLayer.objects;
         // console.log(this.spawns);
 
         this.parado = true;
@@ -176,7 +179,6 @@ class Level_1 extends Phaser.Scene {
         e criação da ponte na fase*/
         this.ponte = this.layer1;
 
-        this.anims = new Anims(this);
 
         /*Cria as moedas */
         let coinLayer = map.getObjectLayer("moedas");
