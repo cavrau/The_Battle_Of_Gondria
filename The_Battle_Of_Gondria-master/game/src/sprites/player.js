@@ -90,7 +90,7 @@ export default class Player {
       this.sprite.setVelocityX(0);
       sprite.setTexture("sprite_hero", 5);
       sprite.setTint(0xff0000);
-      let jogarBtn = this.scene.add.image(this.meio.x, 310, "btnJogar").setInteractive();
+      let jogarBtn = this.scene.add.image(this.scene.cameras.main.midPoint.x, 310, "btnJogar").setInteractive();
       jogarBtn.setScale(0.65);
       jogarBtn.on("pointerdown",()=>{
         this.scene.scene.restart();
@@ -233,8 +233,8 @@ export default class Player {
   }
 
   updateHUD() {
-    this.scene.hud_1.x = this.meio.x-282;
-    this.scene.hud_2.x = this.meio.x+362;
+    // this.scene.hud_1.x = this.meio.x-282;
+    // this.scene.hud_2.x = this.meio.x+362;
   }
 }//FIM DA CLASSE PLAYER
 
