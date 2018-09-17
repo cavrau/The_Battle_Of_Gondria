@@ -755,6 +755,18 @@
                  "width":16,
                  "x":2648,
                  "y":199.625
+                }, 
+                {
+                 "gid":822,
+                 "height":32,
+                 "id":191,
+                 "name":"alavanca",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":4480,
+                 "y":384
                 }],
          "offsetx":0,
          "offsety":-0.125,
@@ -968,7 +980,7 @@
          "y":0
         }],
  "nextlayerid":20,
- "nextobjectid":191,
+ "nextobjectid":192,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"2018.08.22",
@@ -1027,11 +1039,11 @@
          "tilewidth":32
         }, 
         {
-         "columns":2,
+         "columns":1,
          "firstgid":827,
          "image":"..\/images\/itensCenario\/ponte.png",
-         "imageheight":32,
-         "imagewidth":64,
+         "imageheight":64,
+         "imagewidth":32,
          "margin":0,
          "name":"ponte",
          "spacing":0,
@@ -1068,7 +1080,7 @@
         {
          "columns":12,
          "firstgid":844,
-         "image":"..\/images\/itensCenario\/arvore_1_grande.png",
+         "image":"..\/images\/arvores\/arvore1.png",
          "imageheight":352,
          "imagewidth":384,
          "margin":0,

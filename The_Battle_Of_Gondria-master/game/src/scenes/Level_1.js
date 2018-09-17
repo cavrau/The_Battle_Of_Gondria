@@ -26,6 +26,7 @@ class Level_1 extends Phaser.Scene {
 
         this.load.spritesheet('bandeira_branca', 'assets/images/itensCenario/bandeira_branca.png',
             { frameWidth: 36, frameHeight: 60 });
+
         this.load.spritesheet('bandeira_verde', 'assets/images/itensCenario/bandeira_verde.png',
             { frameWidth: 36, frameHeight: 60 });
 
@@ -108,7 +109,7 @@ class Level_1 extends Phaser.Scene {
         this.layer2.setCollisionBetween(1, 6);
 
         //Cria um player dentro da cena da fase, com coordenadas x e y
-        this.player = new Player(this, 3055, 320);
+        this.player = new Player(this, 20, 320);
 
         //Seta o bounce do player
         this.player.sprite.setBounce(0.1);
@@ -162,7 +163,7 @@ class Level_1 extends Phaser.Scene {
 
 
         //Criação da alavanca
-        this.alavanca = map.createFromObjects('itensInteracao', 27, { key: 'sprite_alavanca' });
+        this.alavanca = map.createFromObjects('itensInteracao', 'alavanca', { key: 'sprite_alavanca' });
 
         /*ponte recebe layer1 para que this.ponte seja setado como
         parâmetro do player.update(), método que que executa a interação
