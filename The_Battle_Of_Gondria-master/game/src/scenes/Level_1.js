@@ -81,13 +81,19 @@ class Level_1 extends Phaser.Scene {
     create() {
 
         //Cria o mapa apartir do arquivos JSON que veio do Tiled
-        const map = this.make.tilemap({ key: "map_fase_1" });
+        let map = this.make.tilemap({ key: "map_fase_1" });
 
         /* Parametros para tileset: const blocos = map.addTilesetImage("nome do tileset que está no tiled", "nome da key que foi carregada no phaser");*/
-        const blocos = map.addTilesetImage("blocos", "fase_1_tileset");
-        const background = map.addTilesetImage('ceu', 'fase_1_sky');
-        const midground = map.addTilesetImage('montanhas', 'fase_1_montanhas');
+        // const blocos = map.addTilesetImage("blocos", "fase_1_tileset");
+        // const background = map.addTilesetImage('ceu', 'fase_1_sky');
+        // const midground = map.addTilesetImage('montanhas', 'fase_1_montanhas');
+        let blocos = map.addTilesetImage("blocos", "fase_1_tileset");
+        let background = map.addTilesetImage('ceu', 'fase_1_sky');
+        let midground = map.addTilesetImage('montanhas', 'fase_1_montanhas');
         const casa = map.addTilesetImage('casa', 'fase_1_casa');
+        // const ponte = map.addTilesetImage('ponte', ' fase_1_ponte');
+        
+        console.log(blocos);
 
         //Cria layers não colidivel
         map.createDynamicLayer('background', background, 0, 0);

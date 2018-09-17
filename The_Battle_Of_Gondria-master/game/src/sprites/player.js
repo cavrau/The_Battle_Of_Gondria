@@ -84,68 +84,84 @@ export default class Player {
   }
 
   update(enemies, scene, alavanca, ponte, aldeao, casa, moedas) {
-    // console.log(objectInteraction);
+
     let colisao = scene.colisao;
-
     const { keys, sprite } = this;
-
-    // Checa a colisão com a layer 2 de blocos
-    if (colisao == true) {
-      enemies.c_player.active = false;
-    } else {
-      enemies.c_player.active = true;
+    if(this.vidas==0){
+      this.isDead = true;
+    }else if(this.sprite.y>540){
+      this.isDead = true;
     }
-
-    if (colisao == true) {
-      setTimeout(() => {
-        if (sprite.body.onFloor()) {
-          scene.colisao = false;
-        }
-      }, 500)
-    }
-
-    if (sprite.body.blocked.down && sprite.body.velocity.y < 1) {
-      this.scene.c_layer2.active = false;
-    } else {
-      this.scene.c_layer2.active = true;
-    }
-
-    if (colisao == false) {
-      /*Ao apertar a seta a esquerda o personagem se move a direção
-      e ativa o método de animção coerente com a direção */
-      if (keys.left.isDown && sprite.x > 8) {
-        sprite.setVelocityX(-120);
-        if (this.isAttacking == false) {
-          sprite.anims.play("sprite_hero_left", true);
-        }
-
-        /*Ao apertar a seta a direita o personagem se move a direção
-        e ativa o método de animção coerente com a direção */
-      } else if (keys.right.isDown && sprite.x < 6040) {
-
-        sprite.setVelocityX(120);
-        if (this.isAttacking == false) {
-          sprite.anims.play("sprite_hero_right", true);
-        }
-
-        /*Se nenhum botão for precionado, o personagem fica
-          parado e seta uma textura de parado*/
+    if(this.isDead==true){
+      this.sprite.setVelocityX(0);
+      sprite.setTexture("sprite_hero", 5);
+      sprite.setTint(0xff0000);
+      let jogarBtn = this.scene.add.image(this.scene.cameras.main.midPoint.x, 310, "btnJogar").setInteractive();
+      jogarBtn.setScale(0.65);
+      jogarBtn.on("pointerdown",()=>{
+        this.scene.scene.restart();
+      })
+      // this.scene.
+    }else{
+      
+      // Checa a colisão com a layer 2 de blocos
+      if (colisao == true) {
+        enemies.c_player.active = false;
       } else {
-
-        sprite.setVelocityX(0);
-        if (this.isAttacking == false) {
-          sprite.setTexture("sprite_hero", 5);
-        }
-
+        enemies.c_player.active = true;
       }
-
-
+      
+      if (colisao == true) {
+        setTimeout(() => {
+          if (sprite.body.onFloor()) {
+            scene.colisao = false;
+          }
+        }, 200)
+      }
+      
+      if (sprite.body.blocked.down && sprite.body.velocity.y < 1) {
+        this.scene.c_layer2.active = false;
+      } else {
+        this.scene.c_layer2.active = true;
+      }
+      
+      if (colisao == false) {
+        /*Ao apertar a seta a esquerda o personagem se move a direção
+        e ativa o método de animção coerente com a direção */
+        if (keys.left.isDown && sprite.x > 8) {
+          sprite.setVelocityX(-120);
+          if (this.isAttacking == false) {
+            sprite.anims.play("sprite_hero_left", true);
+          }
+          
+          /*Ao apertar a seta a direita o personagem se move a direção
+          e ativa o método de animção coerente com a direção */
+        } else if (keys.right.isDown && sprite.x < 6040) {
+          
+          sprite.setVelocityX(120);
+          if (this.isAttacking == false) {
+            sprite.anims.play("sprite_hero_right", true);
+          }
+          
+          /*Se nenhum botão for precionado, o personagem fica
+          parado e seta uma textura de parado*/
+        } else {
+          
+          sprite.setVelocityX(0);
+          if (this.isAttacking == false) {
+            sprite.setTexture("sprite_hero", 5);
+          }
+          
+        }
+        this.updateHUD();
+        
+        
       /*Caso a seta para cima seja ativada o personagem é
       deslocado para cima do eixo Y "Pulando" */
       if (sprite.body.onFloor() && (keys.up.isDown)) {
         sprite.setVelocityY(-230);
       }
-
+      
       /*Caso o botão de Z seja ativado o ataque do heroi é ativado */
       if (keys.atack.isDown && this.isAttacking == false) {
         sprite.anims.play("sprite_hero_z", true);
@@ -161,20 +177,12 @@ export default class Player {
         setTimeout(() => {
           sprite.anims.play('sprite_hero_c');
         }, 400);
-
+        
       }
-
-
-      // this.scene.physics.add.overlap(this.sprite, moedas, coletarMoedas(), null, this ); 
-
-      // function coletarMoedas(player, moeda){
-      //   moeda.disableBody(true, true);
-      //   console.log(moeda);
-      // };
-
+      
+    }
     }
   }
-
   //Método que faz a interação com as alavancas, com as portas e os aldeoes
   interaction(alavanca, ponte, aldeao, casa) {
 
@@ -232,7 +240,7 @@ export default class Player {
   updateHUD() {
 
     /*Atualiza a pontuação do jogador */
-    this.scene.scoreLabel.text = this.sprite.score; 
+    this.scene.scoreLabel.text = this.sprite.score;
     /*Verifica a vida do jogador */
     if (this.lifes == 3) {
       this.scene.life_1 = this.scene.add.image(137, 57, 'coracao_cheio').setScrollFactor(0);
