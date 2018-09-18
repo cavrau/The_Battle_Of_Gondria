@@ -5,13 +5,15 @@ export default class Player {
     this.isInteracting = false;
     this.hasInteracted = false;
     this.scene = scene;
-
-
+    console.log(scene);
+    let data =  new Date();
+    this.hour = parseInt(data.getHours());
+    this.mins=parseInt(data.getMinutes());
+    this.secs= parseInt(data.getSeconds());
     // Criação das animações apartir da spritesheet
     const anims = scene.anims;
-
     
-
+ 
     // Criação da sprite na fase aplicando fisíca, vidas e pontuação
     this.sprite = this.scene.physics.add.sprite(x, y, "sprite_hero", 0);
     this.lifes = 4;
@@ -33,20 +35,30 @@ export default class Player {
 
   //Método que cria os huds de visualização de vida, pontuação e tempo
   createHUD() {
-
+  
     this.scene.hud_1 = this.scene.add.image(150, 40, 'hud_primario').setScrollFactor(0);
 
-    // this.scoreText = this.scene.add.bitmapText(0, 0, 'myfont', '' + this.scoreText);
-
+    
     this.scene.scoreLabel = this.scene.add.bitmapText(120, 5, 'myfont', '' + this.sprite.score, 32).setScrollFactor(0);
-
+    
     this.scene.hud_1 = this.scene.add.image(794, 40, 'hud_secundario').setScrollFactor(0);
+    this.timeText = this.scene.add.bitmapText(750, 20, 'myfont', '00:00',32).setScrollFactor(0);
+  }
+  timerFunc(){
+    this.timer= this.timer +1;
+    console.log(this.timer);
   }
 
   update(enemies, scene, alavanca, ponte, aldeao, casa, moedas) {
-
+    let data= new Date();
+    let minutes = parseInt(data.getMinutes());
+    let hours = parseInt(data.getHours());
+    let seconds = parseInt(data.getSeconds());
+    let timermins =  minutes - this.minutes;
+    let timersecs = seconds -  this.seconds;
+    let timerhours = hours - this.hour;
+    console.log(timersecs) 
     let colisao = scene.colisao;
-    
     const { keys, sprite } = this;
     if(this.lifes==0){
       this.isDead = true;
@@ -60,7 +72,6 @@ export default class Player {
       let jogarBtn = this.scene.add.image(this.scene.cameras.main.midPoint.x, 310, "btnJogar").setInteractive();
       jogarBtn.setScale(0.65);
       jogarBtn.on("pointerdown",()=>{
-        alert("hi there")
         this.scene.scene.restart();
       })
       // this.scene.
@@ -193,6 +204,7 @@ export default class Player {
         } else if (xdistance < 0 && xdistance > -75) {
           enemy.setVelocityX(-140);
           enemy.setVelocityY(-130);
+          enemy.lifes--;
         }
       }
     }

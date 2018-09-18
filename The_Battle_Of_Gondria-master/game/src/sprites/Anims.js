@@ -4,7 +4,6 @@ class Anims {
   }
   criaAnims(anims){
     if(anims.anims.size== 0 ){
-      alert("oi to null")
       /*INICIO - Animação da moeda */
       
       anims.create({
@@ -150,8 +149,6 @@ class Anims {
       });
       
       /*FIM - Animação da moeda */
-    }else{
-      alert("nao entrei");
     }
     return anims;
   }
