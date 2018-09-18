@@ -5,21 +5,23 @@ export default class Player {
     this.isInteracting = false;
     this.hasInteracted = false;
     this.scene = scene;
-    console.log(scene);
+    this.timermins = 0 ;
+    this.timerhours = 0;
+    this.hasupdated = false;
+    this.timersecs = 0;
     let data =  new Date();
-    this.hour = parseInt(data.getHours());
-    this.mins=parseInt(data.getMinutes());
+    this.mins=0;
     this.secs= parseInt(data.getSeconds());
     // Criação das animações apartir da spritesheet
     const anims = scene.anims;
     
- 
+    
     // Criação da sprite na fase aplicando fisíca, vidas e pontuação
     this.sprite = this.scene.physics.add.sprite(x, y, "sprite_hero", 0);
     this.lifes = 4;
     this.sprite.score = 0;
     this.sprite.chave = 0;
-
+    
     //Criação dos botões que irão fazer a movimentação da sprite
     const { LEFT, RIGHT, UP, Z, C } = Phaser.Input.Keyboard.KeyCodes;
     this.keys = scene.input.keyboard.addKeys({
@@ -29,35 +31,46 @@ export default class Player {
       atack: Z,
       action: C
     });
-
+    
   }
-
-
+  
+  
   //Método que cria os huds de visualização de vida, pontuação e tempo
   createHUD() {
-  
+    
     this.scene.hud_1 = this.scene.add.image(150, 40, 'hud_primario').setScrollFactor(0);
-
+    
     
     this.scene.scoreLabel = this.scene.add.bitmapText(120, 5, 'myfont', '' + this.sprite.score, 32).setScrollFactor(0);
     
     this.scene.hud_1 = this.scene.add.image(794, 40, 'hud_secundario').setScrollFactor(0);
-    this.timeText = this.scene.add.bitmapText(750, 20, 'myfont', '00:00',32).setScrollFactor(0);
+    this.timeText = this.scene.add.bitmapText(750, 20, 'myfont', this.rmins+':'+this.timersecs,32).setScrollFactor(0);
   }
   timerFunc(){
     this.timer= this.timer +1;
     console.log(this.timer);
   }
-
+  
   update(enemies, scene, alavanca, ponte, aldeao, casa, moedas) {
     let data= new Date();
-    let minutes = parseInt(data.getMinutes());
-    let hours = parseInt(data.getHours());
+    // let minutes = parseInt(data.getMinutes());
+    // let hours = parseInt(data.getHours());
     let seconds = parseInt(data.getSeconds());
-    let timermins =  minutes - this.minutes;
-    let timersecs = seconds -  this.seconds;
-    let timerhours = hours - this.hour;
-    console.log(timersecs) 
+    // this.timermins =  minutes - this.mins;
+    this.timersecs = seconds -  this.secs;
+    if(this.timersecs<0){
+      this.timersecs = this.timersecs +60;
+      
+    }
+    if(this.timersecs==59&&this.hasupdated==false){
+      setTimeout(()=>{
+
+        this.mins++
+      },1000)
+      this.hasupdated = true;
+    }else if (this.timersecs!=59){
+      this.hasupdated = false;
+    }
     let colisao = scene.colisao;
     const { keys, sprite } = this;
     if(this.lifes==0){
@@ -74,6 +87,7 @@ export default class Player {
       jogarBtn.on("pointerdown",()=>{
         this.scene.scene.restart();
       })
+      this.scene.physics.pause();
       // this.scene.
     }else{
       
@@ -215,6 +229,13 @@ export default class Player {
 
     /*Atualiza a pontuação do jogador */
     this.scene.scoreLabel.text = this.sprite.score;
+    if(this.mins<10&&this.timersecs<10){
+      this.timeText.text = '0'+this.mins+':0'+this.timersecs;
+    }else if(this.mins<10){
+      this.timeText.text = '0'+this.mins+':'+this.timersecs;
+    }else{
+      this.timeText.text = this.mins+':'+this.timersecs;
+    }
     /*Verifica a vida do jogador */
     if (this.lifes == 3) {
       this.scene.life_1 = this.scene.add.image(137, 57, 'coracao_cheio').setScrollFactor(0);

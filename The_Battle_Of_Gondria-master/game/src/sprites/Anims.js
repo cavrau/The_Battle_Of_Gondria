@@ -4,8 +4,49 @@ class Anims {
   }
   criaAnims(anims){
     if(anims.anims.size== 0 ){
+      anims.create({
+        key: 'up',
+        frames: anims.generateFrameNumbers('setas', { start: 0, end: 1 }),
+        frameRate: 2,
+        yoyo: true,
+        repeat: -1
+      });
+  
+      anims.create({
+        key: 'left',
+        frames: anims.generateFrameNumbers('setas', { start: 2, end: 3 }),
+        frameRate: 2,
+        repeat: -1
+      });
+  
+      anims.create({
+        key: 'right',
+        frames: anims.generateFrameNumbers('setas', { start: 4, end: 5 }),
+        frameRate: 2,
+        repeat: -1
+      });
+  
+      anims.create({
+        key: 'keyZ',
+        frames: anims.generateFrameNumbers('setas', { start: 8, end: 9 }),
+        frameRate: 2,
+        repeat: -1
+      })
+  
+      anims.create({
+        key: 'keyC',
+        frames: anims.generateFrameNumbers('setas', { start: 10, end: 11 }),
+        frameRate: 2,
+        repeat: -1
+      });
+  
+      anims.create({
+        key: 'keyP',
+        frames: anims.generateFrameNumbers('setas', { start: 12, end: 13 }),
+        frameRate: 2,
+        repeat: -1
+      });
       /*INICIO - Animação da moeda */
-      
       anims.create({
         key: 'giraMoeda',
         frames: anims.generateFrameNumbers('sprite_moeda', { start: 0, end: 7 }),

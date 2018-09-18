@@ -7,37 +7,7 @@ class AjudaScene extends Phaser.Scene {
 
   preload() {
 
-    this.load.audio('menusMusic', 'assets/musics/scenesMusics/menuMusic.mp3');
-
-    this.load.image('bgAjuda', 'assets/background/scene_menus.png');
-
-    this.load.image('btnVoltar', 'assets/images/botoes/btnVoltar.png');
-    this.load.image('btnVoltarPress', 'assets/images/botoes/btnVoltarPress.png');
-
-    this.load.image('pular', 'assets/images/menus/pular.png');
-    this.load.image('andarDireita', 'assets/images/menus/andarDireita.png');
-    this.load.image('andarEsquerda', 'assets/images/menus/andarEsquerda.png');
-    this.load.image('atacar', 'assets/images/menus/atacar.png');
-    this.load.image('interagir', 'assets/images/menus/interagir.png');
-    this.load.image('pausar', 'assets/images/menus/pausar.png');
-
-    this.load.spritesheet({
-      key: 'hero',
-      url: 'assets/images/mobs/heroi.png',
-      frameConfig: {
-        frameWidth: 60,
-        frameHeight: 84
-      }
-    });
-
-    this.load.spritesheet({
-      key: 'setas',
-      url: 'assets/images/botoes/setas.png',
-      frameConfig: {
-        frameWidth: 80,
-        frameHeight: 80
-      }
-    });
+    
 
   }
 
@@ -60,57 +30,6 @@ class AjudaScene extends Phaser.Scene {
         this.scene.scene.start('MainMenu');
       }, 150)
     });
-
-    let configUp = {
-      key: 'up',
-      frames: this.anims.generateFrameNumbers('setas', { start: 0, end: 1 }),
-      frameRate: 2,
-      yoyo: true,
-      repeat: -1
-    };
-
-    let configLeft = {
-      key: 'left',
-      frames: this.anims.generateFrameNumbers('setas', { start: 2, end: 3 }),
-      frameRate: 2,
-      repeat: -1
-    }
-
-    let configRight = {
-      key: 'right',
-      frames: this.anims.generateFrameNumbers('setas', { start: 4, end: 5 }),
-      frameRate: 2,
-      repeat: -1
-    }
-
-    let configZ = {
-      key: 'keyZ',
-      frames: this.anims.generateFrameNumbers('setas', { start: 8, end: 9 }),
-      frameRate: 2,
-      repeat: -1
-    }
-
-    let configC = {
-      key: 'keyC',
-      frames: this.anims.generateFrameNumbers('setas', { start: 10, end: 11 }),
-      frameRate: 2,
-      repeat: -1
-    }
-
-    let configP = {
-      key: 'keyP',
-      frames: this.anims.generateFrameNumbers('setas', { start: 12, end: 13 }),
-      frameRate: 2,
-      repeat: -1
-    }
-
-
-    this.anims.create(configUp);
-    this.anims.create(configLeft);
-    this.anims.create(configRight);
-    this.anims.create(configZ);
-    this.anims.create(configC);
-    this.anims.create(configP);
     let botaoUp = this.add.sprite(55, 120, 'setas').setScale(0.750);
     let botaoLeft = this.add.sprite(55, 240, 'setas').setScale(0.750);
     let botaoRight = this.add.sprite(55, 360, 'setas').setScale(0.750);
@@ -126,7 +45,7 @@ class AjudaScene extends Phaser.Scene {
 
     let heroUp = {
       key: 'heroUp',
-      frames: this.anims.generateFrameNumbers('hero', { start: 0, end: 1 }),
+      frames: this.anims.generateFrameNumbers('sprite_hero', { start: 0, end: 1 }),
       frameRate: 2,
       yoyo: true,
       repeat: -1
@@ -134,7 +53,7 @@ class AjudaScene extends Phaser.Scene {
 
     let heroLeft = {
       key: 'heroLeft',
-      frames: this.anims.generateFrameNumbers('hero', { start: 0, end: 3 }),
+      frames: this.anims.generateFrameNumbers('sprite_hero', { start: 0, end: 3 }),
       frameRate: 2,
       yoyo: true,
       repeat: -1
@@ -142,7 +61,7 @@ class AjudaScene extends Phaser.Scene {
 
     let heroRight = {
       key: 'heroRight',
-      frames: this.anims.generateFrameNumbers('hero', { start: 6, end: 9 }),
+      frames: this.anims.generateFrameNumbers('sprite_hero', { start: 6, end: 9 }),
       frameRate: 2,
       yoyo: true,
       repeat: -1
@@ -150,7 +69,7 @@ class AjudaScene extends Phaser.Scene {
 
     let heroZ = {
       key: 'heroZ',
-      frames: this.anims.generateFrameNumbers('hero', { start: 10, end: 13 }),
+      frames: this.anims.generateFrameNumbers('sprite_hero', { start: 10, end: 13 }),
       frameRate: 5,
       yoyo: true,
       repeat: -1
@@ -158,7 +77,7 @@ class AjudaScene extends Phaser.Scene {
 
     let heroC = {
       key: 'heroC',
-      frames: this.anims.generateFrameNumbers('hero', { start: 4, end: 5 }),
+      frames: this.anims.generateFrameNumbers('sprite_hero', { start: 4, end: 5 }),
       frameRate: 2,
       yoyo: true,
       repeat: -1
@@ -170,11 +89,11 @@ class AjudaScene extends Phaser.Scene {
     this.anims.create(heroRight);
     this.anims.create(heroZ);
     this.anims.create(heroC);
-    let heroBotaoUp = this.add.sprite(140, 120, 'hero');
-    let heroBotaoLeft = this.add.sprite(140, 240, 'hero');
-    let heroBotaoRight = this.add.sprite(140, 360, 'hero');
-    let heroBotaoZ = this.add.sprite(510, 120, 'hero');
-    let heroBotaoC = this.add.sprite(510, 240, 'hero');
+    let heroBotaoUp = this.add.sprite(140, 120, 'sprite_hero');
+    let heroBotaoLeft = this.add.sprite(140, 240, 'sprite_hero');
+    let heroBotaoRight = this.add.sprite(140, 360, 'sprite_hero');
+    let heroBotaoZ = this.add.sprite(510, 120, 'sprite_hero');
+    let heroBotaoC = this.add.sprite(510, 240, 'sprite_hero');
     heroBotaoUp.anims.play('heroUp');
     heroBotaoLeft.anims.play('heroLeft');
     heroBotaoRight.anims.play('heroRight');

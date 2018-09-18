@@ -8,28 +8,7 @@ class MenuFases extends Phaser.Scene {
 
         let faseDisponivel = 0;
 
-        this.load.image('bgFases', 'assets/background/scene_menus.png');
-
-        this.load.image('btnFase1', 'assets/images/botoes/btnFase1.png');
-        this.load.image('btnFase1Press', 'assets/images/botoes/btnFase1Press.png');
-        this.load.image('btnFase2', 'assets/images/botoes/btnFase2.png');
-        this.load.image('btnFase2Press', 'assets/images/botoes/btnFase2Press.png');
-        this.load.image('btnFase3', 'assets/images/botoes/btnFase3.png');
-        this.load.image('btnFase3Press', 'assets/images/botoes/btnFase3Press.png');
-        this.load.image('btnFase4', 'assets/images/botoes/btnFase4.png');
-        this.load.image('btnFase4Press', 'assets/images/botoes/btnFase4Press.png');
-        this.load.image('btnVoltar', 'assets/images/botoes/btnVoltar.png');
-        this.load.image('btnVoltarPress', 'assets/images/botoes/btnVoltarPress.png');
-
-        this.load.image('fase_1_cor', 'assets/images/menus/screenTBOG.png');
-        this.load.image('fase_2_cor', 'assets/images/menus/screenTBOG.png');
-        this.load.image('fase_2_pb', 'assets/images/menus/screenTBOGpreta.png');
-        this.load.image('fase_3_cor', 'assets/images/menus/screenTBOG.png');
-        this.load.image('fase_3_pb', 'assets/images/menus/screenTBOGpreta.png');
-        this.load.image('fase_4_cor', 'assets/images/menus/screenTBOG.png');
-        this.load.image('fase_4_pb', 'assets/images/menus/screenTBOGpreta.png');
-
-        this.load.audio('menusMusic', 'assets/musics/scenesMusics/menuMusic.mp3');
+       
     }
     create() {
 

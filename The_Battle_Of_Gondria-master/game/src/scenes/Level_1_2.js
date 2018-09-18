@@ -10,10 +10,6 @@ class Level_1_2 extends Phaser.Scene{
         });
     }
     preload(){
-        this.load.image("fase_1_tileset", "assets/tilesets/fase_1_tileset.png");
-        this.load.image('fase_1_sky', 'assets/background/fase_1_sky.png');
-        this.load.image('fase_1_montanhas', 'assets/background/fase_1_montanhas.png');
-        this.load.image('fase_1_ponte', 'assets/images/itensCenario/ponte.png');
         this.load.tilemapTiledJSON("map_fase_1_2", "assets/tilemap/map_fase_1_2.json");
 
 

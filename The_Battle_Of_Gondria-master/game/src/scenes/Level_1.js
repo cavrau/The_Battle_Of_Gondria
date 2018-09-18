@@ -2,7 +2,6 @@ import Player from "../sprites/player.js";
 import Slimes from "../sprites/enemies/slimes.js";
 import Bandeira from "../sprites/objects/bandeira.js";
 import Moeda from "../sprites/objects/Moeda.js";
-import Anims from '../sprites/Anims.js';
 import Chave from "../sprites/objects/Chave.js";
 class Level_1 extends Phaser.Scene {
 
@@ -13,67 +12,8 @@ class Level_1 extends Phaser.Scene {
     }
 
     preload() {
-
-        this.load.spritesheet({
-            key: 'sprite_hero',
-            url: 'assets/images/mobs/heroi.png',
-            frameConfig: {
-                frameWidth: 60,
-                frameHeight: 84
-            }
-        });
-
-
-        this.load.spritesheet('bandeira_branca', 'assets/images/itensCenario/bandeira_branca.png',
-            { frameWidth: 36, frameHeight: 60 });
-
-        this.load.spritesheet('bandeira_verde', 'assets/images/itensCenario/bandeira_verde.png',
-            { frameWidth: 36, frameHeight: 60 });
-
-        this.load.spritesheet('sprite_alavanca', 'assets/images/itensCenario/alavanca.png',
-            { frameWidth: 32, frameHeight: 32 });
-
-        this.load.spritesheet('sprite_chave', 'assets/images/itensCenario/chave.png',
-            { frameWidth: 16, frameHeight: 16 });
-
-        this.load.spritesheet('sprite_moeda', 'assets/images/itensCenario/moeda.png',
-            { frameWidth: 32, frameHeight: 32 });
-
-        this.load.image('hud_primario', 'assets/images/huds/hud_score_vida.png');
-        this.load.image('hud_secundario', 'assets/images/huds/hud_tempo.png');
-
-        this.load.image('coracao_cheio', 'assets/images/huds/coracao_cheio.png');
-        this.load.image('coracao_vazio', 'assets/images/huds/coracao_vazio.png');
-
-        this.load.image('btnVoltar', 'assets/images/botoes/btnVoltar.png');
-        this.load.image('btnVoltarPress', 'assets/images/botoes/btnVoltarPress.png');
-
+        this.secs = 0;
         this.load.tilemapTiledJSON("map_fase_1", "assets/tilemap/map_fase_1.json");
-
-        this.load.image("fase_1_tileset", "assets/tilesets/fase_1_tileset.png");
-        this.load.image('fase_1_casa', 'assets/tilesets/fase_1_casa.png');
-        this.load.image('fase_1_sky', 'assets/background/fase_1_sky.png');
-        this.load.image('fase_1_montanhas', 'assets/background/fase_1_montanhas.png');
-        this.load.image('fase_1_ponte', 'assets/images/itensCenario/ponte.png');
-
-
-        this.load.spritesheet('slime_verde', 'assets/images/mobs/slime_verde_walk.png',
-            { frameWidth: 18, frameHeight: 21 });
-
-        this.load.spritesheet('slime_azul', 'assets/images/mobs/slime_azul_walk.png',
-            { frameWidth: 18, frameHeight: 21 });
-
-        this.load.spritesheet('slime_vermelho', 'assets/images/mobs/slime_vermelho_walk.png',
-            { frameWidth: 18, frameHeight: 21 });
-        this.load.spritesheet('slime_verde_hit', 'assets/images/mobs/slime_verde_hit.png',
-            { frameWidth: 16, frameHeight: 12 });
-
-        this.load.spritesheet('slime_azul_hit', 'assets/images/mobs/slime_azul_hit.png',
-            { frameWidth: 16, frameHeight: 12 });
-
-        this.load.spritesheet('slime_vermelho_hit', 'assets/images/mobs/slime_vermelho_hit.png',
-            { frameWidth: 16, frameHeight: 12 });
-
 
     }
 
@@ -153,10 +93,7 @@ class Level_1 extends Phaser.Scene {
                 
                 //Seta os limites do mapa que a camera acompanhará
             this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-                
-            let Anim = new Anims(this);
-            this.anims = Anim.criaAnims(this.anims);
-            console.log(this.anims);
+            
             let spawnLayer = map.getObjectLayer("spawns");
             this.spawns = spawnLayer.objects;
         // console.log(this.spawns);
@@ -208,9 +145,7 @@ class Level_1 extends Phaser.Scene {
         this.player.update(this.slimes, this, this.alavanca, this.ponte, this.aldeao, this.casa, this.moedas);
         this.player.updateHUD();
         this.slimes.update(this.player.sprite, this.slimes);
-
-
-
+        this.secs = this.player.mins*60+this.player.timersecs;
 
 
         // if (this.player.body.x < 432) {
