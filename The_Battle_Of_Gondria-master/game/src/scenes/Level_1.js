@@ -14,12 +14,19 @@ class Level_1 extends Phaser.Scene {
     preload() {
         this.secs = 0;
         this.load.tilemapTiledJSON("map_fase_1", "assets/tilemap/map_fase_1.json");
-
+        this.load.audio('music_1_1','assets/musics/music_level_1.mp3');
+        this.load.audio('slime_jump','assets/sounds/slime_jump.mp3');
     }
 
 
     create() {
-
+        let music =this.sound.add('music_1_1');
+        music.setLoop(true);
+        music.play();
+        music.setVolume(0.5);
+        this.slime_sound = this.sound.add('slime_jump');
+        this.slime_sound.setVolume(0.3);
+        
         //Cria o mapa apartir do arquivos JSON que veio do Tiled
         let map = this.make.tilemap({ key: "map_fase_1" });
 

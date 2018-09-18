@@ -14,8 +14,15 @@ export default class Player {
     this.secs= parseInt(data.getSeconds());
     // Criação das animações apartir da spritesheet
     const anims = scene.anims;
-    
-    
+    this.morte = this.scene.sound.add('morte');
+    this.espada = this.scene.sound.add('espada');
+    this.hit  = this.scene.sound.add('hit');
+    this.jump = this.scene.sound.add('jump');
+    this.pegar = this.scene.sound.add('pegar');
+    this.espada.setVolume(0.1);
+    this.jump.setVolume(0.3);
+    this.pegar.setVolume(0.1);
+    this.hit.setVolume(0.1);
     // Criação da sprite na fase aplicando fisíca, vidas e pontuação
     this.sprite = this.scene.physics.add.sprite(x, y, "sprite_hero", 0);
     this.lifes = 4;
@@ -146,6 +153,7 @@ export default class Player {
       /*Caso a seta para cima seja ativada o personagem é
       deslocado para cima do eixo Y "Pulando" */
       if (sprite.body.onFloor() && (keys.up.isDown)) {
+        this.jump.play();
         sprite.setVelocityY(-230);
       }
       
@@ -153,6 +161,7 @@ export default class Player {
       if (keys.atack.isDown && this.isAttacking == false) {
         sprite.anims.play("sprite_hero_z", true);
         this.checkHit(enemies.array);
+        this.espada.play();
         this.isAttacking = true;
         setTimeout(() => {
           this.isAttacking = false;

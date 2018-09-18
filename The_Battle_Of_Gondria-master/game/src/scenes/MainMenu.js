@@ -16,7 +16,7 @@ class MainMenu extends Phaser.Scene {
 
         this.load.image('logo', 'assets/images/logo.png');
 
-        this.load.audio('menusMusic', 'assets/musics/scenesMusics/menuMusic.mp3');
+        
     }
 
 
@@ -36,16 +36,8 @@ class MainMenu extends Phaser.Scene {
         map.createStaticLayer('backforeground', backforeground, 0, 0);
         map.createStaticLayer('foreground', foreground, 0, 0);
 
-        // let config = {
-        //     key: 'move',
-        //     frames: this.anims.generateFrameNumbers('sprite_hero', { start: 4, end: 5 }),
-        //     frameRate: 6,
-        //     repeat: -1
-        // };
-
-        // this.anims.create(config);
         let hero = this.add.sprite(85, 375, 'sprite_hero');
-        // hero.anims.play('move');
+        hero.anims.play('move');
 
         let logo = this.add.image(432, 200, 'logo');
         logo.setScale(0.13);
@@ -56,9 +48,14 @@ class MainMenu extends Phaser.Scene {
         let ajudaBtn = this.add.image(535, 310, "btnAjuda").setInteractive();
         ajudaBtn.setScale(0.65);
 
-        var music = this.sound.add('menusMusic');
-
-        // music.play();
+        if(this.sound.sounds[0]===undefined){
+            this.sound.add('menusMusic');
+            this.sound.sounds[0].setLoop(true);
+        }
+        console.log(this.sound);
+        if(this.sound.sounds[0].isPlaying==false){
+            this.sound.sounds[0].play();
+        }
 
         jogarBtn.on("pointerdown", function () {
             let btn = this;

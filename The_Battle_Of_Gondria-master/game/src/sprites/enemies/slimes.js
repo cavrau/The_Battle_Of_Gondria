@@ -55,7 +55,7 @@ class Slimes {
         player.setVelocityY(-150);
         this.player.lifes -= 1;
         console.log(this.player.lifes + ' - player slime hit');
-
+        this.player.hit.play();
         this.colisao = true;
 
     }
@@ -78,12 +78,14 @@ class Slimes {
                 }, 466)
             } else if (slime.x - player.x < 150 && slime.x - player.x > 0) {
                 if (slime.body.onFloor()) {
+                    this.scene.slime_sound.play();
                     slime.anims.play('slime_' + slime.cor + '_jump_left', true);
                     slime.setVelocityX(-80);
                     slime.setVelocityY(-200);
                 }
             } else if (slime.x - player.x > -150 && slime.x - player.x < 0) {
                 if (slime.body.onFloor()) {
+                    this.scene.slime_sound.play();
                     slime.anims.play('slime_' + slime.cor + '_jump_right', true);
                     slime.setVelocityX(80);
                     slime.setVelocityY(-200);

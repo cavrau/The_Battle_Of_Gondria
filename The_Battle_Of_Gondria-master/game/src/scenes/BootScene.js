@@ -17,7 +17,7 @@ class BootScene extends Phaser.Scene {
         //     progress.destroy();
         //     this.scene.start('AjudaScene');
         // })
-
+    
         this.load.on('complete', () => {
             progress.destroy();
             this.scene.start('MainMenu');
@@ -171,7 +171,11 @@ class BootScene extends Phaser.Scene {
         });
 
 
-
+        this.load.audio("jump","assets/sounds/jump.mp3");
+        this.load.audio("espada",'assets/sounds/espada.mp3');
+        this.load.audio("morte",'assets/sounds/death.mp3');
+        this.load.audio("hit",'assets/sounds/hit.mp3');
+        this.load.audio("pegar",'assets/sounds/pegar.mp3');
         // this.load.on('complete', () => {
         //     // prepare all animations, defined in a separate file
         //     makeAnimations(this);

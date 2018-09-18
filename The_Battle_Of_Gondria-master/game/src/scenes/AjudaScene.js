@@ -43,62 +43,16 @@ class AjudaScene extends Phaser.Scene {
     botaoC.anims.play('keyC');
     botaoP.anims.play('keyP');
 
-    let heroUp = {
-      key: 'heroUp',
-      frames: this.anims.generateFrameNumbers('sprite_hero', { start: 0, end: 1 }),
-      frameRate: 2,
-      yoyo: true,
-      repeat: -1
-    };
-
-    let heroLeft = {
-      key: 'heroLeft',
-      frames: this.anims.generateFrameNumbers('sprite_hero', { start: 0, end: 3 }),
-      frameRate: 2,
-      yoyo: true,
-      repeat: -1
-    };
-
-    let heroRight = {
-      key: 'heroRight',
-      frames: this.anims.generateFrameNumbers('sprite_hero', { start: 6, end: 9 }),
-      frameRate: 2,
-      yoyo: true,
-      repeat: -1
-    };
-
-    let heroZ = {
-      key: 'heroZ',
-      frames: this.anims.generateFrameNumbers('sprite_hero', { start: 10, end: 13 }),
-      frameRate: 5,
-      yoyo: true,
-      repeat: -1
-    };
-
-    let heroC = {
-      key: 'heroC',
-      frames: this.anims.generateFrameNumbers('sprite_hero', { start: 4, end: 5 }),
-      frameRate: 2,
-      yoyo: true,
-      repeat: -1
-    };
-
-
-    this.anims.create(heroUp);
-    this.anims.create(heroLeft);
-    this.anims.create(heroRight);
-    this.anims.create(heroZ);
-    this.anims.create(heroC);
     let heroBotaoUp = this.add.sprite(140, 120, 'sprite_hero');
     let heroBotaoLeft = this.add.sprite(140, 240, 'sprite_hero');
     let heroBotaoRight = this.add.sprite(140, 360, 'sprite_hero');
-    let heroBotaoZ = this.add.sprite(510, 120, 'sprite_hero');
+    this.heroBotaoZ = this.add.sprite(510, 120, 'sprite_hero');
     let heroBotaoC = this.add.sprite(510, 240, 'sprite_hero');
-    heroBotaoUp.anims.play('heroUp');
-    heroBotaoLeft.anims.play('heroLeft');
-    heroBotaoRight.anims.play('heroRight');
-    heroBotaoZ.anims.play('heroZ');
-    heroBotaoC.anims.play('heroC');
+    heroBotaoUp.anims.play('sprite_hero_right');
+    heroBotaoLeft.anims.play('sprite_hero_left');
+    heroBotaoRight.anims.play('sprite_hero_right');
+    this.heroBotaoZ.anims.play('sprite_hero_z');
+    heroBotaoC.anims.play('sprite_hero_c');
 
     this.add.image(290, 120, 'pular').setScale(0.6);
     this.add.image(290, 240, 'andarDireita').setScale(0.6);
@@ -109,7 +63,9 @@ class AjudaScene extends Phaser.Scene {
   }
 
   update() {
-
+      setInterval(()=>{
+        this.heroBotaoZ.anims.play('sprite_hero_z');
+      },2000)
   }
 
 }
