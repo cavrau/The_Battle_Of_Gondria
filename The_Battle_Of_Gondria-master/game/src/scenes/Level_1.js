@@ -1,7 +1,7 @@
 import Player from "../sprites/player.js";
 import Slimes from "../sprites/enemies/slimes.js";
 import Bandeira from "../sprites/objects/bandeira.js";
-import Moeda from "../sprites/objects/moeda.js";
+import Moeda from "../sprites/objects/Moeda.js";
 import Anims from '../sprites/Anims.js';
 import Chave from "../sprites/objects/Chave.js";
 class Level_1 extends Phaser.Scene {
