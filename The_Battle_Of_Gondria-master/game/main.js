@@ -6,6 +6,7 @@ import MenuFases from './src/scenes/MenuFases.js'
 import AjudaScene from './src/scenes/AjudaScene.js'
 import Level_1_2 from './src/scenes/Level_1_2.js';
 import Level_casa from './src/scenes/level_casa.js';
+import MenuPause from './src/scenes/MenuPause.js'
 
 const config = {
     type: Phaser.WEBGL,
@@ -23,6 +24,7 @@ const config = {
         BootScene,
         MainMenu,
         MenuFases,
+        MenuPause,
         Level_1,
         Level_1_2,
         AjudaScene,

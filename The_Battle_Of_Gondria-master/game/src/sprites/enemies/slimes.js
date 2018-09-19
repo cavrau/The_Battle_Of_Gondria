@@ -1,5 +1,5 @@
 class Slimes {
-    constructor(scene) {
+    constructor(scene,camada1) {
         this.scene = scene;
         const anims = scene.anims;
         let spawns = this.scene.spawns;
@@ -32,7 +32,7 @@ class Slimes {
         }
        
         //Cria a colisão do slime com a layer 1
-        this.scene.physics.add.collider(this.array, this.scene.layer1);
+        this.scene.physics.add.collider(this.array, camada1);
         this.c_player = this.scene.physics.add.collider(this.array, this.scene.player.sprite, this.slimeHit, null, this.scene);
         this.scene.colisao = false;
     }

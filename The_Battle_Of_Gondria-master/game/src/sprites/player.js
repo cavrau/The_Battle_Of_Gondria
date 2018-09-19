@@ -7,11 +7,11 @@ export default class Player {
     this.scene = scene;
     this.timermins = 0 ;
     this.timerhours = 0;
-    this.hasupdated = false;
     this.timersecs = 0;
+    this.menuIsSet = false;
     let data =  new Date();
     this.mins=0;
-    this.secs= parseInt(data.getSeconds());
+    this.secs= 0;
     // Criação das animações apartir da spritesheet
     const anims = scene.anims;
     this.morte = this.scene.sound.add('morte');
@@ -30,17 +30,24 @@ export default class Player {
     this.sprite.chave = 1;
     
     //Criação dos botões que irão fazer a movimentação da sprite
-    const { LEFT, RIGHT, UP, Z, C } = Phaser.Input.Keyboard.KeyCodes;
+    const { LEFT, RIGHT, UP, Z, C,P } = Phaser.Input.Keyboard.KeyCodes;
     this.keys = scene.input.keyboard.addKeys({
       left: LEFT,
       right: RIGHT,
       up: UP,
       atack: Z,
-      action: C
+      action: C,
+      pause: P
     });
     
+    
   }
-  
+  criaIntervalo(){
+    this.intervalo = setInterval(()=>this.secs++,1000)
+  }
+  deletaIntervalo(){
+    clearInterval(this.intervalo);
+  }
   
   //Método que cria os huds de visualização de vida, pontuação e tempo
   createHUD() {
@@ -60,60 +67,68 @@ export default class Player {
   }
   
   update(enemies, scene, alavanca, ponte, aldeao, casa, moedas) {
-    let data= new Date();
-    // let minutes = parseInt(data.getMinutes());
-    // let hours = parseInt(data.getHours());
-    let seconds = parseInt(data.getSeconds());
-    // this.timermins =  minutes - this.mins;
-    this.timersecs = seconds -  this.secs;
-    if(this.timersecs<0){
-      this.timersecs = this.timersecs +60;
-      
-    }
-    if(this.timersecs==59&&this.hasupdated==false){
-      setTimeout(()=>{
-
-        this.mins++
-      },1000)
-      this.hasupdated = true;
-    }else if (this.timersecs!=59){
-      this.hasupdated = false;
-    }
+    
     let colisao = scene.colisao;
     const { keys, sprite } = this;
-    if(this.lifes==0){
-      this.isDead = true;
-    }else if(this.sprite.y>540){
-      this.isDead = true;
+    if(keys.pause.isDown&&this.menuIsSet==false){
+      this.scene.scene.pause(this.scene);
+      this.scene.scene.run('MenuPause',[this,this.scene]);
+      this.scene.scene.moveBelow(this.scene,'MenuPause');
+      this.menuIsSet = true;
     }
-    if(this.isDead==true){
-      this.sprite.setVelocityX(0);
-      sprite.setTexture("sprite_hero", 5);
-      sprite.setTint(0xff0000);
-      let jogarBtn = this.scene.add.image(this.scene.cameras.main.midPoint.x, 310, "btnJogar").setInteractive();
-      jogarBtn.setScale(0.65);
-      jogarBtn.on("pointerdown",()=>{
-        this.scene.scene.restart();
-      })
-      this.scene.physics.pause();
-      // this.scene.
-    }else{
-      
-      // Checa a colisão com a layer 2 de blocos
-      if (colisao == true) {
-        enemies.c_player.active = false;
-      } else {
-        enemies.c_player.active = true;
-      }
-      
-      if (colisao == true) {
-        setTimeout(() => {
-          if (sprite.body.onFloor()) {
-            scene.colisao = false;
-          }
-        }, 200)
-      }
-      
+    // else{
+      //   console.log(this.keys.pause.isDown);
+      //   setInterval(()=>{
+        //     if(this.menuIsSet&&this.keys.pause.isDown){
+          //       this.menuIsSet = false;
+          //       this.scene.scene.stop('')
+          //       this.scene.scene.resume('Level_1');
+          //     }
+          //   },
+          //   1000
+          //     );
+          //   } 
+          
+          if(this.menuIsSet==false){
+            if(this.secs>59){
+              this.secs=0;
+              this.mins++
+              
+            }
+            if(this.lifes==0){
+              this.isDead = true;
+            }else if(this.sprite.y>540){
+              this.isDead = true;
+            }
+            if(this.isDead==true){
+              this.deletaIntervalo();
+              this.sprite.setVelocityX(0);
+              sprite.setTexture("sprite_hero", 5);
+              sprite.setTint(0xff0000);
+              let jogarBtn = this.scene.add.image(this.scene.cameras.main.midPoint.x, 310, "btnJogar").setInteractive();
+              jogarBtn.setScale(0.65);
+              jogarBtn.on("pointerdown",()=>{
+                this.scene.scene.restart();
+              })
+              this.scene.physics.pause();
+              // this.scene.
+            }else{
+              
+              // Checa a colisão com a layer 2 de blocos
+              if (colisao == true) {
+                enemies.c_player.active = false;
+        } else {
+          enemies.c_player.active = true;
+        }
+        
+        if (colisao == true) {
+          setTimeout(() => {
+            if (sprite.body.onFloor()) {
+              scene.colisao = false;
+            }
+          }, 200)
+        }
+        
       if (sprite.body.blocked.down && sprite.body.velocity.y < 1) {
         this.scene.c_layer2.active = false;
       } else {
@@ -151,35 +166,36 @@ export default class Player {
         this.updateHUD();
         
         
-      /*Caso a seta para cima seja ativada o personagem é
-      deslocado para cima do eixo Y "Pulando" */
-      if (sprite.body.onFloor() && (keys.up.isDown)) {
-        this.jump.play();
-        sprite.setVelocityY(-230);
-      }
-      
-      /*Caso o botão de Z seja ativado o ataque do heroi é ativado */
-      if (keys.atack.isDown && this.isAttacking == false) {
-        sprite.anims.play("sprite_hero_z", true);
-        this.checkHit(enemies.array);
-        this.espada.play();
-        this.isAttacking = true;
-        setTimeout(() => {
-          this.isAttacking = false;
-        }, 500);
-      }
-
-      if (keys.action.isDown && colisao == false) {
-        this.interaction(alavanca, ponte, aldeao, casa);
-        setTimeout(() => {
-          sprite.anims.play('sprite_hero_c');
-        }, 400);
+        /*Caso a seta para cima seja ativada o personagem é
+        deslocado para cima do eixo Y "Pulando" */
+        if (sprite.body.onFloor() && (keys.up.isDown)) {
+          this.jump.play();
+          sprite.setVelocityY(-230);
+        }
+        
+        /*Caso o botão de Z seja ativado o ataque do heroi é ativado */
+        if (keys.atack.isDown && this.isAttacking == false) {
+          sprite.anims.play("sprite_hero_z", true);
+          this.checkHit(enemies.array);
+          this.espada.play();
+          this.isAttacking = true;
+          setTimeout(() => {
+            this.isAttacking = false;
+          }, 500);
+        }
+        
+        if (keys.action.isDown && colisao == false) {
+          this.interaction(alavanca, ponte, aldeao, casa);
+          setTimeout(() => {
+            sprite.anims.play('sprite_hero_c');
+          }, 400);
+          
+        }
         
       }
-      
-    }
     }
   }
+}
   //Método que faz a interação com as alavancas, com as portas e os aldeoes
   interaction(alavanca, ponte, aldeao, casa) {
 
@@ -257,12 +273,12 @@ export default class Player {
 
     /*Atualiza a pontuação do jogador */
     this.scene.scoreLabel.text = this.sprite.score;
-    if(this.mins<10&&this.timersecs<10){
-      this.timeText.text = '0'+this.mins+':0'+this.timersecs;
+    if(this.mins<10&&this.secs<10){
+      this.timeText.text = '0'+this.mins+':0'+this.secs;
     }else if(this.mins<10){
-      this.timeText.text = '0'+this.mins+':'+this.timersecs;
+      this.timeText.text = '0'+this.mins+':'+this.secs;
     }else{
-      this.timeText.text = this.mins+':'+this.timersecs;
+      this.timeText.text = this.mins+':'+this.secs;
     }
     /*Verifica a vida do jogador */
     if (this.lifes == 3) {
@@ -291,10 +307,11 @@ export default class Player {
       this.scene.life_3 = this.scene.add.image(209, 57, 'coracao_cheio').setScrollFactor(0);
       this.scene.life_4 = this.scene.add.image(246, 57, 'coracao_cheio').setScrollFactor(0);
     }
-
-
-
+    
+    
+    
   }
+  
 
 
 

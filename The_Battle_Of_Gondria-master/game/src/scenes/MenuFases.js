@@ -12,7 +12,6 @@ class MenuFases extends Phaser.Scene {
     }
     create() {
 
-        var music = this.sound.add('menusMusic');
 
         // music.play();
 
@@ -30,7 +29,7 @@ class MenuFases extends Phaser.Scene {
             }, 150);
         });
 
-        this.faseDisponivel = 1;
+        this.faseDisponivel = 2;
 
         //Fase 1
         if ((this.faseDisponivel == 1) || (this.faseDisponivel >= 1)) {
@@ -67,7 +66,7 @@ class MenuFases extends Phaser.Scene {
                 btn.setTexture("btnFase2Press");
                 setTimeout(() => {
                     btn.setTexture("btnFase2");
-                    this.scene.scene.start('Level_1');
+                    this.scene.scene.start('Level_1_2');
                 }, 150);
             });
 

@@ -49,8 +49,9 @@ class MainMenu extends Phaser.Scene {
         ajudaBtn.setScale(0.65);
 
         if(this.sound.sounds[0]===undefined){
-            this.sound.add('menusMusic');
-            this.sound.sounds[0].setLoop(true);
+            let music= this.sound.add('menusMusic');
+            music.setLoop(true);
+            music.setVolume(0.3);
         }
         // console.log(this.sound);
         if(this.sound.sounds[0].isPlaying==false){

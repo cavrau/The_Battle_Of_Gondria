@@ -12,31 +12,9 @@ class Level_1_2 extends Phaser.Scene{
     preload(){
         this.load.tilemapTiledJSON("map_fase_1_2", "assets/tilemap/map_fase_1_2.json");
 
-
-        this.load.image('hud_primario', 'assets/images/huds/hud_score_vida.png')
-        this.load.image('hud_secundario', 'assets/images/huds/hud_tempo.png');
-
-        this.load.spritesheet({
-            key: 'sprite_hero',
-            url: 'assets/images/mobs/heroi.png',
-            frameConfig: {
-                frameWidth: 60,
-                frameHeight: 84
-            }
-        });
-
-
-
-
-        this.load.spritesheet('slime_vermelho', 'assets/images/mobs/slime_vermelho_walk.png',
-            { frameWidth: 18, frameHeight: 21 });
-
-        this.load.spritesheet('slime_vermelho_hit', 'assets/images/mobs/slime_vermelho_hit.png',
-            { frameWidth: 16, frameHeight: 12 });
     }
 
     create() {
-
         //Cria o mapa apartir do arquivos JSON que veio do Tiled
         let map = this.make.tilemap({ key: "map_fase_1_2" });
 
@@ -53,98 +31,99 @@ class Level_1_2 extends Phaser.Scene{
         map.createDynamicLayer('midground', midground, 0, 0);
 
         //Cria e seta os blocos do tileset da layer 1
-        this.layer1 = map.createDynamicLayer("foreground_1", blocos);
+        let layer1 = map.createDynamicLayer("foreground_1", blocos,0,0);
 
         //Cria e seta os blocos do tileset da layer 2
-        this.layer2 = map.createStaticLayer("foreground_2", blocos, 0, 0);
+        let layer2 = map.createStaticLayer("foreground_2", blocos, 0, 0);
 
 
         //Seta os blocos que serão colidiveis na layer 1
-        this.layer1.setCollision([1,2,3,4,5,6,10]);
-        console.log(this.layer1);
+        layer1.setCollisionBetween(1,6);
+        console.log(layer1.setCollisionBetween(1,6));
         //Seta os blocos que serão colidiveis na layer 2
-        this.layer2.setCollisionBetween(1, 6);
-
+        layer2.setCollisionBetween(1, 6);
+        
         //Cria um player dentro da cena da fase, com coordenadas x e y
         this.player = new Player(this, 20, 320);
-
+        
         //Seta o bounce do player
         this.player.sprite.setBounce(0.1);
         this.player.sprite.setScale(0.5);
-
         //Seta a colisão do player com a layer 1
-        this.c_layer1 = this.physics.add.collider(this.player.sprite, this.layer1);
+        this.physics.add.collider(this.player.sprite, layer1);
         //Cria e seta os blocos do tileset da layer 2
-        this.c_layer2 = this.physics.add.collider(this.player.sprite, this.layer2);
-
+        this.c_layer2 = this.physics.add.collider(this.player.sprite, layer2);
+        
         /*Desativa a colisão temporáriamente, pois o player poderá passar
         entre os blocos dessa layer sem precisar pular, mas caso seja sua 
         preferencia pular em cima a colisão é ativada no update() */
         this.c_layer2.active = false;
-
+        
+        console.log(this.physics);
         // // /*INICIO - Debug para colisão */
         const debugGraphics = this.add.graphics().setAlpha(0.75);
-
-         this.layer1.renderDebug(debugGraphics, {
-             tileColor: null, // Color of non-colliding tiles
-             collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-             faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-         });
-
-        // // this.layer2.renderDebug(debugGraphics, {
-        // //     tileColor: null, // Color of non-colliding tiles
-        // //     collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-        // //     faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-        // // });
-        // /*FIM - Debug para colisão */
-
-        //Cria uma camera que seguira o player
-        this.cameras.main.startFollow(this.player.sprite);
-        //Seta os limites do mapa que a camera acompanhará
-        this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-
-        let spawnLayer = map.getObjectLayer("spawns");
-        this.spawns = spawnLayer.objects;
-
-        this.parado = true;
-        this.slimes = new Slimes(this);
-        // for(let i =0 ;i<this.spawns.length;i++){
-        //     if (this.spawns[i].name === "Spawn_Flag") {
-        //         this.bandeira = new Bandeira(this,this.spawns[i].x,this.spawns[i].y);
-        //     }
-        // }
-        // this.physics.add.collider(this.bandeira.sprite, this.layer1);
-            
-
-        //Criação da alavanca
-        // this.alavanca = map.createFromObjects('itensInteracao', 27, { key:'sprite_alavanca'});
-
-        // /*ponte recebe layer1 para que this.ponte seja setado como
-        // parâmetro do player.update(), método que que executa a interação
-        // e criação da ponte na fase*/
-        // this.ponte = this.layer1;
-
-        //     this.c_slimes = this.physics.add.collider(this.player, this.slimes, this.slimeHit, null, this);
-        //     this.life_1 = this.add.image(720, 40, 'coracao_cheio');
-        //     this.life_2 = this.add.image(770, 40, 'coracao_cheio');
-        //     this.life_3 = this.add.image(820, 40, 'coracao_cheio');
-        //     this.timer = 0;
-
-
-        //     this.scoreText = this.add.text(16, 16, '0', {
-        //         fontSize: '16px',
-        //         fill: '#000'
-        //     });
-        // }
         
-        // Chama o método que cria o hud do player
+        layer1.renderDebug(debugGraphics, {
+            tileColor: null, // Color of non-colliding tiles
+            collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
+            faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
+        });
+        
+        // // layer2.renderDebug(debugGraphics, {
+            // //     tileColor: null, // Color of non-colliding tiles
+            // //     collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
+            // //     faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
+            // // });
+            // /*FIM - Debug para colisão */
+            
+            //Cria uma camera que seguira o player
+            this.cameras.main.startFollow(this.player.sprite);
+            //Seta os limites do mapa que a camera acompanhará
+            this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+            
+            let spawnLayer = map.getObjectLayer("spawns");
+            this.spawns = spawnLayer.objects;
+            
+            this.parado = true;
+            this.slimes = new Slimes(this,layer1);
+            // for(let i =0 ;i<this.spawns.length;i++){
+                //     if (this.spawns[i].name === "Spawn_Flag") {
+                    //         this.bandeira = new Bandeira(this,this.spawns[i].x,this.spawns[i].y);
+                    //     }
+                    // }
+                    // this.physics.add.collider(this.bandeira.sprite, layer1);
+                    
+                    
+                    //Criação da alavanca
+                    // this.alavanca = map.createFromObjects('itensInteracao', 27, { key:'sprite_alavanca'});
+                    
+                    // /*ponte recebe layer1 para que this.ponte seja setado como
+                    // parâmetro do player.update(), método que que executa a interação
+                    // e criação da ponte na fase*/
+                    // this.ponte = layer1;
+                    
+                    //     this.c_slimes = this.physics.add.collider(this.player, this.slimes, this.slimeHit, null, this);
+                    //     this.life_1 = this.add.image(720, 40, 'coracao_cheio');
+                    //     this.life_2 = this.add.image(770, 40, 'coracao_cheio');
+                    //     this.life_3 = this.add.image(820, 40, 'coracao_cheio');
+                    //     this.timer = 0;
+                    
+                    
+                    //     this.scoreText = this.add.text(16, 16, '0', {
+                        //         fontSize: '16px',
+                        //         fill: '#000'
+                        //     });
+                        // }
+                        
+                        // Chama o método que cria o hud do player
+                        console.log(this.player);
         this.player.createHUD();
         
 
     }
     
     update() {
-        this.player.update(this.slimes,this,this.alavanca,this.ponte,this.aldeao,this.casa);
+        this.player.update(this.slimes,this,this.alavanca,this.ponte,this.aldeao,this.casa,null);
         this.slimes.update(this.player.sprite,this.slimes);
         
 

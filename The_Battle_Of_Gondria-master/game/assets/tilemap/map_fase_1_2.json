@@ -9,7 +9,7 @@
          "name":"background",
          "opacity":1,
          "type":"tilelayer",
-         "visible":true,
+         "visible":false,
          "width":72,
          "x":0,
          "y":0
@@ -22,7 +22,7 @@
          "name":"midground",
          "opacity":1,
          "type":"tilelayer",
-         "visible":true,
+         "visible":false,
          "width":72,
          "x":0,
          "y":0

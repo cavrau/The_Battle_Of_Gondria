@@ -47,19 +47,19 @@ class Level_1 extends Phaser.Scene {
         map.createDynamicLayer('midground', midground, 0, 0);
 
         //Cria e seta os blocos do tileset da layer 1
-        this.layer1 = map.createDynamicLayer("foreground_1", blocos);
+        let camada1 = map.createDynamicLayer("foreground_1", blocos);
 
         //Cria e seta os blocos do tileset da layer 2
-        this.layer2 = map.createStaticLayer("foreground_2", blocos, 0, 0);
+        let layer2 = map.createStaticLayer("foreground_2", blocos, 0, 0);
 
         //Cria a layer da casa do aldeão
         this.hauseLayer = map.createDynamicLayer('casa', casa, 0, 0);
 
         //Seta os blocos que serão colidiveis na layer 1
-        this.layer1.setCollision([1, 2, 3, 4, 5, 6, 10]);
+        camada1.setCollision([1, 2, 3, 4, 5, 6, 10]);
 
         //Seta os blocos que serão colidiveis na layer 2
-        this.layer2.setCollisionBetween(1, 6);
+        layer2.setCollisionBetween(1, 6);
 
         //Cria um player dentro da cena da fase, com coordenadas x e y
         this.player = new Player(this, 3055, 352);
@@ -69,10 +69,10 @@ class Level_1 extends Phaser.Scene {
         this.player.sprite.setScale(0.5);
 
         //Seta a colisão do player com a layer 1
-        this.physics.add.collider(this.player.sprite, this.layer1);
+        this.physics.add.collider(this.player.sprite, camada1);
 
         //Cria e seta os blocos do tileset da layer 2
-        this.c_layer2 = this.physics.add.collider(this.player.sprite, this.layer2);
+        this.c_layer2 = this.physics.add.collider(this.player.sprite, layer2);
 
         /*Desativa a colisão temporáriamente, pois o player poderá passar
         entre os blocos dessa layer sem precisar pular, mas caso seja sua 
@@ -82,13 +82,13 @@ class Level_1 extends Phaser.Scene {
         // /*INICIO - Debug para colisão */
         // const debugGraphics = this.add.graphics().setAlpha(0.75);
 
-        // this.layer1.renderDebug(debugGraphics, {
+        // camada1.renderDebug(debugGraphics, {
         //     tileColor: null, // Color of non-colliding tiles
         //     collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
         //     faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
         // });
 
-        // this.layer2.renderDebug(debugGraphics, {
+        // layer2.renderDebug(debugGraphics, {
         //     tileColor: null, // Color of non-colliding tiles
         //     collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
         //     faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
@@ -105,13 +105,13 @@ class Level_1 extends Phaser.Scene {
         this.spawns = spawnLayer.objects;
 
         this.parado = true;
-        this.slimes = new Slimes(this);
+        this.slimes = new Slimes(this,camada1);
         for (let i = 0; i < this.spawns.length; i++) {
             if (this.spawns[i].name === "Spawn_Flag") {
                 this.bandeira = new Bandeira(this, this.spawns[i].x, this.spawns[i].y);
             }
         }
-        this.physics.add.collider(this.bandeira.sprite, this.layer1);
+        this.physics.add.collider(this.bandeira.sprite, camada1);
 
 
         //Criação da alavanca
@@ -120,7 +120,7 @@ class Level_1 extends Phaser.Scene {
         /*this.ponte recebe a layer que ficará a ponte e também as
         coordenas de onde a ponte começa e termina*/
         this.ponte = {
-            layer: this.layer1,
+            layer: camada1,
             pXi: 145,
             pXf: 151,
             pYcollision: 12,
@@ -157,6 +157,7 @@ class Level_1 extends Phaser.Scene {
 
         // Chama o método que cria o hud do player
         this.player.createHUD();
+        this.player.criaIntervalo();
     }
 
     update() {
