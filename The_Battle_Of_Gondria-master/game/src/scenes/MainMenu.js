@@ -52,7 +52,7 @@ class MainMenu extends Phaser.Scene {
             this.sound.add('menusMusic');
             this.sound.sounds[0].setLoop(true);
         }
-        console.log(this.sound);
+        // console.log(this.sound);
         if(this.sound.sounds[0].isPlaying==false){
             this.sound.sounds[0].play();
         }

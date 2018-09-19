@@ -27,7 +27,7 @@ export default class Player {
     this.sprite = this.scene.physics.add.sprite(x, y, "sprite_hero", 0);
     this.lifes = 4;
     this.sprite.score = 0;
-    this.sprite.chave = 0;
+    this.sprite.chave = 1;
     
     //Criação dos botões que irão fazer a movimentação da sprite
     const { LEFT, RIGHT, UP, Z, C } = Phaser.Input.Keyboard.KeyCodes;
@@ -53,6 +53,7 @@ export default class Player {
     this.scene.hud_1 = this.scene.add.image(794, 40, 'hud_secundario').setScrollFactor(0);
     this.timeText = this.scene.add.bitmapText(750, 20, 'myfont', this.rmins+':'+this.timersecs,32).setScrollFactor(0);
   }
+
   timerFunc(){
     this.timer= this.timer +1;
     console.log(this.timer);
@@ -182,6 +183,7 @@ export default class Player {
   //Método que faz a interação com as alavancas, com as portas e os aldeoes
   interaction(alavanca, ponte, aldeao, casa) {
 
+    // console.log(ponte)
     /*Pega a diferença da distancia entre o player e a alavanca */
     let alavancaX = alavanca[0].x - this.sprite.body.x;
     let alavancaY = alavanca[0].y - this.sprite.body.y;
@@ -195,16 +197,33 @@ export default class Player {
 
         let i;
         let j = 2;
-        for (i = 145; i <= 151; i++) {
+        let tileXinicial = ponte.pXi;
+        let tileXfinal = ponte.pXf;
+        
+        for (i = tileXinicial; i <= tileXfinal; i++) {
           j = j + 3;
           (function (i) {
             setTimeout(function () {
-              ponte.putTileAt(10, i, 12);
-              ponte.putTileAt(11, i, 11);
+              ponte.layer.putTileAt(10, i, ponte.pYcollision);
+              ponte.layer.putTileAt(11, i, ponte.pYnCollision);
             }, i * j);
           })(i);
 
         }
+      }
+    }//Fim da Criação da ponte
+
+    /*Parte que fará o jogador interagir com a casa*/
+    let distanciaCasaX = casa.x - this.sprite.body.x;
+    let distanciaCadaY = casa.y - this.sprite.body.y;
+    // console.log(this.scene);
+    // console.log(this.scene.scene);
+    if(distanciaCadaY <= 64){
+      // console.log(this);
+      if((distanciaCasaX < 20) && (distanciaCasaX > -16) && (this.sprite.chave == 1)){
+
+        alert("olaaaaaaaaaa mocoooo");
+        this.scene.scene.start('Level_casa', {level_1_Scene:this.scene, player: this});
       }
     }
 
@@ -220,7 +239,7 @@ export default class Player {
 
       if ((ydistance < 72)) {
         if (xdistance < 75 && xdistance > 0) {
-          console.log(enemy.lifes);
+          // console.log(enemy.lifes);
           enemy.lifes--;
           enemy.setVelocityX(140);
           enemy.setVelocityY(-130);

@@ -14,19 +14,19 @@ class Level_1 extends Phaser.Scene {
     preload() {
         this.secs = 0;
         this.load.tilemapTiledJSON("map_fase_1", "assets/tilemap/map_fase_1.json");
-        this.load.audio('music_1_1','assets/musics/music_level_1.mp3');
-        this.load.audio('slime_jump','assets/sounds/slime_jump.mp3');
+        this.load.audio('music_1_1', 'assets/musics/music_level_1.mp3');
+        this.load.audio('slime_jump', 'assets/sounds/slime_jump.mp3');
     }
 
 
     create() {
-        let music =this.sound.add('music_1_1');
+        let music = this.sound.add('music_1_1');
         music.setLoop(true);
         music.play();
         music.setVolume(0.5);
         this.slime_sound = this.sound.add('slime_jump');
         this.slime_sound.setVolume(0.3);
-        
+
         //Cria o mapa apartir do arquivos JSON que veio do Tiled
         let map = this.make.tilemap({ key: "map_fase_1" });
 
@@ -39,8 +39,8 @@ class Level_1 extends Phaser.Scene {
         let midground = map.addTilesetImage('montanhas', 'fase_1_montanhas');
         const casa = map.addTilesetImage('casa', 'fase_1_casa');
         // const ponte = map.addTilesetImage('ponte', ' fase_1_ponte');
-        
-        console.log(blocos);
+
+        // console.log(blocos);
 
         //Cria layers não colidivel
         map.createDynamicLayer('background', background, 0, 0);
@@ -62,7 +62,7 @@ class Level_1 extends Phaser.Scene {
         this.layer2.setCollisionBetween(1, 6);
 
         //Cria um player dentro da cena da fase, com coordenadas x e y
-        this.player = new Player(this, 20, 320);
+        this.player = new Player(this, 3055, 352);
 
         //Seta o bounce do player
         this.player.sprite.setBounce(0.1);
@@ -73,37 +73,36 @@ class Level_1 extends Phaser.Scene {
 
         //Cria e seta os blocos do tileset da layer 2
         this.c_layer2 = this.physics.add.collider(this.player.sprite, this.layer2);
-        
+
         /*Desativa a colisão temporáriamente, pois o player poderá passar
         entre os blocos dessa layer sem precisar pular, mas caso seja sua 
         preferencia pular em cima a colisão é ativada no update() */
         this.c_layer2.active = false;
-        
+
         // /*INICIO - Debug para colisão */
         // const debugGraphics = this.add.graphics().setAlpha(0.75);
-        
+
         // this.layer1.renderDebug(debugGraphics, {
-            //     tileColor: null, // Color of non-colliding tiles
-            //     collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-            //     faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-            // });
-            
-            // this.layer2.renderDebug(debugGraphics, {
-                //     tileColor: null, // Color of non-colliding tiles
-                //     collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-                //     faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-                // });
-                /*FIM - Debug para colisão */
-                
-                //Cria uma camera que seguira o player
-            this.cameras.main.startFollow(this.player.sprite);
-                
-                //Seta os limites do mapa que a camera acompanhará
-            this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-            
-            let spawnLayer = map.getObjectLayer("spawns");
-            this.spawns = spawnLayer.objects;
-        // console.log(this.spawns);
+        //     tileColor: null, // Color of non-colliding tiles
+        //     collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
+        //     faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
+        // });
+
+        // this.layer2.renderDebug(debugGraphics, {
+        //     tileColor: null, // Color of non-colliding tiles
+        //     collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
+        //     faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
+        // });
+        /*FIM - Debug para colisão */
+
+        //Cria uma camera que seguira o player
+        this.cameras.main.startFollow(this.player.sprite);
+
+        //Seta os limites do mapa que a camera acompanhará
+        this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+
+        let spawnLayer = map.getObjectLayer("spawns");
+        this.spawns = spawnLayer.objects;
 
         this.parado = true;
         this.slimes = new Slimes(this);
@@ -118,11 +117,15 @@ class Level_1 extends Phaser.Scene {
         //Criação da alavanca
         this.alavanca = map.createFromObjects('itensInteracao', 'alavanca', { key: 'sprite_alavanca' });
 
-        /*ponte recebe layer1 para que this.ponte seja setado como
-        parâmetro do player.update(), método que que executa a interação
-        e criação da ponte na fase*/
-        this.ponte = this.layer1;
-
+        /*this.ponte recebe a layer que ficará a ponte e também as
+        coordenas de onde a ponte começa e termina*/
+        this.ponte = {
+            layer: this.layer1,
+            pXi: 145,
+            pXf: 151,
+            pYcollision: 12,
+            pYnCollision: 11
+        };
 
         /*Cria as moedas */
         let coinLayer = map.getObjectLayer("moedas");
@@ -137,12 +140,20 @@ class Level_1 extends Phaser.Scene {
         this.layerObjetos = map.getObjectLayer('itensInteracao');
         this.chave;
 
-        for(let i = 0; i < this.layerObjetos.objects.length; i++ ){
-            if(this.layerObjetos.objects[i].name == 'chave'){
+        for (let i = 0; i < this.layerObjetos.objects.length; i++) {
+            if (this.layerObjetos.objects[i].name == 'chave') {
                 this.chave = new Chave(this, this.layerObjetos.objects[i].x, this.layerObjetos.objects[i].y);
             }
         }
-        console.log(this.player);
+
+        /*Criação da interação da casa*/
+
+        /*Coordenadas da porta da casa que o jogador
+        terá que interagir */
+        this.casa = {
+            x: 3200,
+            y: 352,
+        };
 
         // Chama o método que cria o hud do player
         this.player.createHUD();
@@ -152,77 +163,8 @@ class Level_1 extends Phaser.Scene {
         this.player.update(this.slimes, this, this.alavanca, this.ponte, this.aldeao, this.casa, this.moedas);
         this.player.updateHUD();
         this.slimes.update(this.player.sprite, this.slimes);
-        this.secs = this.player.mins*60+this.player.timersecs;
-
-
-        // if (this.player.body.x < 432) {
-        // } else {
-        //     this.life_1.x = this.player.body.x + 300;
-        //     this.life_2.x = this.player.body.x + 350;
-        //     this.life_3.x = this.player.body.x + 400;
-        // }
-        // const cam = this.cameras.main;
-
-        // if (this.player_vidas == 2) {
-        //     this.life_1.setTexture("coracao_vazio");
-        // } else if (this.player_vidas == 1) {
-        //     this.life_1.setTexture("coracao_vazio");
-        //     this.life_2.setTexture("coracao_vazio");
-        // } else if (this.player_vidas == 0) {
-        //     this.life_1.setTexture("coracao_vazio");
-        //     this.life_2.setTexture("coracao_vazio");
-        //     this.life_3.setTexture("coracao_vazio");
-        // } else if (this.player_vidas == 3) {
-        //     this.life_1.setTexture("coracao_cheio");
-        //     this.life_2.setTexture("coracao_cheio");
-        //     this.life_3.setTexture("coracao_cheio");
-        // }
-
-        // if (this.player.body.y > 500) {
-        //     this.player_vidas = 0;
-        // }
-
-
-
-        // }
-
-
-
-        // if (this.colisao == false) {
-        //     if (cursors.left.isDown && this.player.x - 16 > 0) {
-        //         this.player.sprite.setVelocityX(120);
-        //         this.parado = false;
-        //         // this.player.anims.play('left',true);
-        //     } else if (cursors.right.isDown) {
-        //         this.player.sprite.setVelocityX(-120);
-        //         this.parado = false;
-        //         // this.player.anims.play('right',true);
-        //     } else if (this.colisao == false) {
-        //         this.player.sprite.setVelocityX(0);
-        //         // this.player.anims.play('turn',true);
-        //     }
-        // }
-
-        // if (this.colisao == true) {
-        //     // this.c_slimes.active = false;
-        // } else {
-        //     // this.c_slimes.active = true;
-        // }
-
-        // if (this.colisao == true) {
-        //     setTimeout(() => {
-        //         if (this.player.body.onFloor()) {
-        //             this.colisao = false;
-        //         }
-        //     }, 500)
-        // }
-
-        // if (cursors.up.isDown && this.player.sprite.body.onFloor()) {
-        //     this.player.sprite.setVelocityY(-230);
-        // }
-
-
+        this.secs = this.player.mins * 60 + this.player.timersecs;
 
     }
 
-} export default Level_1;
+}export default Level_1;
