@@ -5,7 +5,7 @@ import Moeda from "../sprites/objects/Moeda.js";
 import Chave from "../sprites/objects/Chave.js";
 class Level_1 extends Phaser.Scene {
 
-    constructor(test) {
+    constructor() {
         super({
             key: 'Level_1'
         });
@@ -28,26 +28,20 @@ class Level_1 extends Phaser.Scene {
         this.slime_sound.setVolume(0.3);
 
         //Cria o mapa apartir do arquivos JSON que veio do Tiled
-        let map = this.make.tilemap({ key: "map_fase_1" });
+        const map = this.make.tilemap({ key: "map_fase_1" });
 
         /* Parametros para tileset: const blocos = map.addTilesetImage("nome do tileset que está no tiled", "nome da key que foi carregada no phaser");*/
-        // const blocos = map.addTilesetImage("blocos", "fase_1_tileset");
-        // const background = map.addTilesetImage('ceu', 'fase_1_sky');
-        // const midground = map.addTilesetImage('montanhas', 'fase_1_montanhas');
         let blocos = map.addTilesetImage("blocos", "fase_1_tileset");
         let background = map.addTilesetImage('ceu', 'fase_1_sky');
         let midground = map.addTilesetImage('montanhas', 'fase_1_montanhas');
-        const casa = map.addTilesetImage('casa', 'fase_1_casa');
-        // const ponte = map.addTilesetImage('ponte', ' fase_1_ponte');
-
-        // console.log(blocos);
+        let casa = map.addTilesetImage('casa', 'fase_1_casa');
 
         //Cria layers não colidivel
         map.createDynamicLayer('background', background, 0, 0);
         map.createDynamicLayer('midground', midground, 0, 0);
 
         //Cria e seta os blocos do tileset da layer 1
-        let camada1 = map.createDynamicLayer("foreground_1", blocos);
+        let layer1 = map.createDynamicLayer("foreground_1", blocos);
 
         //Cria e seta os blocos do tileset da layer 2
         let layer2 = map.createStaticLayer("foreground_2", blocos, 0, 0);
@@ -56,20 +50,22 @@ class Level_1 extends Phaser.Scene {
         this.hauseLayer = map.createDynamicLayer('casa', casa, 0, 0);
 
         //Seta os blocos que serão colidiveis na layer 1
-        camada1.setCollision([1, 2, 3, 4, 5, 6, 10]);
+        layer1.setCollision([1, 2, 3, 4, 5, 6, 10]);
 
         //Seta os blocos que serão colidiveis na layer 2
         layer2.setCollisionBetween(1, 6);
 
         //Cria um player dentro da cena da fase, com coordenadas x e y
-        this.player = new Player(this, 3055, 352);
+        this.player = new Player(this);
+        this.player.spawnPlayer(20, 352);
 
         //Seta o bounce do player
         this.player.sprite.setBounce(0.1);
         this.player.sprite.setScale(0.5);
 
         //Seta a colisão do player com a layer 1
-        this.physics.add.collider(this.player.sprite, camada1);
+        this.physics.add.collider(this.player.sprite, layer1);
+        console.log(this.physics.add.collider(this.player.sprite, layer1));
 
         //Cria e seta os blocos do tileset da layer 2
         this.c_layer2 = this.physics.add.collider(this.player.sprite, layer2);
@@ -105,13 +101,13 @@ class Level_1 extends Phaser.Scene {
         this.spawns = spawnLayer.objects;
 
         this.parado = true;
-        this.slimes = new Slimes(this,camada1);
+        this.slimes = new Slimes(this,layer1);
         for (let i = 0; i < this.spawns.length; i++) {
             if (this.spawns[i].name === "Spawn_Flag") {
                 this.bandeira = new Bandeira(this, this.spawns[i].x, this.spawns[i].y);
             }
         }
-        this.physics.add.collider(this.bandeira.sprite, camada1);
+        this.physics.add.collider(this.bandeira.sprite, layer1);
 
 
         //Criação da alavanca
@@ -120,7 +116,7 @@ class Level_1 extends Phaser.Scene {
         /*this.ponte recebe a layer que ficará a ponte e também as
         coordenas de onde a ponte começa e termina*/
         this.ponte = {
-            layer: camada1,
+            layer: layer1,
             pXi: 145,
             pXf: 151,
             pYcollision: 12,

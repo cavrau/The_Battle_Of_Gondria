@@ -4,9 +4,9 @@ import Level_1 from './src/scenes/Level_1.js';
 import MainMenu from './src/scenes/MainMenu.js'
 import MenuFases from './src/scenes/MenuFases.js'
 import AjudaScene from './src/scenes/AjudaScene.js'
-import Level_1_2 from './src/scenes/Level_1_2.js';
 import Level_casa from './src/scenes/level_casa.js';
-import MenuPause from './src/scenes/MenuPause.js'
+import MenuPause from './src/scenes/MenuPause.js';
+import Level_1_boss from './src/scenes/Level_1_boss.js';
 
 const config = {
     type: Phaser.WEBGL,
@@ -17,7 +17,7 @@ const config = {
         default: 'arcade',
         arcade: {
             gravity: { y: 400 },
-            debug: false
+            debug: true
         }
     },
     scene: [
@@ -25,9 +25,9 @@ const config = {
         MainMenu,
         MenuFases,
         MenuPause,
-        Level_1,
-        Level_1_2,
         AjudaScene,
+        Level_1,
+        Level_1_boss,
         Level_casa
     ]
 };
