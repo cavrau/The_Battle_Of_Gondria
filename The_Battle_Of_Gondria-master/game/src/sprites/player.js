@@ -2,6 +2,7 @@ export default class Player {
 
   constructor(scene) {
     this.isAttacking = false;
+    this.sceneMainMenu = false;
     this.isInteracting = false;
     this.hasInteracted = false;
     this.scene = scene;
@@ -30,6 +31,11 @@ export default class Player {
     this.chave = 1;
 
     //Criação dos botões que irão fazer a movimentação da sprite
+    
+    
+    
+  }
+  criaKeys(scene){
     const { LEFT, RIGHT, UP, Z, C, P } = Phaser.Input.Keyboard.KeyCodes;
     this.keys = scene.input.keyboard.addKeys({
       left: LEFT,
@@ -39,8 +45,6 @@ export default class Player {
       action: C,
       pause: P
     });
-
-
   }
   criaIntervalo() {
     this.intervalo = setInterval(() => this.secs++, 1000)
@@ -55,7 +59,7 @@ export default class Player {
     this.scene.hud_1 = this.scene.add.image(150, 40, 'hud_primario').setScrollFactor(0);
 
 
-    this.scene.scoreLabel = this.scene.add.bitmapText(120, 5, 'myfont', '' + this.sprite.score, 32).setScrollFactor(0);
+    this.scene.score = this.scene.add.bitmapText(120, 5, 'myfont', '' + this.score, 32).setScrollFactor(0);
 
     this.scene.hud_1 = this.scene.add.image(794, 40, 'hud_secundario').setScrollFactor(0);
     this.timeText = this.scene.add.bitmapText(750, 20, 'myfont', this.rmins + ':' + this.timersecs, 32).setScrollFactor(0);
@@ -67,13 +71,19 @@ export default class Player {
   }
 
   update(enemies, scene, alavanca, ponte, aldeao, casa, moedas) {
-
+    console.log(this.sceneMainMenu)
     let colisao = scene.colisao;
     const { keys, sprite } = this;
-    if (keys.pause.isDown && this.menuIsSet == false) {
-      this.scene.scene.pause(this.scene);
+
+    if(this.sceneMainMenu){
+      this.scene.scene.start('MainMenu');
+    }
+    if (keys.pause.isDown && this.menuIsSet == false){
+      keys.left.isDown=false;
+      keys.right.isDown = false;
+      keys.up.isDown=false;
+      this.scene.scene.pause();
       this.scene.scene.run('MenuPause', [this, this.scene]);
-      this.scene.scene.moveBelow(this.scene, 'MenuPause');
       this.menuIsSet = true;
     }
     // else{
@@ -276,7 +286,7 @@ export default class Player {
   updateHUD() {
 
     /*Atualiza a pontuação do jogador */
-    this.scene.scoreLabel.text = this.sprite.score;
+    this.scene.score.text = this.score;
     if (this.mins < 10 && this.secs < 10) {
       this.timeText.text = '0' + this.mins + ':0' + this.secs;
     } else if (this.mins < 10) {
@@ -315,7 +325,9 @@ export default class Player {
 
 
   }
-
+  setScene(scene){
+    this.scene = scene
+  }
 
 
 

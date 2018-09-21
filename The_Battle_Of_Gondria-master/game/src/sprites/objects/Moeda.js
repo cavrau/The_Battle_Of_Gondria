@@ -11,7 +11,7 @@ class Moeda {
   }
 
   coletaMoeda(moeda, player) {
-    player.score += 15;
+    this.player.score += 15;
     this.player.pegar.play();
     moeda.destroy();
   }

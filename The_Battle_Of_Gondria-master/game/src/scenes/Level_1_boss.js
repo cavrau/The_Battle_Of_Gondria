@@ -9,6 +9,11 @@ class Level_1_boss extends Phaser.Scene {
     });
   }
 
+  init(player){
+    this.player = player;
+    this.player.setScene(this);
+    console.log(this.player)
+  }
   preload() {
     this.load.tilemapTiledJSON("map_1_boss", "assets/tilemap/map_fase_1_boss.json");
   }
@@ -28,10 +33,10 @@ class Level_1_boss extends Phaser.Scene {
     mapBoss.createDynamicLayer('middleground_boss', middleground, 0, 0);
 
     //Cria e seta os blocos do tileset da layer 1
-    let layer1 = mapBoss.createDynamicLayer("foreground_1_boss", tilesetBlocos,0,0);
+    let layer1 = mapBoss.createStaticLayer("foreground_1_boss", tilesetBlocos,0,0);
 
     //Cria e seta os blocos do tileset da layer 2
-    // let layer2 = mapBoss.createStaticLayer("foreground_2_boss", tilesetBlocos, 0, 0);
+    let layer2 = mapBoss.createStaticLayer("foreground_2_boss", tilesetBlocos, 0, 0);
 
     
     //Seta os blocos que serão colidiveis na layer 1
@@ -48,24 +53,26 @@ class Level_1_boss extends Phaser.Scene {
 
     });
     console.log(layer1);
-    // layer1.setCollisionByProperty({ collides: true });
+    layer1.setCollisionByProperty({ collides: true });
     // console.log(layer1.setCollisionByProperty({ collides: true }));
     //Seta os blocos que serão colidiveis na layer 2
     // layer2.setCollisionBetween(1, 6);
 
     //Cria um player dentro da cena da fase, com coordenadas x e y
-    this.player = new Player(this);
-    this.player.spawnPlayer(30, 352);
-
+    this.player.spawnPlayer(30, 90);
+    
     //Seta o bounce do player
     this.player.sprite.setBounce(0.1);
     this.player.sprite.setScale(0.5);
+    this.player.criaKeys(this);
+    this.player.createHUD();
+    this.player.criaIntervalo();
 
     //Seta a colisão do player com a layer 1
     this.physics.add.collider(this.player.sprite, layer1);
     console.log(this.physics.add.collider(this.player.sprite, layer1));
     // Cria e seta os blocos do tileset da layer 2
-    // this.c_layer2 = this.physics.add.collider(this.player.sprite, layer2);
+    this.c_layer2 = this.physics.add.collider(this.player.sprite, layer2);
 
     /*Desativa a colisão temporáriamente, pois o player poderá passar
     entre os blocos dessa layer sem precisar pular, mas caso seja sua 
@@ -81,6 +88,7 @@ class Level_1_boss extends Phaser.Scene {
         faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
     });
 
+    this.colisao= false;
     // // layer2.renderDebug(debugGraphics, {
     // //     tileColor: null, // Color of non-colliding tiles
     // //     collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
@@ -88,25 +96,19 @@ class Level_1_boss extends Phaser.Scene {
     // // });
     // /*FIM - Debug para colisão */
 
-    // //Cria uma camera que seguira o player
-    // this.cameras.main.startFollow(this.player.sprite);
+    //Cria uma camera que seguira o player
+    this.cameras.main.startFollow(this.player.sprite);
 
-    // //Seta os limites do mapa que a camera acompanhará
-    // this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+    //Seta os limites do mapa que a camera acompanhará
+    this.cameras.main.setBounds(0, 0, 2592, 480);
 
-    // let spawnLayer = map.getObjectLayer("spawns");
-    // this.spawns = spawnLayer.objects;
+    let spawnLayer = mapBoss.getObjectLayer("spawns");
+    this.spawns = spawnLayer.objects;
 
-    // this.parado = true;
-    // this.slimes = new Slimes(this, camada1);
-    // for (let i = 0; i < this.spawns.length; i++) {
-    //   if (this.spawns[i].name === "Spawn_Flag") {
-    //     this.bandeira = new Bandeira(this, this.spawns[i].x, this.spawns[i].y);
-    //   }
-    // }
-    // this.physics.add.collider(this.bandeira.sprite, camada1);
-
-
+    this.parado = true;
+    this.slimes = new Slimes(this, layer1);
+    this.slime_sound = this.sound.add('slime_jump');
+    this.slime_sound.setVolume(0.3);
     // //Criação da alavanca
     // this.alavanca = map.createFromObjects('itensInteracao', 'alavanca', { key: 'sprite_alavanca' });
 
@@ -154,10 +156,10 @@ class Level_1_boss extends Phaser.Scene {
   }
 
   update() {
-    // this.player.update(this.slimes, this, this.alavanca, this.ponte, this.aldeao, this.casa, this.moedas);
+    this.player.update(this.slimes, this, this.alavanca, this.ponte, this.aldeao, this.casa, this.moedas);
     // this.player.updateHUD();
-    // this.slimes.update(this.player.sprite, this.slimes);
-    // this.secs = this.player.mins * 60 + this.player.timersecs;
+    this.slimes.update(this.player.sprite, this.slimes);
+    this.secs = this.player.mins * 60 + this.player.timersecs;
 
   }
 

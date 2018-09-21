@@ -126,11 +126,11 @@ class Slimes {
             if(slime.isDead == true){
 
                 if (slime.cor == 'vermelho') {
-                    this.player.score += 60;
+                    this.scene.player.score += 60;
                 } else if (slime.cor == 'azul') {
-                    this.player.score += 40;
+                    this.scene.player.score += 40;
                 } else {
-                    this.player.score += 20;
+                    this.scene.player.score += 20;
                 }
                 slime.isDead = false;
             }

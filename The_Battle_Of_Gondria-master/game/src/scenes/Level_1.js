@@ -20,6 +20,7 @@ class Level_1 extends Phaser.Scene {
 
 
     create() {
+        this.ended = false;
         let music = this.sound.add('music_1_1');
         music.setLoop(true);
         music.play();
@@ -57,12 +58,12 @@ class Level_1 extends Phaser.Scene {
 
         //Cria um player dentro da cena da fase, com coordenadas x e y
         this.player = new Player(this);
-        this.player.spawnPlayer(20, 352);
-
+        this.player.spawnPlayer(6020, 0);
+        
         //Seta o bounce do player
         this.player.sprite.setBounce(0.1);
         this.player.sprite.setScale(0.5);
-
+        this.player.criaKeys(this);
         //Seta a colisão do player com a layer 1
         this.physics.add.collider(this.player.sprite, layer1);
         console.log(this.physics.add.collider(this.player.sprite, layer1));
@@ -108,7 +109,7 @@ class Level_1 extends Phaser.Scene {
             }
         }
         this.physics.add.collider(this.bandeira.sprite, layer1);
-
+        
 
         //Criação da alavanca
         this.alavanca = map.createFromObjects('itensInteracao', 'alavanca', { key: 'sprite_alavanca' });
