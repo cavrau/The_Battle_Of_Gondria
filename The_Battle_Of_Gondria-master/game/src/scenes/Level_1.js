@@ -35,7 +35,7 @@ class Level_1 extends Phaser.Scene {
         let blocos = map.addTilesetImage("blocos", "fase_1_tileset");
         let background = map.addTilesetImage('ceu', 'fase_1_sky');
         let midground = map.addTilesetImage('montanhas', 'fase_1_montanhas');
-        let casa = map.addTilesetImage('casa', 'fase_1_casa');
+        let casa = map.addTilesetImage('casa', 'fase_casa');
 
         //Cria layers não colidivel
         map.createDynamicLayer('background', background, 0, 0);
@@ -45,10 +45,10 @@ class Level_1 extends Phaser.Scene {
         let layer1 = map.createDynamicLayer("foreground_1", blocos);
 
         //Cria e seta os blocos do tileset da layer 2
-        let layer2 = map.createStaticLayer("foreground_2", blocos, 0, 0);
+        let layer2 = map.createStaticLayer("foreground_2", blocos);
 
         //Cria a layer da casa do aldeão
-        this.hauseLayer = map.createDynamicLayer('casa', casa, 0, 0);
+        this.hauseLayer = map.createDynamicLayer('casa', casa);
 
         //Seta os blocos que serão colidiveis na layer 1
         layer1.setCollision([1, 2, 3, 4, 5, 6, 10]);
@@ -58,15 +58,14 @@ class Level_1 extends Phaser.Scene {
 
         //Cria um player dentro da cena da fase, com coordenadas x e y
         this.player = new Player(this);
-        this.player.spawnPlayer(6020, 0);
+        this.player.spawnPlayer(3055, 352);
         
         //Seta o bounce do player
         this.player.sprite.setBounce(0.1);
         this.player.sprite.setScale(0.5);
-        this.player.criaKeys(this);
+        this.player.criaKeys();
         //Seta a colisão do player com a layer 1
         this.physics.add.collider(this.player.sprite, layer1);
-        console.log(this.physics.add.collider(this.player.sprite, layer1));
 
         //Cria e seta os blocos do tileset da layer 2
         this.c_layer2 = this.physics.add.collider(this.player.sprite, layer2);

@@ -13,6 +13,8 @@ class Anims {
         frameRate: 6,
         repeat: -1
       })
+
+      /*INICIO ANIMS - setas */
       anims.create({
         key: 'up',
         frames: anims.generateFrameNumbers('setas', {
@@ -27,8 +29,8 @@ class Anims {
       anims.create({
         key: 'left',
         frames: anims.generateFrameNumbers('setas', {
-          start: 2,
-          end: 3
+          start: 4,
+          end: 5
         }),
         frameRate: 2,
         repeat: -1
@@ -37,8 +39,8 @@ class Anims {
       anims.create({
         key: 'right',
         frames: anims.generateFrameNumbers('setas', {
-          start: 4,
-          end: 5
+          start: 2,
+          end: 3
         }),
         frameRate: 2,
         repeat: -1
@@ -265,6 +267,7 @@ class Anims {
         repeat: -1,
         yoyo: false
       });
+
       anims.create({
         key: 'bandeira_verde_play',
         frames: anims.generateFrameNumbers('bandeira_verde', {

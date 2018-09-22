@@ -36,6 +36,7 @@ class AjudaScene extends Phaser.Scene {
     let botaoZ = this.add.sprite(440, 120, 'setas').setScale(0.750);
     let botaoC = this.add.sprite(440, 240, 'setas').setScale(0.750);
     let botaoP = this.add.sprite(440, 360, 'setas').setScale(0.750);
+    
     botaoUp.anims.play('up');
     botaoLeft.anims.play('left');
     botaoRight.anims.play('right');
