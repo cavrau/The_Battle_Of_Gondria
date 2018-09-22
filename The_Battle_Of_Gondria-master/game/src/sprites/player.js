@@ -254,7 +254,7 @@ export default class Player {
 
         for (i = tileXinicial; i <= tileXfinal; i++) {
           j = j + 3;
-          (function (i,ponte) {
+          (function (i) {
             setTimeout(function () {
               ponte.layer.putTileAt(10, i, ponte.pYcollision);
               ponte.layer.putTileAt(11, i, ponte.pYnCollision);

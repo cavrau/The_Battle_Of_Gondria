@@ -11,13 +11,8 @@ class Level_1_boss extends Phaser.Scene {
 
   init(player){
     this.player = player;
-<<<<<<< HEAD
     this.player.setScene(this);
     console.log(this.player);
-=======
-    // this.player.setScene(this);
-    console.log(this.player)
->>>>>>> c409483ee282403cab689975a61c08ad3e39c800
   }
   preload() {
     this.load.tilemapTiledJSON("map_1_boss", "assets/tilemap/map_fase_1_boss.json");

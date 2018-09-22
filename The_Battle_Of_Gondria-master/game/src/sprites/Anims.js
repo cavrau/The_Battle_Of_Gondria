@@ -12,13 +12,7 @@ class Anims {
         }),
         frameRate: 6,
         repeat: -1
-<<<<<<< HEAD
       });
-=======
-      })
-
-      /*INICIO ANIMS - setas */
->>>>>>> c409483ee282403cab689975a61c08ad3e39c800
       anims.create({
         key: 'up',
         frames: anims.generateFrameNumbers('setas', {
