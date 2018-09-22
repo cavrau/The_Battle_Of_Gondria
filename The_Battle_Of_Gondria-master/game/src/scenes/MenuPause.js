@@ -23,6 +23,7 @@ class MenuPause extends Phaser.Scene {
             this.player.criaIntervalo();
             this.scene.resume(this.name);
         })
+        
         let voltarBtn = this.add.image(432, 200, "btnVoltar").setInteractive();
         voltarBtn.setScale(0.65);
         voltarBtn.setScrollFactor(0);

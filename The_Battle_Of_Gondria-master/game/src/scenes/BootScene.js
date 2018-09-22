@@ -13,22 +13,15 @@ class BootScene extends Phaser.Scene {
             progress.fillRect(0, this.sys.game.config.height / 2, this.sys.game.config.width * value, 60);
         });
 
-        // this.load.on('complete',() =>{
-        //     progress.destroy();
-        //     this.scene.start('AjudaScene');
-        // })
-    
         this.load.on('complete', () => {
             progress.destroy();
             this.scene.start('MainMenu');
         })
 
-        // this.load.on('complete',() =>{
-        //     progress.destroy();
-        //     this.scene.start('Level_1');
-        // })
+        /*Faz o load da fonte personalizada */
         this.load.bitmapFont('myfont', 'assets/fonts/font.png', 'assets/fonts/font.fnt');
-        //main Menu
+
+        /*Faz load dos arquivos usados na cena mainMenu e outras cenas  */
         this.load.image('btnJogar', 'assets/images/botoes/btnJogar.png');
         this.load.image('btnJogarPress', 'assets/images/botoes/btnJogarPress.png');
 
@@ -36,7 +29,7 @@ class BootScene extends Phaser.Scene {
         this.load.image('btnAjudaPress', 'assets/images/botoes/btnAjudaPress.png');
 
 
-        //Ajuda menu
+        /*Faz load dos arquivos usados na cena Ajuda e outras cenas  */
         this.load.image('bgAjuda', 'assets/background/scene_menus.png');
 
         this.load.image('btnVoltar', 'assets/images/botoes/btnVoltar.png');
@@ -50,16 +43,11 @@ class BootScene extends Phaser.Scene {
         this.load.image('pausar', 'assets/images/menus/pausar.png');
 
         this.load.spritesheet({
-            key: 'setas',
-            url: 'assets/images/botoes/setas.png',
-            frameConfig: {
-                frameWidth: 80,
-                frameHeight: 80
-            }
+            key: 'setas', url: 'assets/images/botoes/setas.png',
+            frameConfig: { frameWidth: 80, frameHeight: 80 }
         });
 
-
-        //menuFases
+        /*Faz load dos arquivos usados na cena menuFases e outras cenas  */
         this.load.image('bgFases', 'assets/background/scene_menus.png');
 
         this.load.image('btnFase1', 'assets/images/botoes/btnFase1.png');
@@ -83,20 +71,11 @@ class BootScene extends Phaser.Scene {
 
         this.load.audio('menusMusic', 'assets/musics/scenesMusics/menuMusic.mp3');
 
-
-
-
-
-        //fase 1 
+        /*Faz load dos arquivos usados na cena Level_1 e outras cenas  */
         this.load.spritesheet({
-            key: 'sprite_hero',
-            url: 'assets/images/mobs/heroi.png',
-            frameConfig: {
-                frameWidth: 60,
-                frameHeight: 84
-            }
+            key: 'sprite_hero', url: 'assets/images/mobs/heroi.png',
+            frameConfig: { frameWidth: 60, frameHeight: 84 }
         });
-
 
         this.load.spritesheet('bandeira_branca', 'assets/images/itensCenario/bandeira_branca.png', {
             frameWidth: 36,
@@ -132,14 +111,11 @@ class BootScene extends Phaser.Scene {
         this.load.image('btnVoltar', 'assets/images/botoes/btnVoltar.png');
         this.load.image('btnVoltarPress', 'assets/images/botoes/btnVoltarPress.png');
 
-
         this.load.image('arvore1', 'assets/images/arvores/arvore1.png');
         this.load.image("fase_1_tileset", "assets/tilesets/fase_1_tileset.png");
-        this.load.image('fase_1_casa', 'assets/tilesets/fase_1_casa.png');
         this.load.image('fase_1_sky', 'assets/background/fase_1_sky.png');
         this.load.image('fase_1_montanhas', 'assets/background/fase_1_montanhas.png');
         this.load.image('fase_1_ponte', 'assets/images/itensCenario/ponte.png');
-
 
         this.load.spritesheet('slime_verde', 'assets/images/mobs/slime_verde_walk.png', {
             frameWidth: 18,
@@ -170,14 +146,15 @@ class BootScene extends Phaser.Scene {
             frameHeight: 12
         });
 
+        this.load.audio("jump", "assets/sounds/jump.mp3");
+        this.load.audio("espada", 'assets/sounds/espada.mp3');
+        this.load.audio("morte", 'assets/sounds/death.mp3');
+        this.load.audio("hit", 'assets/sounds/hit.mp3');
+        this.load.audio("pegar", 'assets/sounds/pegar.mp3');
 
-        this.load.audio("jump","assets/sounds/jump.mp3");
-        this.load.audio("espada",'assets/sounds/espada.mp3');
-        this.load.audio("morte",'assets/sounds/death.mp3');
-        this.load.audio("hit",'assets/sounds/hit.mp3');
-        this.load.audio("pegar",'assets/sounds/pegar.mp3');
-        
-        
+        /*Faz load dos arquivos usados na cena casa e outras cenas  */
+        this.load.tilemapTiledJSON('map_casa', 'assets/tilemap/map_casa.json');
+        this.load.image('fase_casa', 'assets/tilesets/fase_casa.png');
     }
 }
 
