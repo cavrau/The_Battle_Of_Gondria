@@ -12,7 +12,7 @@ class Anims {
         }),
         frameRate: 6,
         repeat: -1
-      })
+      });
       anims.create({
         key: 'up',
         frames: anims.generateFrameNumbers('setas', {
@@ -52,7 +52,7 @@ class Anims {
         }),
         frameRate: 2,
         repeat: -1
-      })
+      });
 
       anims.create({
         key: 'keyC',
@@ -93,7 +93,7 @@ class Anims {
         }),
         frameRate: 15,
         repeat: -1
-      })
+      });
       anims.create({
         key: "slime_azul_jump_left",
         frames: anims.generateFrameNumbers('slime_azul', {
@@ -102,7 +102,7 @@ class Anims {
         }),
         frameRate: 15,
         repeat: -1
-      })
+      });
       anims.create({
         key: "slime_vermelho_jump_left",
         frames: anims.generateFrameNumbers('slime_vermelho', {
@@ -111,7 +111,7 @@ class Anims {
         }),
         frameRate: 15,
         repeat: -1
-      })
+      });
       //animacoes andar pra direita
       anims.create({
         key: "slime_verde_jump_right",
@@ -121,7 +121,7 @@ class Anims {
         }),
         frameRate: 15,
         repeat: -1
-      })
+      });
       anims.create({
         key: "slime_azul_jump_right",
         frames: anims.generateFrameNumbers('slime_azul', {
@@ -130,7 +130,7 @@ class Anims {
         }),
         frameRate: 15,
         repeat: -1
-      })
+      });
       anims.create({
         key: "slime_vermelho_jump_right",
         frames: anims.generateFrameNumbers('slime_vermelho', {
@@ -139,7 +139,7 @@ class Anims {
         }),
         frameRate: 15,
         repeat: -1
-      })
+      });
       //anims hit esquerda
       anims.create({
         key: "slime_verde_hit_left",
@@ -149,7 +149,7 @@ class Anims {
         }),
         frameRate: 15,
         repeat: -1
-      })
+      });
       anims.create({
         key: "slime_azul_hit_left",
         frames: anims.generateFrameNumbers('slime_azul_hit', {
@@ -158,7 +158,7 @@ class Anims {
         }),
         frameRate: 15,
         repeat: -1
-      })
+      });
       anims.create({
         key: "slime_vermelho_hit_left",
         frames: anims.generateFrameNumbers('slime_vermelho_hit', {
@@ -167,7 +167,7 @@ class Anims {
         }),
         frameRate: 15,
         repeat: -1
-      })
+      });
       //anims hit direita
       anims.create({
         key: "slime_verde_hit_right",
@@ -177,7 +177,7 @@ class Anims {
         }),
         frameRate: 15,
         repeat: -1
-      })
+      });
       anims.create({
         key: "slime_azul_hit_right",
         frames: anims.generateFrameNumbers('slime_azul_hit', {
@@ -186,7 +186,7 @@ class Anims {
         }),
         frameRate: 15,
         repeat: -1
-      })
+      });
       anims.create({
         key: "slime_vermelho_hit_right",
         frames: anims.generateFrameNumbers('slime_vermelho_hit', {
@@ -195,7 +195,7 @@ class Anims {
         }),
         frameRate: 15,
         repeat: -1
-      })
+      });
 
 
       //Animação - andar para esquerda
@@ -224,7 +224,7 @@ class Anims {
 
       //Animação - atacar
       anims.create({
-        key: 'sprite_hero_z',
+        key: 'sprite_hero_z_right',
         frames: anims.generateFrameNumbers('sprite_hero', {
           start: 10,
           end: 13
@@ -232,6 +232,17 @@ class Anims {
         frameRate: 8,
         repeat: 1
       });
+      anims.create(
+        {
+          key:"sprite_hero_z_left",
+          frames: anims.generateFrameNumbers('sprite_hero',{
+            start:14,
+            end:17
+          }), 
+          frameRate:8,
+          repeat:1
+        }
+      );
 
       //Animação - interagir
       anims.create({
@@ -282,4 +293,4 @@ class Anims {
   }
 
 }
-export default Anims
+export default Anims;
