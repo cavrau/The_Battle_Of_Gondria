@@ -1,7 +1,7 @@
 class MenuFases extends Phaser.Scene {
 
     constructor() {
-        super({ key: "MenuFases" })
+        super({ key: "MenuFases" });
     }
 
     preload() {

@@ -28,10 +28,11 @@ export default class Player {
     this.pegar.setVolume(0.1);
     this.hit.setVolume(0.1);
     // Criação da sprite na fase aplicando fisíca, vidas e pontuação
-    this.sprite;
+    this.sprite =undefined;
     this.lifes = 4;
     this.score = 0;
     this.chave = 1;
+    this.lastLeftLast = false;
 
   }
 
@@ -56,7 +57,7 @@ export default class Player {
   }
 
   criaIntervalo() {
-    this.intervalo = setInterval(() => this.secs++, 1000)
+    this.intervalo = setInterval(() => this.secs++, 1000);
   }
   deletaIntervalo() {
     clearInterval(this.intervalo);
@@ -114,7 +115,7 @@ export default class Player {
     if (this.menuIsSet == false) {
       if (this.secs > 59) {
         this.secs = 0;
-        this.mins++
+        this.mins++;
 
       }
 
@@ -177,6 +178,7 @@ export default class Player {
           e ativa o método de animção coerente com a direção */
           if (keys.left.isDown && sprite.x > 8) {
             sprite.setVelocityX(-120);
+            this.lastLeftLast = true;
             if (this.isAttacking == false) {
               sprite.anims.play("sprite_hero_left", true);
             }
@@ -186,6 +188,7 @@ export default class Player {
           } else if (keys.right.isDown && sprite.x < 6040) {
 
             sprite.setVelocityX(120);
+            this.lastLeftLast = false;
             if (this.isAttacking == false) {
               sprite.anims.play("sprite_hero_right", true);
             }
@@ -210,7 +213,11 @@ export default class Player {
 
           /*Caso o botão de Z seja ativado o ataque do heroi é ativado */
           if (keys.atack.isDown && this.isAttacking == false) {
-            sprite.anims.play("sprite_hero_z", true);
+            if(this.lastLeftLast ){
+              sprite.anims.play("sprite_hero_z_left", true);
+            }else{
+              sprite.anims.play("sprite_hero_z_right", true);
+            }
             this.checkHit(enemies.array);
             this.espada.play();
             this.isAttacking = true;
@@ -321,14 +328,16 @@ export default class Player {
       let enemy = enemies.children.entries[i];
       let xdistance = enemy.x - this.sprite.body.x;
       let ydistance = enemy.y - this.sprite.body.y;
+      if(this.lastLeftLast){
 
-      if ((ydistance < 72)) {
-        if (xdistance < 75 && xdistance > 0) {
+      }
+      if ((ydistance < 72 && ydistance>-72)) {
+        if (xdistance < 75 && xdistance > 0&&!this.lastLeftLast) {
           // console.log(enemy.lifes);
           enemy.lifes--;
           enemy.setVelocityX(140);
           enemy.setVelocityY(-130);
-        } else if (xdistance < 0 && xdistance > -75) {
+        } else if (xdistance < 0 && xdistance > -75 &&this.lastLeftLast) {
           enemy.setVelocityX(-140);
           enemy.setVelocityY(-130);
           enemy.lifes--;

@@ -11,8 +11,8 @@ class Level_1_boss extends Phaser.Scene {
 
   init(player){
     this.player = player;
-    // this.player.setScene(this);
-    console.log(this.player)
+    this.player.setScene(this);
+    console.log(this.player);
   }
   preload() {
     this.load.tilemapTiledJSON("map_1_boss", "assets/tilemap/map_fase_1_boss.json");
@@ -80,13 +80,13 @@ class Level_1_boss extends Phaser.Scene {
     // this.c_layer2.active = false;
 
     // /*INICIO - Debug para colisão */
-    const debugGraphics = this.add.graphics().setAlpha(0.75);
+    // const debugGraphics = this.add.graphics().setAlpha(0.75);
 
-    layer1.renderDebug(debugGraphics, {
-        tileColor: null, // Color of non-colliding tiles
-        collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-        faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-    });
+    // layer1.renderDebug(debugGraphics, {
+    //     tileColor: null, // Color of non-colliding tiles
+    //     collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
+    //     faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
+    // });
 
     this.colisao= false;
     // // layer2.renderDebug(debugGraphics, {
@@ -100,8 +100,10 @@ class Level_1_boss extends Phaser.Scene {
     this.cameras.main.startFollow(this.player.sprite);
 
     //Seta os limites do mapa que a camera acompanhará
-    this.cameras.main.setBounds(0, 0, 2592, 480);
 
+    this.cameras.main.setBounds(0, 0, 2592, 480);
+    
+    // this.cameras.main.width= 964;
     let spawnLayer = mapBoss.getObjectLayer("spawns");
     this.spawns = spawnLayer.objects;
 
@@ -153,8 +155,9 @@ class Level_1_boss extends Phaser.Scene {
     // // Chama o método que cria o hud do player
     // this.player.createHUD();
     // this.player.criaIntervalo();
+    this.cameras.main.backgroundColor.r=100;
   }
-
+  
   update() {
     this.player.update(this.slimes, this, this.alavanca, this.ponte, this.aldeao, this.casa, this.moedas);
     // this.player.updateHUD();

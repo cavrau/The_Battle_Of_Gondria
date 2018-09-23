@@ -11,14 +11,14 @@ class Slimes {
                 slime.lifes = 2;
                 slime.cor = "verde";
                 slime.isHit = { right: false, left: false };
-                slime.isDead = false
+                slime.isDead = false;
             }
             if (spawns[i].name === "Spawn_Slime_Azul") {
                 let slime = this.array.create(spawns[i].x, spawns[i].y, 'slime_azul');
                 slime.lifes = 3;
                 slime.cor = "azul";
                 slime.isHit = { right: false, left: false };
-                slime.isDead = false
+                slime.isDead = false;
                 // slime.setScale(1.7);
             }
             if (spawns[i].name === "Spawn_Slime_Vermelho") {
@@ -27,7 +27,7 @@ class Slimes {
                 slime.cor = "vermelho";
                 // slime.setScale(2.0);
                 slime.isHit = { right: false, left: false };
-                slime.isDead = false
+                slime.isDead = false;
             }
         }
        
@@ -68,14 +68,14 @@ class Slimes {
 
             if (slime.isHit.left && slime.lifes > 0) {
                 slime.anims.play("slime_" + slime.cor + "_hit_left", true);
-                setTimeout(() => {
+                setTimeout((slime) => {
                     slime.isHit.left = false;
-                }, 466)
+                }, 466);
             } else if (slime.isHit.right) {
                 slime.anims.play("slime_" + slime.cor + "_hit_right", true);
-                setTimeout(() => {
+                setTimeout((slime) => {
                     slime.isHit.right = false;
-                }, 466)
+                }, 466);
             } else if (slime.x - player.x < 150 && slime.x - player.x > 0) {
                 if (slime.body.onFloor()) {
                     this.scene.slime_sound.play();
@@ -91,7 +91,7 @@ class Slimes {
                     slime.setVelocityY(-200);
                 }
             } else {
-                slime.setTexture('slime_' + slime.cor, 0)
+                slime.setTexture('slime_' + slime.cor, 0);
                 slime.setVelocityX(0);
             }
             if (slime.lifes == 0) {
@@ -106,7 +106,7 @@ class Slimes {
                 setTimeout(() => {
                     this.atualizaPontuacao();
                     slime.destroy();
-                }, 466)
+                }, 466);
 
 
             }

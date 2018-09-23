@@ -149,7 +149,7 @@ class Level_1 extends Phaser.Scene {
 
         /*Cria a chave */
         this.layerObjetos = map.getObjectLayer('itensInteracao');
-        this.chave;
+        this.chave = null;
 
         for (let i = 0; i < this.layerObjetos.objects.length; i++) {
             if (this.layerObjetos.objects[i].name == 'chave') {
