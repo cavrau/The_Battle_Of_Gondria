@@ -111,12 +111,11 @@ class BootScene extends Phaser.Scene {
         this.load.image('btnVoltar', 'assets/images/botoes/btnVoltar.png');
         this.load.image('btnVoltarPress', 'assets/images/botoes/btnVoltarPress.png');
 
-        this.load.image('arvore1', 'assets/images/arvores/arvore1.png');
         this.load.image("fase_1_tileset", "assets/tilesets/fase_1_tileset.png");
         this.load.image('fase_1_sky', 'assets/background/fase_1_sky.png');
         this.load.image('fase_1_montanhas', 'assets/background/fase_1_montanhas.png');
         this.load.image('fase_1_ponte', 'assets/images/itensCenario/ponte.png');
-
+        
         this.load.spritesheet('slime_verde', 'assets/images/mobs/slime_verde_walk.png', {
             frameWidth: 18,
             frameHeight: 21
@@ -155,6 +154,14 @@ class BootScene extends Phaser.Scene {
         /*Faz load dos arquivos usados na cena casa e outras cenas  */
         this.load.tilemapTiledJSON('map_casa', 'assets/tilemap/map_casa.json');
         this.load.image('fase_casa', 'assets/tilesets/fase_casa.png');
+
+        /*Itens de Cenário */
+        this.load.image('itensCenario', 'assets/images/itensCenario/itensDeCenario.png');
+        this.load.spritesheet('sprite_pocao', 'assets/images/itensCenario/pocao.png', {
+            frameWidth: 15,
+            frameHeight: 16
+        });
+
     }
 }
 

@@ -5,7 +5,10 @@ export default class Player {
     this.sceneMainMenu = false;
     this.isInteracting = false;
     this.hasInteracted = false;
+    this.intoHause = false;
+    this.oldScene;
     this.scene = scene;
+
     this.timermins = 0;
     this.timerhours = 0;
     this.timersecs = 0;
@@ -34,7 +37,14 @@ export default class Player {
 
   //Criação dos botões que irão fazer a movimentação da sprite
   criaKeys() {
-    const { LEFT, RIGHT, UP, Z, C, P } = Phaser.Input.Keyboard.KeyCodes;
+    const {
+      LEFT,
+      RIGHT,
+      UP,
+      Z,
+      C,
+      P
+    } = Phaser.Input.Keyboard.KeyCodes;
     this.keys = this.scene.input.keyboard.addKeys({
       left: LEFT,
       right: RIGHT,
@@ -70,7 +80,10 @@ export default class Player {
 
   update(enemies, scene, alavanca, ponte, aldeao, casa, moedas) {
     let colisao = scene.colisao;
-    const { keys, sprite } = this;
+    const {
+      keys,
+      sprite
+    } = this;
 
     if (this.sceneMainMenu) {
       this.scene.scene.start('MainMenu');
@@ -256,33 +269,48 @@ export default class Player {
 
         }
       }
-    }//Fim da Criação da ponte
+    } //Fim da Criação da ponte
 
-    /*Parte que fará o jogador interagir com a casa*/
-    let distanciaCasaX;
-    let distanciaCadaY;
-    if (casa != null) {
-      distanciaCasaX = casa.x - this.sprite.body.x;
-      distanciaCadaY = casa.y - this.sprite.body.y;
-    }
+    if (this.intoHause == false) {
 
-    if (distanciaCadaY <= 64) {
-      if ((distanciaCasaX < 20) && (distanciaCasaX > -16) && (this.chave == 1)) {
-        this.scene.scene.launch('Level_casa', { scene_level: this.scene, player: this });
-        this.scene.scene.pause();
+      /*Parte que fará o jogador interagir com a casa*/
+      let distanciaCasaX;
+      let distanciaCadaY;
+      if (casa != null) {
+        distanciaCasaX = casa.x - this.sprite.body.x;
+        distanciaCadaY = casa.y - this.sprite.body.y;
       }
-    }
 
-    /*Parte em que o jogador sai da casa */
-    let distanciaPortaX = 864 - this.sprite.body.x;
-    let distanciaPortaY = 244 - this.sprite.body.y;
-
-    if (distanciaPortaY <= 64) {
-      if ((distanciaPortaX < 15) && (distanciaPortaX > -16)) {
-        this.scene.scene.pause();
-        this.scene.scene.resume('Level_1');
+      if (distanciaCadaY <= 64) {
+        if ((distanciaCasaX < 20) && (distanciaCasaX > -16) && (this.chave == 1)) {
+          this.oldScene = this.scene;
+          console.log(this.oldScene);
+          this.scene.scene.run('Level_casa', {
+            scene_level: this.scene,
+            player: this
+          });
+          this.intoHause = true;
+          this.scene.scene.pause();
+        }
       }
+
+    } else {
+
+      /*Parte em que o jogador sai da casa */
+      let distanciaPortaX = 864 - this.sprite.body.x;
+      let distanciaPortaY = 244 - this.sprite.body.y;
+
+      if (distanciaPortaY <= 64) {
+        if ((distanciaPortaX < 15) && (distanciaPortaX > -16)) {
+          this.scene.scene.moveBelow(this, this.player.oldScene);
+          // this.scene.scene.stop();
+          // this.scene.sendToBack();
+          // this.scene.scene.restart('Level_1');
+        }
+      }
+
     }
+
 
   }
 
@@ -361,8 +389,4 @@ export default class Player {
 
 
 
-}//FIM DA CLASSE PLAYER
-
-
-
-
+} //FIM DA CLASSE PLAYER

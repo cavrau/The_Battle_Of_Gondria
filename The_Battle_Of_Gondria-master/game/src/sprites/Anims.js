@@ -280,6 +280,19 @@ class Anims {
       });
 
       /*FIM - Animação da moeda */
+
+      /*ANIMS - Pocao */
+      anims.create({
+        key: 'potionEffect',
+        frames: anims.generateFrameNumbers('sprite_pocao', {
+          start: 0,
+          end: 2
+        }),
+        frameRate: 5,
+        repeat: -1,
+        yoyo: true
+      });
+
     }
     return anims;
   }

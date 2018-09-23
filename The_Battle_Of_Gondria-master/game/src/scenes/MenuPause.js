@@ -5,6 +5,7 @@ class MenuPause extends Phaser.Scene {
         })
     }
     init(data, x) {
+        console.log(data);
         this.player = data[0];
         this.name = data[1];
         this.player.deletaIntervalo();

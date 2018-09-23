@@ -10,12 +10,8 @@ class MainMenu extends Phaser.Scene {
         
         let anim = new Anims(this);
         anim.criaAnims(this.anims);
-        this.load.tilemapTiledJSON("map_mainMenu", "assets/tilemap/map_mainMenu.json");
-        
-
-
+        this.load.tilemapTiledJSON("map_mainMenu", "assets/tilemap/mainMenuMap.json");
         this.load.image('logo', 'assets/images/logo.png');
-
         
     }
 
@@ -27,13 +23,13 @@ class MainMenu extends Phaser.Scene {
         });
 
         let foreground = map.addTilesetImage('ground', 'fase_1_tileset');
-        let backforeground = map.addTilesetImage('arvore1', 'arvore1');
+        let middleground_2 = map.addTilesetImage('itensDeCenario', 'itensCenario');
         let middleground = map.addTilesetImage('montanhas', 'fase_1_montanhas');
         let background = map.addTilesetImage('sky', 'fase_1_sky');
 
         map.createStaticLayer('background', background, 0, 0);
         map.createStaticLayer('middleground', middleground, 0, 0);
-        map.createStaticLayer('backforeground', backforeground, 0, 0);
+        map.createStaticLayer('middleground_2', middleground_2, 0, 0);
         map.createStaticLayer('foreground', foreground, 0, 0);
 
         let hero = this.add.sprite(85, 375, 'sprite_hero');

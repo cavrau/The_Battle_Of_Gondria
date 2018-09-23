@@ -3,6 +3,7 @@ import Slimes from "../sprites/enemies/slimes.js";
 import Bandeira from "../sprites/objects/bandeira.js";
 import Moeda from "../sprites/objects/Moeda.js";
 import Chave from "../sprites/objects/Chave.js";
+import Pocao from "../sprites/objects/pocao.js";
 class Level_1 extends Phaser.Scene {
 
     constructor() {
@@ -35,20 +36,25 @@ class Level_1 extends Phaser.Scene {
         let blocos = map.addTilesetImage("blocos", "fase_1_tileset");
         let background = map.addTilesetImage('ceu', 'fase_1_sky');
         let midground = map.addTilesetImage('montanhas', 'fase_1_montanhas');
+        let itensCenario = map.addTilesetImage('itensDeCenario', 'itensCenario');
         let casa = map.addTilesetImage('casa', 'fase_casa');
 
         //Cria layers não colidivel
         map.createDynamicLayer('background', background, 0, 0);
         map.createDynamicLayer('midground', midground, 0, 0);
 
+        //Cria a layer da casa do aldeão
+        this.hauseLayer = map.createDynamicLayer('casa', casa);
+
+        map.createDynamicLayer('midground_2', itensCenario);
+        map.createDynamicLayer('midground_3', itensCenario);
+        
         //Cria e seta os blocos do tileset da layer 1
         let layer1 = map.createDynamicLayer("foreground_1", blocos);
 
         //Cria e seta os blocos do tileset da layer 2
         let layer2 = map.createStaticLayer("foreground_2", blocos);
 
-        //Cria a layer da casa do aldeão
-        this.hauseLayer = map.createDynamicLayer('casa', casa);
 
         //Seta os blocos que serão colidiveis na layer 1
         layer1.setCollision([1, 2, 3, 4, 5, 6, 10]);
@@ -130,6 +136,15 @@ class Level_1 extends Phaser.Scene {
         for (let i = 0; i < this.moedasObjetos.length; i++) {
             this.moeda = new Moeda(this, this.moedasObjetos[i].x, this.moedasObjetos[i].y);
             this.moeda.sprite.anims.play('giraMoeda');
+        }
+
+        /*Cria as Poções */
+        let PotionLayer = map.getObjectLayer("pocoes");
+        this.pocoesObjetos = PotionLayer.objects;
+
+        for (let i = 0; i < this.pocoesObjetos.length; i++) {
+            this.pocao = new Pocao(this, this.pocoesObjetos[i].x, this.pocoesObjetos[i].y);
+            this.pocao.sprite.anims.play('potionEffect');
         }
 
         /*Cria a chave */

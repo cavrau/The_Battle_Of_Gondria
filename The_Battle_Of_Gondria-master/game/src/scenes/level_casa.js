@@ -11,10 +11,13 @@ class Level_casa extends Phaser.Scene {
 
   init(data) {
     this.player = data.player;
-    this.levelScene = data.scene_leve;
+    // this.player.oldScene = data.scene_level;
   }
 
   create() {
+    // this.scene.bringToTop()
+
+    // console.log(this.player.oldScene);
     //Cria o mapa apartir do arquivos JSON que veio do Tiled
     const map = this.make.tilemap({ key: "map_casa" });
 
