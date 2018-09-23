@@ -10,6 +10,7 @@ class Level_casa extends Phaser.Scene {
   }
 
   init(data) {
+    this.name = data.scene;
     this.player = data.player;
     // this.player.oldScene = data.scene_level;
   }
@@ -53,6 +54,7 @@ class Level_casa extends Phaser.Scene {
 
     //Seta o bounce do player
     this.player.criaKeys();
+    this.player.keys.action.isDown=false;
     this.player.sprite.setBounce(0.1);
     this.player.sprite.setScale(0.5);
 
@@ -84,7 +86,6 @@ class Level_casa extends Phaser.Scene {
 
   update() {
     this.player.update(null, this, null, null, null, null, null);
-    this.player.updateHUD();
     this.secs = this.player.mins * 60 + this.player.timersecs;
   }
 

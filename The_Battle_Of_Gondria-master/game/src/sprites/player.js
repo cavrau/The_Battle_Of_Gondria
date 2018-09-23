@@ -5,10 +5,10 @@ export default class Player {
     this.sceneMainMenu = false;
     this.isInteracting = false;
     this.hasInteracted = false;
-    this.intoHause = false;
-    this.oldScene;
+    this.intoHouse = false;
+    this.oldScene = undefined;
     this.scene = scene;
-
+    this.hasIntoHouse = false;
     this.timermins = 0;
     this.timerhours = 0;
     this.timersecs = 0;
@@ -28,12 +28,12 @@ export default class Player {
     this.pegar.setVolume(0.1);
     this.hit.setVolume(0.1);
     // Criação da sprite na fase aplicando fisíca, vidas e pontuação
-    this.sprite =undefined;
+    this.sprite = undefined;
     this.lifes = 4;
     this.score = 0;
     this.chave = 1;
     this.lastLeftLast = false;
-
+    this.oldSprite = undefined;
   }
 
   //Criação dos botões que irão fazer a movimentação da sprite
@@ -55,9 +55,12 @@ export default class Player {
       pause: P
     });
   }
-
+  
   criaIntervalo() {
-    this.intervalo = setInterval(() => this.secs++, 1000);
+    this.intervalo = setInterval(() => {
+      this.secs++;
+      console.log(this.secs);
+    }, 1000);
   }
   deletaIntervalo() {
     clearInterval(this.intervalo);
@@ -78,10 +81,11 @@ export default class Player {
   timerFunc() {
     this.timer = this.timer + 1;
   }
-
+  
   update(enemies, scene, alavanca, ponte, aldeao, casa, moedas) {
+    this.updateHUD();
     let colisao = scene.colisao;
-    const {
+    let {
       keys,
       sprite
     } = this;
@@ -134,35 +138,35 @@ export default class Player {
         sprite.setTint(0xff0000);
         let jogarBtn = this.scene.add.image(this.scene.cameras.main.midPoint.x, 310, "btnJogar").setScale(0.65).setInteractive();
         jogarBtn.on("pointerdown", () => {
-          this.scene.scene.restart();
-        })
+          this.scene.scene.restart(this.scene);
+        });
 
       } else {
 
-        // Checa a colisão com a layer 2 de blocos
-        if (colisao == null) {
 
-          if (enemies != null) {
 
-            if (colisao == true) {
-              enemies.c_player.active = false;
-            } else {
-              enemies.c_player.active = true;
-            }
-
-          }
+        if (enemies != null) {
 
           if (colisao == true) {
-            setTimeout(() => {
-              if (sprite.body.onFloor()) {
-                scene.colisao = false;
-              }
-            }, 200)
+            enemies.c_player.active = false;
+          } else {
+            enemies.c_player.active = true;
           }
 
         } else {
           colisao = false;
         }
+
+        if (colisao == true) {
+          // console.log(sprite.body.blocked.down);
+          setTimeout(() => {
+            if (sprite.body.blocked.down) {
+              scene.colisao = false;
+            }
+          }, 200);
+        }
+
+
 
         if (this.scene.c_layer2 != null) {
 
@@ -213,12 +217,14 @@ export default class Player {
 
           /*Caso o botão de Z seja ativado o ataque do heroi é ativado */
           if (keys.atack.isDown && this.isAttacking == false) {
-            if(this.lastLeftLast ){
+            if (this.lastLeftLast) {
               sprite.anims.play("sprite_hero_z_left", true);
-            }else{
+            } else {
               sprite.anims.play("sprite_hero_z_right", true);
             }
-            this.checkHit(enemies.array);
+            if (enemies != null) {
+              this.checkHit(enemies.array);
+            }
             this.espada.play();
             this.isAttacking = true;
             setTimeout(() => {
@@ -247,7 +253,7 @@ export default class Player {
 
     /*Pega a diferença da distancia entre o player e a alavanca */
     let alavancaX;
-    let alavancaY
+    let alavancaY;
     if (alavanca != null) {
       alavancaX = alavanca[0].x - this.sprite.body.x;
       alavancaY = alavanca[0].y - this.sprite.body.y;
@@ -277,30 +283,33 @@ export default class Player {
         }
       }
     } //Fim da Criação da ponte
-
-    if (this.intoHause == false) {
+    console.log(this.intoHouse);
+    if (this.intoHouse == false&&this.hasIntoHouse ==false) {
 
       /*Parte que fará o jogador interagir com a casa*/
       let distanciaCasaX;
-      let distanciaCadaY;
+      let distanciaCasaY;
       if (casa != null) {
         distanciaCasaX = casa.x - this.sprite.body.x;
-        distanciaCadaY = casa.y - this.sprite.body.y;
+        distanciaCasaY = casa.y - this.sprite.body.y;
       }
-
-      if (distanciaCadaY <= 64) {
+      if (distanciaCasaY <= 64) {
         if ((distanciaCasaX < 20) && (distanciaCasaX > -16) && (this.chave == 1)) {
+          this.intoHouse = true;
+          this.keys.action.isDown = false;
+          this.oldSprite = this.sprite;
           this.oldScene = this.scene;
-          console.log(this.oldScene);
-          this.scene.scene.run('Level_casa', {
-            scene_level: this.scene,
+          this.scene.scene.launch('Level_casa', {
+            scene: this.scene,
             player: this
           });
-          this.intoHause = true;
+          this.scene.scene.sendToBack(this.scene);
+          this.scene.scene.bringToTop('level_casa');
           this.scene.scene.pause();
+          
         }
       }
-
+      
     } else {
 
       /*Parte em que o jogador sai da casa */
@@ -309,35 +318,54 @@ export default class Player {
 
       if (distanciaPortaY <= 64) {
         if ((distanciaPortaX < 15) && (distanciaPortaX > -16)) {
-          this.scene.scene.moveBelow(this, this.player.oldScene);
+          this.scene.scene.sendToBack(this.scene);
+          this.scene.scene.sleep(this.scene);            
+          this.sprite = this.oldSprite;
+          let cena = this.scene;
+          this.setScene(this.oldScene);
+          this.scene.scene.resume(this.scene);
+          this.intoHouse = false;
+          this.hasIntoHouse = true;
+          this.criaKeys();
+
+
+
+          //TO DO arrumar pro hud receber valores antigos;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+          this.createHUD();
+          
+          
+          
+          
+          
+          cena.scene.stop();
           // this.scene.scene.stop();
           // this.scene.sendToBack();
           // this.scene.scene.restart('Level_1');
         }
       }
-
+      
     }
-
-
+    
+    
   }
-
+  
   // método que checa se o jogabor bateu em algum inimigo
   checkHit(enemies) {
     for (let i = 0; i < enemies.children.entries.length; i++) {
-
+      
       let enemy = enemies.children.entries[i];
       let xdistance = enemy.x - this.sprite.body.x;
       let ydistance = enemy.y - this.sprite.body.y;
-      if(this.lastLeftLast){
-
+      if (this.lastLeftLast) {
+        
       }
-      if ((ydistance < 72 && ydistance>-72)) {
-        if (xdistance < 75 && xdistance > 0&&!this.lastLeftLast) {
+      if ((ydistance < 72 && ydistance > -72)) {
+        if (xdistance < 75 && xdistance > 0 && !this.lastLeftLast) {
           // console.log(enemy.lifes);
           enemy.lifes--;
           enemy.setVelocityX(140);
           enemy.setVelocityY(-130);
-        } else if (xdistance < 0 && xdistance > -75 &&this.lastLeftLast) {
+        } else if (xdistance < 0 && xdistance > -75 && this.lastLeftLast) {
           enemy.setVelocityX(-140);
           enemy.setVelocityY(-130);
           enemy.lifes--;
@@ -345,13 +373,13 @@ export default class Player {
       }
     }
   }
-
+  
   //Método que atualiza a quantidade de vidas do jogador
   updateHUD() {
 
     /*Atualiza a pontuação do jogador */
     this.scene.score.text = this.score;
-
+    console.log(this.secs);
     if (this.mins < 10 && this.secs < 10) {
       this.timeText.text = '0' + this.mins + ':0' + this.secs;
     } else if (this.mins < 10) {
@@ -390,7 +418,9 @@ export default class Player {
 
 
   }
-
+  setSprite(sprite){
+    this.sprite = sprite;
+  }
   setScene(scene) {
     this.scene = scene;
   }

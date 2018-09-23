@@ -21,4 +21,4 @@ class Pocao {
     pocao.destroy();
   }
 }
-export default Pocao
+export default Pocao;

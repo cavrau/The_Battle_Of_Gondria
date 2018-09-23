@@ -1,13 +1,15 @@
 class AjudaScene extends Phaser.Scene {
 
   constructor() {
-    super({ key: "AjudaScene" });
+    super({
+      key: "AjudaScene"
+    });
   }
 
 
   preload() {
 
-    
+
 
   }
 
@@ -36,7 +38,7 @@ class AjudaScene extends Phaser.Scene {
     let botaoZ = this.add.sprite(440, 120, 'setas').setScale(0.750);
     let botaoC = this.add.sprite(440, 240, 'setas').setScale(0.750);
     let botaoP = this.add.sprite(440, 360, 'setas').setScale(0.750);
-    
+
     botaoUp.anims.play('up');
     botaoLeft.anims.play('left');
     botaoRight.anims.play('right');
@@ -52,22 +54,21 @@ class AjudaScene extends Phaser.Scene {
     heroBotaoUp.anims.play('sprite_hero_right');
     heroBotaoLeft.anims.play('sprite_hero_left');
     heroBotaoRight.anims.play('sprite_hero_right');
-    this.heroBotaoZ.anims.play('sprite_hero_z');
+    this.heroBotaoZ.anims.play('sprite_hero_z_right');
     heroBotaoC.anims.play('sprite_hero_c');
 
     this.add.image(290, 120, 'pular').setScale(0.6);
-    this.add.image(290, 240, 'andarDireita').setScale(0.6);
-    this.add.image(290, 360, 'andarEsquerda').setScale(0.6);
+    this.add.image(290, 240, 'andarEsquerda').setScale(0.6);
+    this.add.image(290, 360, 'andarDireita').setScale(0.6);
     this.add.image(680, 120, 'atacar').setScale(0.8);
     this.add.image(680, 250, 'interagir').setScale(0.7);
     this.add.image(600, 370, 'pausar').setScale(0.7);
+    setInterval(() => {
+      this.heroBotaoZ.anims.play('sprite_hero_z_right');
+    }, 2000);
   }
+  update() {}
 
-  update() {
-      setInterval(()=>{
-        this.heroBotaoZ.anims.play('sprite_hero_z');
-      },2000)
-  }
 
 }
 export default AjudaScene;

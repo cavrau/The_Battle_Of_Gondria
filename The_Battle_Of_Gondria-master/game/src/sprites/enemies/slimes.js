@@ -38,14 +38,14 @@ class Slimes {
     }
 
     slimeHit(player, slime) {
-
+        this.colisao = true;
+        player.setVelocityX(0);
         if (player.x - slime.x <= 0) {
             slime.setVelocityX(200);
         } else {
             slime.setVelocityX(-200);
         }
         slime.setVelocityY(-200);
-        player.setVelocityX(0);
         if (slime.body.velocity.x <= 0) {
             player.setVelocityX(200);
         } else {
@@ -56,8 +56,6 @@ class Slimes {
         this.player.lifes -= 1;
         console.log(this.player.lifes + ' - player slime hit');
         this.player.hit.play();
-        this.colisao = true;
-
     }
 
     update(player) {

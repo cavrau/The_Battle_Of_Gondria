@@ -72,93 +72,93 @@ class Level_1 extends Phaser.Scene {
         this.player.criaKeys();
         //Seta a colisão do player com a layer 1
         this.physics.add.collider(this.player.sprite, layer1);
-
+        
         //Cria e seta os blocos do tileset da layer 2
         this.c_layer2 = this.physics.add.collider(this.player.sprite, layer2);
-
+        
         /*Desativa a colisão temporáriamente, pois o player poderá passar
         entre os blocos dessa layer sem precisar pular, mas caso seja sua 
         preferencia pular em cima a colisão é ativada no update() */
         this.c_layer2.active = false;
-
+        
         // /*INICIO - Debug para colisão */
         // const debugGraphics = this.add.graphics().setAlpha(0.75);
-
-        // camada1.renderDebug(debugGraphics, {
-        //     tileColor: null, // Color of non-colliding tiles
-        //     collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-        //     faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-        // });
-
-        // layer2.renderDebug(debugGraphics, {
-        //     tileColor: null, // Color of non-colliding tiles
-        //     collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-        //     faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-        // });
-        /*FIM - Debug para colisão */
-
-        //Cria uma camera que seguira o player
-        this.cameras.main.startFollow(this.player.sprite);
-
-        //Seta os limites do mapa que a camera acompanhará
-        this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-
-        let spawnLayer = map.getObjectLayer("spawns");
-        this.spawns = spawnLayer.objects;
-
-        this.parado = true;
-        this.slimes = new Slimes(this,layer1);
-        for (let i = 0; i < this.spawns.length; i++) {
-            if (this.spawns[i].name === "Spawn_Flag") {
-                this.bandeira = new Bandeira(this, this.spawns[i].x, this.spawns[i].y);
-            }
-        }
-        this.physics.add.collider(this.bandeira.sprite, layer1);
         
-
-        //Criação da alavanca
-        this.alavanca = map.createFromObjects('itensInteracao', 'alavanca', { key: 'sprite_alavanca' });
-
-        /*this.ponte recebe a layer que ficará a ponte e também as
-        coordenas de onde a ponte começa e termina*/
-        this.ponte = {
-            layer: layer1,
-            pXi: 145,
-            pXf: 151,
-            pYcollision: 12,
-            pYnCollision: 11
-        };
-
-        /*Cria as moedas */
-        let coinLayer = map.getObjectLayer("moedas");
-        this.moedasObjetos = coinLayer.objects;
-
-        for (let i = 0; i < this.moedasObjetos.length; i++) {
-            this.moeda = new Moeda(this, this.moedasObjetos[i].x, this.moedasObjetos[i].y);
-            this.moeda.sprite.anims.play('giraMoeda');
-        }
-
-        /*Cria as Poções */
-        let PotionLayer = map.getObjectLayer("pocoes");
-        this.pocoesObjetos = PotionLayer.objects;
-
-        for (let i = 0; i < this.pocoesObjetos.length; i++) {
-            this.pocao = new Pocao(this, this.pocoesObjetos[i].x, this.pocoesObjetos[i].y);
-            this.pocao.sprite.anims.play('potionEffect');
-        }
-
-        /*Cria a chave */
-        this.layerObjetos = map.getObjectLayer('itensInteracao');
-        this.chave = null;
-
-        for (let i = 0; i < this.layerObjetos.objects.length; i++) {
-            if (this.layerObjetos.objects[i].name == 'chave') {
-                this.chave = new Chave(this, this.layerObjetos.objects[i].x, this.layerObjetos.objects[i].y);
-            }
-        }
-
+        // camada1.renderDebug(debugGraphics, {
+            //     tileColor: null, // Color of non-colliding tiles
+            //     collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
+            //     faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
+            // });
+            
+            // layer2.renderDebug(debugGraphics, {
+                //     tileColor: null, // Color of non-colliding tiles
+                //     collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
+                //     faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
+                // });
+                /*FIM - Debug para colisão */
+                
+                //Cria uma camera que seguira o player
+                this.cameras.main.startFollow(this.player.sprite);
+                
+                //Seta os limites do mapa que a camera acompanhará
+                this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+                
+                let spawnLayer = map.getObjectLayer("spawns");
+                this.spawns = spawnLayer.objects;
+                
+                this.parado = true;
+                this.slimes = new Slimes(this,layer1);
+                for (let i = 0; i < this.spawns.length; i++) {
+                    if (this.spawns[i].name === "Spawn_Flag") {
+                        this.bandeira = new Bandeira(this, this.spawns[i].x, this.spawns[i].y);
+                    }
+                }
+                this.physics.add.collider(this.bandeira.sprite, layer1);
+                
+                
+                //Criação da alavanca
+                this.alavanca = map.createFromObjects('itensInteracao', 'alavanca', { key: 'sprite_alavanca' });
+                
+                /*this.ponte recebe a layer que ficará a ponte e também as
+                coordenas de onde a ponte começa e termina*/
+                this.ponte = {
+                    layer: layer1,
+                    pXi: 145,
+                    pXf: 151,
+                    pYcollision: 12,
+                    pYnCollision: 11
+                };
+                
+                /*Cria as moedas */
+                let coinLayer = map.getObjectLayer("moedas");
+                this.moedasObjetos = coinLayer.objects;
+                
+                for (let i = 0; i < this.moedasObjetos.length; i++) {
+                    this.moeda = new Moeda(this, this.moedasObjetos[i].x, this.moedasObjetos[i].y);
+                    this.moeda.sprite.anims.play('giraMoeda');
+                }
+                
+                /*Cria as Poções */
+                let PotionLayer = map.getObjectLayer("pocoes");
+                this.pocoesObjetos = PotionLayer.objects;
+                
+                for (let i = 0; i < this.pocoesObjetos.length; i++) {
+                    this.pocao = new Pocao(this, this.pocoesObjetos[i].x, this.pocoesObjetos[i].y);
+                    this.pocao.sprite.anims.play('potionEffect');
+                }
+                
+                /*Cria a chave */
+                this.layerObjetos = map.getObjectLayer('itensInteracao');
+                this.chave = null;
+                
+                for (let i = 0; i < this.layerObjetos.objects.length; i++) {
+                    if (this.layerObjetos.objects[i].name == 'chave') {
+                        this.chave = new Chave(this, this.layerObjetos.objects[i].x, this.layerObjetos.objects[i].y);
+                    }
+                }
+                
         /*Criação da interação da casa*/
-
+        this.moved= false;
         /*Coordenadas da porta da casa que o jogador
         terá que interagir */
         this.casa = {
@@ -169,14 +169,13 @@ class Level_1 extends Phaser.Scene {
         // Chama o método que cria o hud do player
         this.player.createHUD();
         this.player.criaIntervalo();
+        this.colisao= false;
     }
 
     update() {
         this.player.update(this.slimes, this, this.alavanca, this.ponte, this.aldeao, this.casa, this.moedas);
-        this.player.updateHUD();
         this.slimes.update(this.player.sprite, this.slimes);
         this.secs = this.player.mins * 60 + this.player.timersecs;
-
     }
 
 }export default Level_1;
