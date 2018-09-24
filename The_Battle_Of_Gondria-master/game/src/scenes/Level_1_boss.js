@@ -1,5 +1,5 @@
 import Player from "../sprites/player.js";
-import Slimes from "../sprites/enemies/slimes.js";
+import Slime_boss from "../sprites/enemies/Slime_boss.js";
 import Bandeira from "../sprites/objects/bandeira.js";
 class Level_1_boss extends Phaser.Scene {
 
@@ -29,14 +29,14 @@ class Level_1_boss extends Phaser.Scene {
     let middleground = mapBoss.addTilesetImage('fase_1_montanhas', 'fase_1_montanhas');
 
     //Cria layers não colidivel
-    mapBoss.createDynamicLayer('background_boss', background, 0, 0);
-    mapBoss.createDynamicLayer('middleground_boss', middleground, 0, 0);
+    mapBoss.createDynamicLayer('background', background, 0, 0);
+    mapBoss.createDynamicLayer('middleground', middleground, 0, 0);
 
     //Cria e seta os blocos do tileset da layer 1
-    let layer1 = mapBoss.createStaticLayer("foreground_1_boss", tilesetBlocos,0,0);
+    let layer1 = mapBoss.createStaticLayer("foreground_1", tilesetBlocos,0,0);
 
     //Cria e seta os blocos do tileset da layer 2
-    let layer2 = mapBoss.createStaticLayer("foreground_2_boss", tilesetBlocos, 0, 0);
+    let layer2 = mapBoss.createStaticLayer("foreground_2", tilesetBlocos, 0, 0);
 
     
     //Seta os blocos que serão colidiveis na layer 1
@@ -53,9 +53,8 @@ class Level_1_boss extends Phaser.Scene {
 
     });
     layer2.forEachTile(tile => {
-      // alert('oieeeee');
+
       if(tile.index != -1){
-        // console.log(tile);
         tile.collideDown = false;
         tile.collideUp = true;
         tile.collideLeft = false;
@@ -63,8 +62,8 @@ class Level_1_boss extends Phaser.Scene {
       }
 
     });
-    console.log(layer1);
     layer1.setCollisionByProperty({ collides: true });
+    layer2.setCollisionBetween(1,10);
     // console.log(layer1.setCollisionByProperty({ collides: true }));
     //Seta os blocos que serão colidiveis na layer 2
     // layer2.setCollisionBetween(1, 6);
@@ -88,10 +87,10 @@ class Level_1_boss extends Phaser.Scene {
     entre os blocos dessa layer sem precisar pular, mas caso seja sua 
     preferencia pular em cima a colisão é ativada no update() */
 
-    // /*INICIO - Debug para colisão */
+    // // /*INICIO - Debug para colisão */
     // const debugGraphics = this.add.graphics().setAlpha(0.75);
 
-    // layer1.renderDebug(debugGraphics, {
+    // layer2.renderDebug(debugGraphics, {
     //     tileColor: null, // Color of non-colliding tiles
     //     collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
     //     faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
@@ -105,19 +104,12 @@ class Level_1_boss extends Phaser.Scene {
     // // });
     // /*FIM - Debug para colisão */
 
-    //Cria uma camera que seguira o player
-    this.cameras.main.startFollow(this.player.sprite);
-
-    //Seta os limites do mapa que a camera acompanhará
-
-    this.cameras.main.setBounds(0, 0, 2592, 480);
     
     // this.cameras.main.width= 964;
     let spawnLayer = mapBoss.getObjectLayer("spawns");
     this.spawns = spawnLayer.objects;
-
-    this.parado = true;
-    this.slimes = new Slimes(this, layer1);
+    this.boss = new Slime_boss(this, this.spawns);
+    this.physics.add.collider(this.boss.boss,layer1);
     this.slime_sound = this.sound.add('slime_jump');
     this.slime_sound.setVolume(0.3);
     // //Criação da alavanca
@@ -164,14 +156,12 @@ class Level_1_boss extends Phaser.Scene {
     // // Chama o método que cria o hud do player
     // this.player.createHUD();
     // this.player.criaIntervalo();
-    this.cameras.main.backgroundColor.r=100;
-    console.log(this.cameras.main)
+    // this.cameras.main.backgroundColor.r=100;
+    
   }
   
   update() {
     this.player.update(this.slimes, this, this.alavanca, this.ponte, this.aldeao, this.casa, this.moedas);
-    // this.player.updateHUD();
-    this.slimes.update(this.player.sprite, this.slimes);
     this.secs = this.player.mins * 60 + this.player.timersecs;
 
   }
