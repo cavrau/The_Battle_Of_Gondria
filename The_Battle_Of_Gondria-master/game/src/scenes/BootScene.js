@@ -162,6 +162,11 @@ class BootScene extends Phaser.Scene {
             frameHeight: 16
         });
 
+        /*Sprite do aldeão*/
+        this.load.spritesheet('sprite_aldeao', 'assets/images/mobs/aldeao.png', {
+            frameWidth: 31,
+            frameHeight: 38
+        });
     }
 }
 

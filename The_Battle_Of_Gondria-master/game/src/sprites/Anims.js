@@ -302,6 +302,19 @@ class Anims {
         yoyo: true
       });
 
+      anims.create({
+        key: 'aldeaoMove',
+        frames: anims.generateFrameNumbers('sprite_aldeao', {
+          start: 0,
+          end: 1
+        }),
+        frameRate: 5,
+        repeat: -1,
+        yoyo: true
+      });
+
+
+
     }
     return anims;
   }

@@ -959,8 +959,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":3123,
-                 "y":384
+                 "x":3344,
+                 "y":374
                 }, 
                 {
                  "height":0,
@@ -1045,6 +1045,18 @@
                  "width":0,
                  "x":6001,
                  "y":126
+                }, 
+                {
+                 "height":0,
+                 "id":197,
+                 "name":"Spawn_aldeao",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":3109,
+                 "y":364
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1053,7 +1065,7 @@
          "y":0
         }],
  "nextlayerid":22,
- "nextobjectid":197,
+ "nextobjectid":198,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"2018.08.22",

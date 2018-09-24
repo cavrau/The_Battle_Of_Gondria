@@ -4,6 +4,7 @@ import Bandeira from "../sprites/objects/bandeira.js";
 import Moeda from "../sprites/objects/Moeda.js";
 import Chave from "../sprites/objects/Chave.js";
 import Pocao from "../sprites/objects/pocao.js";
+import Aldeao from "../sprites/Aldeao.js";
 class Level_1 extends Phaser.Scene {
 
     constructor() {
@@ -76,7 +77,7 @@ class Level_1 extends Phaser.Scene {
 
         //Cria um player dentro da cena da fase, com coordenadas x e y
         this.player = new Player(this);
-        this.player.spawnPlayer(6020, 0);
+        this.player.spawnPlayer(3055, 352);
         
         //Seta o bounce do player
         this.player.sprite.setBounce(0.1);
@@ -120,8 +121,13 @@ class Level_1 extends Phaser.Scene {
                     if (this.spawns[i].name === "Spawn_Flag") {
                         this.bandeira = new Bandeira(this, this.spawns[i].x, this.spawns[i].y);
                     }
+                    if (this.spawns[i].name === "Spawn_aldeao") {
+                        this.aldeao = new Aldeao(this, this.spawns[i].x, this.spawns[i].y);
+                        this.aldeao.sprite.play('aldeaoMove');
+                    }
                 }
                 this.physics.add.collider(this.bandeira.sprite, layer1);
+                this.physics.add.collider(this.aldeao.sprite, layer1);
                 
                 
                 //Criação da alavanca
