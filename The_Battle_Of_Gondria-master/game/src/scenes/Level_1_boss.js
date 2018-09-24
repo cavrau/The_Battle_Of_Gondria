@@ -12,7 +12,7 @@ class Level_1_boss extends Phaser.Scene {
   init(player){
     this.player = player;
     this.player.setScene(this);
-    console.log(this.player);
+    // console.log(this.player);
   }
   preload() {
     this.load.tilemapTiledJSON("map_1_boss", "assets/tilemap/map_fase_1_boss.json");
@@ -52,6 +52,17 @@ class Level_1_boss extends Phaser.Scene {
       }
 
     });
+    layer2.forEachTile(tile => {
+      // alert('oieeeee');
+      if(tile.index != -1){
+        // console.log(tile);
+        tile.collideDown = false;
+        tile.collideUp = true;
+        tile.collideLeft = false;
+        tile.collideRight = false;
+      }
+
+    });
     console.log(layer1);
     layer1.setCollisionByProperty({ collides: true });
     // console.log(layer1.setCollisionByProperty({ collides: true }));
@@ -59,7 +70,7 @@ class Level_1_boss extends Phaser.Scene {
     // layer2.setCollisionBetween(1, 6);
 
     //Cria um player dentro da cena da fase, com coordenadas x e y
-    this.player.spawnPlayer(30, 90);
+    this.player.spawnPlayer(20, 90);
     
     //Seta o bounce do player
     this.player.sprite.setBounce(0.1);
@@ -70,14 +81,12 @@ class Level_1_boss extends Phaser.Scene {
 
     //Seta a colisão do player com a layer 1
     this.physics.add.collider(this.player.sprite, layer1);
-    console.log(this.physics.add.collider(this.player.sprite, layer1));
     // Cria e seta os blocos do tileset da layer 2
-    this.c_layer2 = this.physics.add.collider(this.player.sprite, layer2);
+    this.physics.add.collider(this.player.sprite, layer2);
 
     /*Desativa a colisão temporáriamente, pois o player poderá passar
     entre os blocos dessa layer sem precisar pular, mas caso seja sua 
     preferencia pular em cima a colisão é ativada no update() */
-    // this.c_layer2.active = false;
 
     // /*INICIO - Debug para colisão */
     // const debugGraphics = this.add.graphics().setAlpha(0.75);
@@ -156,6 +165,7 @@ class Level_1_boss extends Phaser.Scene {
     // this.player.createHUD();
     // this.player.criaIntervalo();
     this.cameras.main.backgroundColor.r=100;
+    console.log(this.cameras.main)
   }
   
   update() {

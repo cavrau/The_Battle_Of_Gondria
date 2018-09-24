@@ -62,9 +62,21 @@ class Level_1 extends Phaser.Scene {
         //Seta os blocos que serão colidiveis na layer 2
         layer2.setCollisionBetween(1, 6);
 
+        layer2.forEachTile(tile => {
+            // alert('oieeeee');
+            if(tile.index != -1){
+              // console.log(tile);
+              tile.collideDown = false;
+              tile.collideUp = true;
+              tile.collideLeft = false;
+              tile.collideRight = false;
+            }
+      
+          });
+
         //Cria um player dentro da cena da fase, com coordenadas x e y
         this.player = new Player(this);
-        this.player.spawnPlayer(3055, 352);
+        this.player.spawnPlayer(6020, 0);
         
         //Seta o bounce do player
         this.player.sprite.setBounce(0.1);
@@ -74,12 +86,8 @@ class Level_1 extends Phaser.Scene {
         this.physics.add.collider(this.player.sprite, layer1);
         
         //Cria e seta os blocos do tileset da layer 2
-        this.c_layer2 = this.physics.add.collider(this.player.sprite, layer2);
-        
-        /*Desativa a colisão temporáriamente, pois o player poderá passar
-        entre os blocos dessa layer sem precisar pular, mas caso seja sua 
-        preferencia pular em cima a colisão é ativada no update() */
-        this.c_layer2.active = false;
+        this.physics.add.collider(this.player.sprite, layer2);
+        console.log(this.cameras.main);
         
         // /*INICIO - Debug para colisão */
         // const debugGraphics = this.add.graphics().setAlpha(0.75);

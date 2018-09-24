@@ -59,7 +59,7 @@ export default class Player {
   criaIntervalo() {
     this.intervalo = setInterval(() => {
       this.secs++;
-      console.log(this.secs);
+      // console.log(this.secs);
     }, 1000);
   }
   deletaIntervalo() {
@@ -167,16 +167,6 @@ export default class Player {
         }
 
 
-
-        if (this.scene.c_layer2 != null) {
-
-          if (sprite.body.blocked.down && sprite.body.velocity.y < 1) {
-            this.scene.c_layer2.active = false;
-          } else {
-            this.scene.c_layer2.active = true;
-          }
-
-        }
         if (colisao == false) {
           /*Ao apertar a seta a esquerda o personagem se move a direção
           e ativa o método de animção coerente com a direção */
@@ -379,7 +369,7 @@ export default class Player {
 
     /*Atualiza a pontuação do jogador */
     this.scene.score.text = this.score;
-    console.log(this.secs);
+    // console.log(this.secs);
     if (this.mins < 10 && this.secs < 10) {
       this.timeText.text = '0' + this.mins + ':0' + this.secs;
     } else if (this.mins < 10) {
