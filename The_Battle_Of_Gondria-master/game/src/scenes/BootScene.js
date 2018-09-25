@@ -29,8 +29,11 @@ class BootScene extends Phaser.Scene {
         this.load.image('btnAjudaPress', 'assets/images/botoes/btnAjudaPress.png');
 
 
+        this.load.image('btnInicio', 'assets/images/botoes/btnInicio.png');
+        this.load.image('btnInicioPress', 'assets/images/botoes/btnInicioPress.png');
+
         /*Faz load dos arquivos usados na cena Ajuda e outras cenas  */
-        this.load.image('bgAjuda', 'assets/background/scene_menus.png');
+        this.load.image('bgGeral', 'assets/background/scene_menus.png');
 
         this.load.image('btnVoltar', 'assets/images/botoes/btnVoltar.png');
         this.load.image('btnVoltarPress', 'assets/images/botoes/btnVoltarPress.png');
@@ -46,9 +49,6 @@ class BootScene extends Phaser.Scene {
             key: 'setas', url: 'assets/images/botoes/setas.png',
             frameConfig: { frameWidth: 80, frameHeight: 80 }
         });
-
-        /*Faz load dos arquivos usados na cena menuFases e outras cenas  */
-        this.load.image('bgFases', 'assets/background/scene_menus.png');
 
         this.load.image('btnFase1', 'assets/images/botoes/btnFase1.png');
         this.load.image('btnFase1Press', 'assets/images/botoes/btnFase1Press.png');

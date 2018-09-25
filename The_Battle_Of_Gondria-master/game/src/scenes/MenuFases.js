@@ -15,7 +15,7 @@ class MenuFases extends Phaser.Scene {
 
         // music.play();
 
-        this.add.image(432, 240, 'bgFases');
+        this.add.image(432, 240, 'bgGeral');
 
         this.voltar = this.add.image(785, 35, 'btnVoltar').setInteractive();
         this.voltar.setScale(0.6);
@@ -66,7 +66,7 @@ class MenuFases extends Phaser.Scene {
                 btn.setTexture("btnFase2Press");
                 setTimeout(() => {
                     btn.setTexture("btnFase2");
-                    this.scene.scene.start('Level_1_boss');
+                    this.scene.scene.start('CalculaPontuacao');
                 }, 150);
             });
 

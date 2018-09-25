@@ -79,7 +79,7 @@ class Level_1 extends Phaser.Scene {
 
         //Cria um player dentro da cena da fase, com coordenadas x e y
         this.player = new Player(this);
-        this.player.spawnPlayer(3055, 352);
+        this.player.spawnPlayer(3055, 0);
 
         //Seta o bounce do player
         this.player.sprite.setBounce(0.1);
@@ -121,7 +121,7 @@ class Level_1 extends Phaser.Scene {
         this.slimes = new Slimes(this, layer1);
         for (let i = 0; i < this.spawns.length; i++) {
             if (this.spawns[i].name === "Spawn_Flag") {
-                this.bandeira = new Bandeira(this, this.spawns[i].x, this.spawns[i].y);
+                this.bandeira = new Bandeira(this, this.spawns[i].x, this.spawns[i].y, this.player);
             }
             if (this.spawns[i].name === "Spawn_aldeao") {
                 this.aldeao = new Aldeao(this, this.spawns[i].x, this.spawns[i].y);
