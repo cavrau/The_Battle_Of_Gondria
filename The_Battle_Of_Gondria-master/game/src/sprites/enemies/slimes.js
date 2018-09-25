@@ -1,28 +1,34 @@
 class Slimes {
-    constructor(scene,camada1) {
+    constructor(scene, camada1) {
         this.scene = scene;
         const anims = scene.anims;
         let spawns = this.scene.spawns;
         this.array = this.scene.physics.add.group();
         for (let i = 0; i < spawns.length; i++) {
-            if(spawns[i].name==='Spawn_Slime_Boss'){
+            if (spawns[i].name === 'Spawn_Slime_Boss') {
 
-                this.boss = this.array.create(spawns[i].x,spawns[i].y,'slime_verde');
+                this.boss = this.array.create(spawns[i].x, spawns[i].y, 'slime_verde');
                 this.boss.setScale(5.0);
-                this.boss.lifes = 1;
+                this.boss.lifes = 4;
                 this.boss.canHit = false;
                 this.boss.cor = "verde";
-                this.boss.isHit = { right: false, left: false };
+                this.boss.isHit = {
+                    right: false,
+                    left: false
+                };
                 this.boss.isDead = false;
-                this.boss.jumps = 0 ;
-                this.boss.canMove= true;
+                this.boss.jumps = 0;
+                this.boss.canMove = true;
             }
             if (spawns[i].name === "Spawn_Slime_Verde") {
                 let slime = this.array.create(spawns[i].x, spawns[i].y, 'slime_verde');
                 // slime.setScale(1.5);
                 slime.lifes = 2;
                 slime.cor = "verde";
-                slime.isHit = { right: false, left: false };
+                slime.isHit = {
+                    right: false,
+                    left: false
+                };
                 slime.isDead = false;
                 slime.canHit = true;
                 slime.jumps = 0;
@@ -31,7 +37,10 @@ class Slimes {
                 let slime = this.array.create(spawns[i].x, spawns[i].y, 'slime_azul');
                 slime.lifes = 3;
                 slime.cor = "azul";
-                slime.isHit = { right: false, left: false };
+                slime.isHit = {
+                    right: false,
+                    left: false
+                };
                 slime.isDead = false;
                 slime.setScale(1.7);
                 slime.canHit = true;
@@ -42,13 +51,16 @@ class Slimes {
                 slime.lifes = 4;
                 slime.cor = "vermelho";
                 slime.setScale(1.7);
-                slime.isHit = { right: false, left: false };
+                slime.isHit = {
+                    right: false,
+                    left: false
+                };
                 slime.isDead = false;
                 slime.canHit = true;
                 slime.jumps = 0;
             }
         }
-       
+
         //Cria a colisão do slime com a layer 1
         this.scene.physics.add.collider(this.array, camada1);
         this.c_player = this.scene.physics.add.collider(this.array, this.scene.player.sprite, this.slimeHit, null, this.scene);
@@ -56,7 +68,7 @@ class Slimes {
     }
 
     slimeHit(player, slime) {
-        if(slime.stop!=true){
+        if (slime.stop != true) {
 
             this.colisao = true;
             player.setVelocityX(0);
@@ -71,89 +83,87 @@ class Slimes {
             } else {
                 player.setVelocityX(-200);
             }
-            
+
             player.setVelocityY(-150);
             this.player.lifes -= 1;
             console.log(this.player.lifes + ' - player slime hit');
             this.player.hit.play();
-        }else{
+        } else {
             slime.setVelocityX(0);
         }
-        }
+    }
 
     update(player) {
         this.player = player;
         for (let i = 0; i < this.array.children.entries.length; i++) {
             let slime = this.array.children.entries[i];
-            if(slime===this.boss){
-                if(slime.canMove){
-                    if(slime.jumps == 10||slime.jumps == 20|| slime.jumps ==30){
+            if (slime === this.boss) {
+                if (slime.lifes == 0) {
+                    this.c_player.active = false;
+                    let data = {
+                        player: this.scene.player
+                    };
+                    slime.lifes = -1;
+                    setTimeout(
+                        () => slime.destroy(), 2000);
+                    this.scene.player.deletaIntervalo();
+                    setTimeout(() => {
+                        this.scene.scene.start('CalculaPontuacao', data);
+                    }, 5000);
+                } else if (slime.canMove) {
+                    if (slime.jumps == 10 || slime.jumps == 20 || slime.jumps == 30) {
                         slime.canMove = false;
-                        slime.canHit =true;
+                        slime.canHit = true;
                         slime.anims.play("slime_" + slime.cor + "_hit_left", true);
                         slime.stop = true;
                         slime.setVelocityX(0);
                         slime.setVelocityY(0);
                         slime.jumps++;
-                        setTimeout(()=>{
+                        setTimeout(() => {
                             slime.canHit = false;
                             slime.canMove = true;
                             slime.stop = false;
-                        },5000);
+                        }, 5000);
 
-                    }else if(slime.jumps>30){
-                        slime.jumps= 0;
-                    }else if(player.x>64&&player.x<800){
-                        if(player.x<slime.x){
-                            if(slime.body.onFloor()){
+                    } else if (slime.jumps > 30) {
+                        slime.jumps = 0;
+                    } else if (player.x > 64 && player.x < 800) {
+                        if (player.x < slime.x) {
+                            if (slime.body.onFloor()) {
                                 slime.jumps++;
-                                if(slime.canHit==false){
+                                if (slime.canHit == false) {
                                     this.scene.cameras.main.shake(50);
                                 }
-                                slime.setVelocityX(-150);
+                                slime.setVelocityX(-100);
                                 slime.setVelocityY(-400);
                             }
-                        }else if(player.x>slime.x){
-                            if(slime.body.onFloor()){
+                        } else if (player.x > slime.x) {
+                            if (slime.body.onFloor()) {
                                 slime.jumps++;
-                                if(slime.canHit==false){
+                                if (slime.canHit == false) {
                                     this.scene.cameras.main.shake(50);
                                 }
-                                slime.setVelocityX(150);
+                                slime.setVelocityX(100);
                                 slime.setVelocityY(-400);
                             }
-                        }else{
-                            if(slime.body.onFloor()){
+                        } else {
+                            if (slime.body.onFloor()) {
                                 slime.jumps++;
-                                if(slime.canHit==false){
+                                if (slime.canHit == false) {
                                     this.scene.cameras.main.shake(50);
                                 }
                                 slime.setVelocityX(0);
                                 slime.setVelocityY(-300);
                             }
                         }
-                        if(slime.lifes == 0){
-                            this.c_player.active =false;
-                            let data = {
-                                secs:this.scene.secs,
-                                pontuacao : this.scene.player.score
-                            };
-                            slime.lifes=-1;
-                            setTimeout(
-                                ()=>slime.destroy(),2000);
-                            this.scene.player.deletaIntervalo();
-                            setTimeout(()=>{
-                                this.scene.scene.start('CalculaPontuacao',data);
-                            },5000);
-                        }
                     }
-                    }else{
-                        
-                    }
-                }else{
-                    
-                    if (slime.isHit.left && slime.lifes > 0) {
-                        slime.anims.play("slime_" + slime.cor + "_hit_left", true);
+                } else {
+
+                }
+            } else {
+
+                if (slime.isHit.left && slime.lifes > 0) {
+                    slime.anims.play("slime_" + slime.cor + "_hit_left", true);
                     setTimeout((slime) => {
                         slime.isHit.left = false;
                     }, 466);
@@ -181,20 +191,20 @@ class Slimes {
                     slime.setVelocityX(0);
                 }
                 if (slime.lifes == 0) {
-                    
+
                     if (slime.isHit.left) {
                         slime.anims.play("slime_" + slime.cor + "_hit_left", true);
                     } else if (slime.isHit.right) {
                         slime.anims.play("slime_" + slime.cor + "_hit_right", true);
-                    }   
-                    
+                    }
+
                     slime.isDead = true;
                     setTimeout(() => {
                         this.atualizaPontuacao();
                         slime.destroy();
                     }, 466);
-                    
-                    
+
+
                 }
                 if (slime.y > 490) {
                     slime.destroy();
@@ -202,15 +212,15 @@ class Slimes {
             }
         }
 
-        
+
     }
 
-    atualizaPontuacao(){
-        for(let i = 0; i < this.array.children.entries.length; i++){
+    atualizaPontuacao() {
+        for (let i = 0; i < this.array.children.entries.length; i++) {
 
             let slime = this.array.children.entries[i];
 
-            if(slime.isDead == true){
+            if (slime.isDead == true) {
 
                 if (slime.cor == 'vermelho') {
                     this.scene.player.score += 60;

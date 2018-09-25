@@ -9,8 +9,8 @@ class Level_1_boss extends Phaser.Scene {
     });
   }
 
-  init(player){
-    this.player = player;
+  init(data){
+    this.player = data.player;
     this.player.setScene(this);
     // console.log(this.player);
   }

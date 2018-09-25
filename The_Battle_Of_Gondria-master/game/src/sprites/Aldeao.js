@@ -21,7 +21,7 @@ class Aldeao {
           if((xdistance < 60)&&(xdistance > -16)){
             this.msgOn = true;
             this.msg = scene.add.image(this.sprite.x + -100, this.sprite.y + -100, 'msg');
-            this.msgText = scene.add.bitmapText(this.sprite.x + -230, this.sprite.y + -135, 'myfont', msg, 30);; 
+            this.msgText = scene.add.bitmapText(this.sprite.x + -230, this.sprite.y + -135, 'myfont', msg, 30); 
             this.excluiMsg();
           }
         }
@@ -34,7 +34,6 @@ class Aldeao {
     setTimeout(() => {
       this.msg.destroy();
       this.msgText.destroy();
-      // console.log('oieeeeeee');
     }, 5000);
   }
 

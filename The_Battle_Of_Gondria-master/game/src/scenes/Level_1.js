@@ -121,7 +121,7 @@ class Level_1 extends Phaser.Scene {
         this.slimes = new Slimes(this, layer1);
         for (let i = 0; i < this.spawns.length; i++) {
             if (this.spawns[i].name === "Spawn_Flag") {
-                this.bandeira = new Bandeira(this, this.spawns[i].x, this.spawns[i].y);
+                this.bandeira = new Bandeira(this, this.spawns[i].x, this.spawns[i].y, this.player);
             }
             if (this.spawns[i].name === "Spawn_aldeao") {
                 this.aldeao = new Aldeao(this, this.spawns[i].x, this.spawns[i].y);

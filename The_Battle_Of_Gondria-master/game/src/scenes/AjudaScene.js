@@ -19,7 +19,7 @@ class AjudaScene extends Phaser.Scene {
 
     // music.play();
 
-    this.add.image(432, 240, 'bgAjuda');
+    this.add.image(432, 240, 'bgGeral');
 
     this.voltarBtn = this.add.image(785, 35, 'btnVoltar').setInteractive();
     this.voltarBtn.setScale(0.6);
