@@ -25,7 +25,7 @@ class CalculaPontuacao extends Phaser.Scene {
             btn.setTexture("btnInicioPress");
             setTimeout(() => {
                 btn.setTexture("btnInicio");
-                this.scene.scene.start('MainMenu');
+                this.scene.scene.start('MenuFases');
             }, 150)
         });
 
