@@ -1,7 +1,8 @@
 
 class Chave {
-  constructor(scene, x, y) {
+  constructor(scene, x, y,player) {
     this.scene = scene;
+    this.player = player;
     // console.log(this.scene);
     // console.log(this.scene.player.chave);
     this.sprite = this.scene.physics.add.sprite(x, y, "sprite_chave", 0);
@@ -14,8 +15,7 @@ class Chave {
 
   coletaChave(chave, player) {
     player.score += 40;
-    // console.log(player.chave);
-    player.chave = 1;
+    this.player.chave = 1;
     chave.destroy();
   }
 }

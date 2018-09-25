@@ -167,6 +167,9 @@ class BootScene extends Phaser.Scene {
             frameWidth: 31,
             frameHeight: 38
         });
+
+        this.load.image('msg', 'assets/images/huds/msg.png');
+
     }
 }
 

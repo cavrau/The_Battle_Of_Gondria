@@ -31,7 +31,7 @@ export default class Player {
     this.sprite = undefined;
     this.lifes = 4;
     this.score = 0;
-    this.chave = 1;
+    this.chave = 0;
     this.lastLeftLast = false;
     this.oldSprite = undefined;
   }
@@ -62,6 +62,7 @@ export default class Player {
       // console.log(this.secs);
     }, 1000);
   }
+  
   deletaIntervalo() {
     clearInterval(this.intervalo);
   }
