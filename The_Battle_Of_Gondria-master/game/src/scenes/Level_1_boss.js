@@ -1,5 +1,5 @@
 import Player from "../sprites/player.js";
-import Slime_boss from "../sprites/enemies/Slime_boss.js";
+import Slimes from "../sprites/enemies/slimes.js";
 import Bandeira from "../sprites/objects/bandeira.js";
 class Level_1_boss extends Phaser.Scene {
 
@@ -108,7 +108,7 @@ class Level_1_boss extends Phaser.Scene {
     // this.cameras.main.width= 964;
     let spawnLayer = mapBoss.getObjectLayer("spawns");
     this.spawns = spawnLayer.objects;
-    this.boss = new Slime_boss(this, this.spawns);
+    this.boss = new Slimes(this, this.spawns);
     this.physics.add.collider(this.boss.boss,layer1);
     this.slime_sound = this.sound.add('slime_jump');
     this.slime_sound.setVolume(0.3);
@@ -161,8 +161,9 @@ class Level_1_boss extends Phaser.Scene {
   }
   
   update() {
-    this.player.update(this.slimes, this, this.alavanca, this.ponte, this.aldeao, this.casa, this.moedas);
+    this.player.update(this.boss, this, this.alavanca, this.ponte, this.aldeao, this.casa, this.moedas);
     this.secs = this.player.mins * 60 + this.player.timersecs;
+    this.boss.update(this.player.sprite);
 
   }
 

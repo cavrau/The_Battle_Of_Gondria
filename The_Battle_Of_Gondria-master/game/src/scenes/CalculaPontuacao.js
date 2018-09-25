@@ -5,6 +5,11 @@ class CalculaPontuacao extends Phaser.Scene {
             key: 'CalculaPontuacao'
         });
     }
+    init(data){
+        
+        this.pontuacao = data.pontuacao;
+        this.segundos = data.secs;
+    }
 
     preload() {
         this.load.image('btnInicio', 'assets/images/botoes/btnInicio.png');
@@ -28,22 +33,19 @@ class CalculaPontuacao extends Phaser.Scene {
             }, 150)
         });
 
-        let pontuacao = 3580;
         let pontText;
         let timeText;
         let bdTime;
 
         // Tempo vem em segundos (s)
-        let segundos = 60;
 
         this.add.image(432, 240, 'bgMenus');
         this.add.image(200, 200, 'pont');
         this.add.image(200, 300, 'tempo');
 
-        console.log(pontuacao);
 
-        pontText = this.add.text(370, 175, pontuacao, { fontSize: '45px', fill: '#000', fontStyle: 'italic' });
-        timeText = this.add.text(290, 275, timeCont(segundos), { fontSize: '45px', fill: '#000', fontStyle: 'italic' });
+        pontText = this.add.text(370, 175, this.pontuacao, { fontSize: '45px', fill: '#000', fontStyle: 'italic' });
+        timeText = this.add.text(290, 275, timeCont(this.segundos), { fontSize: '45px', fill: '#000', fontStyle: 'italic' });
 
 
     }

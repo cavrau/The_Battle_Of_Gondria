@@ -139,15 +139,15 @@ export default class Player {
         sprite.setTint(0xff0000);
         let jogarBtn = this.scene.add.image(this.scene.cameras.main.midPoint.x, 310, "btnJogar").setScale(0.65).setInteractive();
         jogarBtn.on("pointerdown", () => {
-          this.scene.scene.restart(this.scene);
+          this.lifes=4;
+          this.isDead = false;
+          this.scene.scene.restart(this);
         });
 
       } else {
 
-
-
-        if (enemies != null) {
-
+        if (enemies != null&& enemies.array.children.entries[0]!=enemies.boss) {
+  
           if (colisao == true) {
             enemies.c_player.active = false;
           } else {
@@ -347,19 +347,40 @@ export default class Player {
       let enemy = enemies.children.entries[i];
       let xdistance = enemy.x - this.sprite.body.x;
       let ydistance = enemy.y - this.sprite.body.y;
-      if (this.lastLeftLast) {
-        
-      }
-      if ((ydistance < 72 && ydistance > -72)) {
-        if (xdistance < 75 && xdistance > 0 && !this.lastLeftLast) {
-          // console.log(enemy.lifes);
-          enemy.lifes--;
-          enemy.setVelocityX(140);
-          enemy.setVelocityY(-130);
-        } else if (xdistance < 0 && xdistance > -75 && this.lastLeftLast) {
-          enemy.setVelocityX(-140);
-          enemy.setVelocityY(-130);
-          enemy.lifes--;
+      if (enemy.canHit) {
+        if(enemy.jumps==0){
+          if ((ydistance < 72 && ydistance > -72)) {
+            if (xdistance < 75 && xdistance > 0 && !this.lastLeftLast) {
+              // console.log(enemy.lifes);
+              enemy.lifes--;
+              enemy.setVelocityX(140);
+              enemy.setVelocityY(-130);
+            } else if (xdistance < 0 && xdistance > -75 && this.lastLeftLast) {
+              enemy.setVelocityX(-140);
+              enemy.setVelocityY(-130);
+              enemy.lifes--;
+            }
+          }
+
+        }else{
+          if ((ydistance < 72 && ydistance > -72)) {
+
+            if (xdistance < 90 && xdistance > 0 && !this.lastLeftLast) {
+              enemy.lifes--;
+              enemy.setVelocityX(140);
+              enemy.setVelocityY(-130);
+              enemy.canHit=false;
+            } else if (xdistance < 0 && xdistance > -90 && this.lastLeftLast) {
+
+              enemy.setVelocityX(-140);
+              enemy.setVelocityY(-130);
+              enemy.lifes--;
+              enemy.canHit = false;
+              
+              console.log(enemy.lifes)
+            }
+          }
+
         }
       }
     }
