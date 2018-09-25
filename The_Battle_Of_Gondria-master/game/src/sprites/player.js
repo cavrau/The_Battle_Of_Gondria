@@ -141,7 +141,8 @@ export default class Player {
         jogarBtn.on("pointerdown", () => {
           this.lifes=4;
           this.isDead = false;
-          this.scene.scene.restart(this);
+          let data ={player :this} 
+          this.scene.scene.restart(this.scene,data);
         });
 
       } else {
