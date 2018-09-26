@@ -13,6 +13,8 @@ class Bandeira {
         bandeira.anims.play('bandeira_verde_play',true);
         this.player.deletaIntervalo();console.log(this.ended);
         this.player.canStop = false;
+        this.player.initBossSecs = this.player.secs;
+        this.player.initBossMins = this.player.mins;
         if(!this.ended){
             setTimeout(()=>{
                 this.scene.start('Level_1_boss',{player: this.player});

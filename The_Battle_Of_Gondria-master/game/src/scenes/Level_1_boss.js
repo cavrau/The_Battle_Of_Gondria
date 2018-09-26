@@ -18,6 +18,7 @@ class Level_1_boss extends Phaser.Scene {
     // console.log(this.player);
   }
   preload() {
+    this.load.audio('slime_boss','assets/sounds/slime_boss_jump.wav');
     this.load.tilemapTiledJSON("map_1_boss", "assets/tilemap/map_fase_1_boss.json");
   }
 
@@ -29,7 +30,8 @@ class Level_1_boss extends Phaser.Scene {
     this.music.setVolume(0.5);
     this.music.play();
 }else{
-    this.music.restart();
+    this.music.stop();
+    this.music.play();
 }
     //Cria o mapa apartir do arquivos JSON que veio do Tiled
     const mapBoss = this.make.tilemap({ key: "map_1_boss" });
@@ -121,7 +123,7 @@ class Level_1_boss extends Phaser.Scene {
     this.spawns = spawnLayer.objects;
     this.boss = new Slimes(this, this.spawns);
     this.physics.add.collider(this.boss.boss,layer1);
-    this.slime_sound = this.sound.add('slime_jump');
+    this.slime_sound = this.sound.add('slime_boss');
     this.slime_sound.setVolume(0.3);
     // //Criação da alavanca
     // this.alavanca = map.createFromObjects('itensInteracao', 'alavanca', { key: 'sprite_alavanca' });

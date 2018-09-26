@@ -24,20 +24,20 @@ class MenuPause extends Phaser.Scene {
             this.player.keys.pause.isDown = false;
             this.player.criaIntervalo();
             this.scene.resume(this.name);
-            this.name.music.stop();
         });
-
+        
         let voltarBtn = this.add.image(432, 200, "btnVoltar").setInteractive();
         voltarBtn.setScale(0.65);
         voltarBtn.setScrollFactor(0);
         console.log(this.player.scene);
         voltarBtn.on('pointerdown', () => {
+            this.name.music.stop();
             this.player.sceneMainMenu = true;
             this.scene.sendToBack();
             this.scene.stop('MenuPause');
             this.player.keys.pause.isDown = false;
             console.log(this.scene);
-            this.scene.stop(this.name.name)
+            this.scene.stop(this.name.name);
             this.scene.resume(this.name);
         });
     }

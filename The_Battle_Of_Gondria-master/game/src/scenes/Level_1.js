@@ -19,6 +19,7 @@ class Level_1 extends Phaser.Scene {
         this.load.audio('music_1_1', 'assets/musics/music_level_1.mp3');
         this.load.audio('music_1_2','assets/musics/music_level_1_2.mp3');
         this.load.audio('slime_jump', 'assets/sounds/slime_jump.mp3');
+       
     }
 
 
@@ -30,7 +31,8 @@ class Level_1 extends Phaser.Scene {
             this.music.setVolume(0.5);
             this.music.play();
         }else{
-            this.music.restart();
+            this.music.stop();
+            this.music.play();
         }
         this.slime_sound = this.sound.add('slime_jump');
         this.slime_sound.setVolume(0.3);
@@ -84,7 +86,7 @@ class Level_1 extends Phaser.Scene {
 
         //Cria um player dentro da cena da fase, com coordenadas x e y
         this.player = new Player(this);
-        this.player.spawnPlayer(6020, 52);
+        this.player.spawnPlayer(5920, 52);
 
         //Seta o bounce do player
         this.player.sprite.setBounce(0.1);

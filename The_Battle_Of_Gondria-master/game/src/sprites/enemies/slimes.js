@@ -9,7 +9,7 @@ class Slimes {
 
                 this.boss = this.array.create(spawns[i].x, spawns[i].y, 'slime_verde');
                 this.boss.setScale(5.0);
-                this.boss.lifes = 4;
+                this.boss.lifes = 1;
                 this.boss.canHit = false;
                 this.boss.cor = "verde";
                 this.boss.isHit = {
@@ -91,9 +91,7 @@ class Slimes {
         } else {
             slime.setVelocityX(0);
         }
-
         player.setVelocityY(-150);
-        this.player.lifes -= 1;
         this.player.hit.play();
     }
 
@@ -104,12 +102,16 @@ class Slimes {
             if (slime === this.boss) {
                 if (slime.lifes == 0) {
                     this.c_player.active = false;
+                    
                     let data = {
                         player: this.scene.player
                     };
                     slime.lifes = -1;
                     setTimeout(
-                        () => slime.destroy(), 2000);
+                        () =>{ slime.destroy()
+                            this.scene.player.victory.play();
+                            this.scene.music.stop();
+                        }, 2000);
                     this.scene.player.deletaIntervalo();
                     setTimeout(() => {
                         this.scene.scene.start('CalculaPontuacao', data);
@@ -134,6 +136,7 @@ class Slimes {
                     } else if (player.x > 64 && player.x < 800) {
                         if (player.x < slime.x) {
                             if (slime.body.onFloor()) {
+                                this.scene.slime_sound.play();
                                 slime.jumps++;
                                 if (slime.canHit == false) {
                                     this.scene.cameras.main.shake(50);
@@ -144,6 +147,7 @@ class Slimes {
                         } else if (player.x > slime.x) {
                             if (slime.body.onFloor()) {
                                 slime.jumps++;
+                                this.scene.slime_sound.play();
                                 if (slime.canHit == false) {
                                     this.scene.cameras.main.shake(50);
                                 }
@@ -152,7 +156,8 @@ class Slimes {
                             }
                         } else {
                             if (slime.body.onFloor()) {
-                                slime.jumps++;
+                                slime.jumps++;        
+                                this.scene.slime_sound.play();
                                 if (slime.canHit == false) {
                                     this.scene.cameras.main.shake(50);
                                 }

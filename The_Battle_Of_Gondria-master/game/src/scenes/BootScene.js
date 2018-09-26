@@ -150,6 +150,7 @@ class BootScene extends Phaser.Scene {
         this.load.audio("morte", 'assets/sounds/death.mp3');
         this.load.audio("hit", 'assets/sounds/hit.mp3');
         this.load.audio("pegar", 'assets/sounds/pegar.mp3');
+        this.load.audio('vitoria','assets/sounds/victory.mp3');
 
         /*Faz load dos arquivos usados na cena Level_2 e outras cenas  */
         this.load.tilemapTiledJSON('map_fase_2', 'assets/tilemap/map_fase_2.json');

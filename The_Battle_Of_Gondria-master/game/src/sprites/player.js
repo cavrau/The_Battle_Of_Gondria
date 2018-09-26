@@ -23,10 +23,14 @@ export default class Player {
     this.hit = this.scene.sound.add('hit');
     this.jump = this.scene.sound.add('jump');
     this.pegar = this.scene.sound.add('pegar');
+    this.victory = this.scene.sound.add('vitoria');
+    console.log(this.victory);
     this.espada.setVolume(0.1);
     this.jump.setVolume(0.3);
     this.pegar.setVolume(0.1);
     this.hit.setVolume(0.1);
+    this.initBossSecs= 0;
+    this.initBossMins = 0;
     // Criação da sprite na fase aplicando fisíca, vidas e pontuação
     this.sprite = undefined;
     this.lifes = 4;
@@ -70,14 +74,17 @@ export default class Player {
 
   //Método que cria os huds de visualização de vida, pontuação e tempo
   createHUD() {
-
-    this.scene.hud_1 = this.scene.add.image(150, 40, 'hud_primario').setScrollFactor(0);
-
-
-    this.scene.score = this.scene.add.bitmapText(120, 5, 'myfont', '' + this.score, 32).setScrollFactor(0);
-
-    this.scene.hud_1 = this.scene.add.image(794, 40, 'hud_secundario').setScrollFactor(0);
-    this.timeText = this.scene.add.bitmapText(750, 20, 'myfont', this.rmins + ':' + this.timersecs, 32).setScrollFactor(0);
+    if(this.initBossMins>=0 && this.initBossSecs!=0){
+      this.secs= this.initBossSecs;
+      this.mins = this.initBossMins;
+    }
+      this.scene.hud_1 = this.scene.add.image(150, 40, 'hud_primario').setScrollFactor(0);
+      
+      
+      this.scene.score = this.scene.add.bitmapText(120, 5, 'myfont', '' + this.score, 32).setScrollFactor(0);
+      
+      this.scene.hud_1 = this.scene.add.image(794, 40, 'hud_secundario').setScrollFactor(0);
+      this.timeText = this.scene.add.bitmapText(750, 20, 'myfont', this.mins + ':' + this.secs, 32).setScrollFactor(0);
   }
 
   timerFunc() {
