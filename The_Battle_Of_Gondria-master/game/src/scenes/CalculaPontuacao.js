@@ -35,7 +35,7 @@ class CalculaPontuacao extends Phaser.Scene {
         this.pontResult = this.add.bitmapText(400, 150, 'myfont', this.pontuacao, 45);
         
         this.timeResultado = this.add.bitmapText(275, 275, 'myfont', this.tempo, 45);
-
+        
 
     }
 
@@ -44,6 +44,7 @@ class CalculaPontuacao extends Phaser.Scene {
         result += ":" + (segundos < 10 ? "0" + segundos : segundos);
         return this.tempo = result;
     }
+    
 
 }
 

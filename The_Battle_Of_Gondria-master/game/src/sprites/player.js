@@ -34,6 +34,7 @@ export default class Player {
     this.chave = 0;
     this.lastLeftLast = false;
     this.oldSprite = undefined;
+    this.canStop = true;
   }
 
   //Criação dos botões que irão fazer a movimentação da sprite
@@ -95,7 +96,7 @@ export default class Player {
       this.scene.scene.start('MainMenu');
     }
 
-    if (keys.pause.isDown && this.menuIsSet == false) {
+    if (keys.pause.isDown && this.menuIsSet == false&&this.canStop) {
       keys.left.isDown = false;
       keys.right.isDown = false;
       keys.up.isDown = false;
@@ -147,7 +148,7 @@ export default class Player {
 
       } else {
 
-        if (enemies != null&& enemies.array.children.entries[0]!=enemies.boss) {
+        if (enemies != null) {
   
           if (colisao == true) {
             enemies.c_player.active = false;

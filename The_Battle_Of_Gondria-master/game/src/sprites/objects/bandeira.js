@@ -12,6 +12,7 @@ class Bandeira {
     ending(bandeira, player){
         bandeira.anims.play('bandeira_verde_play',true);
         this.player.deletaIntervalo();console.log(this.ended);
+        this.player.canStop = false;
         if(!this.ended){
             setTimeout(()=>{
                 this.scene.start('Level_1_boss',{player: this.player});

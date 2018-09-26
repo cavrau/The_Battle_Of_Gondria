@@ -8,7 +8,6 @@ import Level_casa from './src/scenes/level_casa.js';
 import MenuPause from './src/scenes/MenuPause.js';
 import Level_1_boss from './src/scenes/Level_1_boss.js';
 import CalculaPontuacao from './src/scenes/CalculaPontuacao.js';
-
 const config = {
     type: Phaser.WEBGL,
     parent: 'content',

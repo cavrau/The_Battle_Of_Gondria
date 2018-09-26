@@ -11,7 +11,10 @@ class Level_1_boss extends Phaser.Scene {
 
   init(data){
     this.player = data.player;
+    data.player.canStop = true;
+    data.player.scene.music.stop();
     this.player.setScene(this);
+
     // console.log(this.player);
   }
   preload() {
@@ -20,6 +23,14 @@ class Level_1_boss extends Phaser.Scene {
 
 
   create() {
+    if(this.music==undefined){
+    this.music = this.sound.add('music_1_2');
+    this.music.setLoop(true);
+    this.music.setVolume(0.5);
+    this.music.play();
+}else{
+    this.music.restart();
+}
     //Cria o mapa apartir do arquivos JSON que veio do Tiled
     const mapBoss = this.make.tilemap({ key: "map_1_boss" });
 
