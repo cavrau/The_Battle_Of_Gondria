@@ -24,7 +24,6 @@ export default class Player {
     this.jump = this.scene.sound.add('jump');
     this.pegar = this.scene.sound.add('pegar');
     this.victory = this.scene.sound.add('vitoria');
-    console.log(this.victory);
     this.espada.setVolume(0.1);
     this.jump.setVolume(0.3);
     this.pegar.setVolume(0.1);
@@ -42,7 +41,7 @@ export default class Player {
   }
 
   //Criação dos botões que irão fazer a movimentação da sprite
-  criaKeys() {
+  criaKeys(scene) {
     const {
       LEFT,
       RIGHT,
@@ -51,7 +50,7 @@ export default class Player {
       C,
       P
     } = Phaser.Input.Keyboard.KeyCodes;
-    this.keys = this.scene.input.keyboard.addKeys({
+    this.keys = scene.input.keyboard.addKeys({
       left: LEFT,
       right: RIGHT,
       up: UP,
@@ -325,7 +324,7 @@ export default class Player {
           this.scene.scene.resume(this.scene);
           this.intoHouse = false;
           this.hasIntoHouse = true;
-          this.criaKeys();
+          this.criaKeys(this.scene);
 
 
 

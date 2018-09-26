@@ -9,7 +9,7 @@ class Slimes {
 
                 this.boss = this.array.create(spawns[i].x, spawns[i].y, 'slime_verde');
                 this.boss.setScale(5.0);
-                this.boss.lifes = 1;
+                this.boss.lifes = 4;
                 this.boss.canHit = false;
                 this.boss.cor = "verde";
                 this.boss.isHit = {

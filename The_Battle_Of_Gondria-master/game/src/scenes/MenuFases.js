@@ -62,6 +62,7 @@ class MenuFases extends Phaser.Scene {
             this.fase2.setInteractive();
 
             this.fase2.on('pointerdown', function () {
+                this.scene.sound.sounds[0].stop();
                 let btn = this;
                 btn.setTexture("btnFase2Press");
                 setTimeout(() => {

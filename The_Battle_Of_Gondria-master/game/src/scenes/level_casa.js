@@ -55,7 +55,7 @@ class Level_casa extends Phaser.Scene {
     this.player.spawnPlayer(864, 244);
 
     //Seta o bounce do player
-    this.player.criaKeys();
+    this.player.criaKeys(this);
     this.player.keys.action.isDown=false;
     this.player.sprite.setBounce(0.1);
     this.player.sprite.setScale(0.5);

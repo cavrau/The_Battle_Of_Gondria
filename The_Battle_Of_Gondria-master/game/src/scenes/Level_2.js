@@ -14,14 +14,24 @@ class Level_2 extends Phaser.Scene {
     }
 
     preload() {
+
         // this.secs = 0;
         // this.load.tilemapTiledJSON("map_fase_1", "assets/tilemap/map_fase_1.json");
-        // this.load.audio('music_1_1', 'assets/musics/music_level_1.mp3');
+        this.load.audio('music_2', 'assets/musics/music_level_2.mp3');
         // this.load.audio('slime_jump', 'assets/sounds/slime_jump.mp3');
     }
 
 
     create() {
+        if(this.music==undefined){
+            this.music = this.sound.add('music_2');
+            this.music.setLoop(true);
+            this.music.setVolume(0.5);
+            this.music.play();
+        }else{
+            this.music.stop();
+            this.music.play();
+        }
         // this.ended = false;
         // let music = this.sound.add('music_1_1');
         // music.setLoop(true);
@@ -47,7 +57,7 @@ class Level_2 extends Phaser.Scene {
         map.createDynamicLayer('midground', midground, 0, 0);
 
         //Cria a layer da casa do aldeão
-        this.hauseLayer = map.createDynamicLayer('casa', casa);
+        this.houseLayer = map.createDynamicLayer('casa', casa);
 
         map.createDynamicLayer('midground_2', itensCenario);
 
@@ -67,21 +77,24 @@ class Level_2 extends Phaser.Scene {
                 tile.collideRight = true;
             }
         });
-        layer1.setCollisionByProperty({ collides: true });
+        layer1.setCollisionByProperty({
+            collides: true
+        });
 
-        //Seta os blocos que serão colidiveis na layer 2
-        layer2.setCollisionBetween(1, 5);
-
+        
         layer2.forEachTile(tile => {
             // alert('oieeeee');
             if (tile.index != -1) {
-                // console.log(tile);
                 tile.collideDown = false;
                 tile.collideUp = true;
                 tile.collideLeft = false;
                 tile.collideRight = false;
             }
-
+            
+        });
+        //Seta os blocos que serão colidiveis na layer 2
+        layer2.setCollisionByProperty({
+            collides: true
         });
 
         //Cria um player dentro da cena da fase, com coordenadas x e y
@@ -91,18 +104,18 @@ class Level_2 extends Phaser.Scene {
         //Seta o bounce do player, escala de sprite e teclas de movimento
         this.player.sprite.setBounce(0.1);
         this.player.sprite.setScale(0.5);
-        this.player.criaKeys();
+        this.player.criaKeys(this);
+        this.colisao = false;
 
-        
         /*INICIO - Debug para colisão */
         const debugGraphics = this.add.graphics().setAlpha(0.75);
-        
+
         layer1.renderDebug(debugGraphics, {
             tileColor: null, // Color of non-colliding tiles
             collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
             faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
         });
-        
+
         layer2.renderDebug(debugGraphics, {
             tileColor: null, // Color of non-colliding tiles
             collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
@@ -114,7 +127,7 @@ class Level_2 extends Phaser.Scene {
         this.physics.add.collider(this.player.sprite, layer1);
 
         //Cria e seta os blocos do tileset da layer 2
-        this.physics.add.collider(this.player.sprite, layer2);
+        this.physics.add.collider( layer2,this.player.sprite);
 
         //Cria uma camera que seguira o player
         this.cameras.main.startFollow(this.player.sprite);
@@ -204,10 +217,13 @@ class Level_2 extends Phaser.Scene {
         // this.player.createHUD();
         // this.player.criaIntervalo();
         // this.colisao = false;
+        this.player.createHUD();
+        
+    this.player.criaIntervalo();
     }
 
     update() {
-        // this.player.update(this.slimes, this, this.alavanca, this.ponte, this.aldeao, this.casa, this.moedas);
+        this.player.update(null, this, null, null, null, null, null);
         // this.slimes.update(this.player.sprite, this.slimes);
         // this.secs = this.player.mins * 60 + this.player.timersecs;
         // this.aldeao.update(this, this.player, this.msg);
