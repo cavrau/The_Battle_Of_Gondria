@@ -1,5 +1,5 @@
 import Player from "../sprites/player.js";
-import Slimes from "../sprites/enemies/slimes.js";
+import Goblins from "../sprites/enemies/goblins.js";
 import Bandeira from "../sprites/objects/bandeira.js";
 import Moeda from "../sprites/objects/Moeda.js";
 import Chave from "../sprites/objects/Chave.js";
@@ -135,9 +135,9 @@ class Level_2 extends Phaser.Scene {
         //Seta os limites do mapa que a camera acompanhará
         this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
-        // let spawnLayer = map.getObjectLayer("spawns");
-        // this.spawns = spawnLayer.objects;
-
+        let spawnLayer = map.getObjectLayer("spawns");
+        this.spawns = spawnLayer.objects;
+        this.goblins =  new Goblins(this,layer1);
         // this.parado = true;
         // this.slimes = new Slimes(this, layer1);
         // for (let i = 0; i < this.spawns.length; i++) {
@@ -223,7 +223,7 @@ class Level_2 extends Phaser.Scene {
     }
 
     update() {
-        this.player.update(null, this, null, null, null, null, null);
+        this.player.update(this.goblins, this, null, null, null, null, null);
         // this.slimes.update(this.player.sprite, this.slimes);
         // this.secs = this.player.mins * 60 + this.player.timersecs;
         // this.aldeao.update(this, this.player, this.msg);

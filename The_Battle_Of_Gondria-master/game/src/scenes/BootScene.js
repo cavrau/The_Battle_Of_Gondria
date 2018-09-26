@@ -176,6 +176,13 @@ class BootScene extends Phaser.Scene {
         });
 
         this.load.image('msg', 'assets/images/huds/msg.png');
+        //sprite aldeão
+        this.load.spritesheet('goblin','assets/images/mobs/goblin.png',
+            {
+                frameWidth:63,
+                frameHeight:63
+            }
+        );
 
     }
 }

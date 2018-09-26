@@ -31,7 +31,6 @@ class Slimes {
                 };
                 slime.isDead = false;
                 slime.canHit = true;
-                slime.jumps = 0;
             }
             if (spawns[i].name === "Spawn_Slime_Azul") {
                 let slime = this.array.create(spawns[i].x, spawns[i].y, 'slime_azul');
@@ -44,7 +43,6 @@ class Slimes {
                 slime.isDead = false;
                 slime.setScale(1.7);
                 slime.canHit = true;
-                slime.jumps = 0;
             }
             if (spawns[i].name === "Spawn_Slime_Vermelho") {
                 let slime = this.array.create(spawns[i].x, spawns[i].y, 'slime_vermelho');
@@ -57,7 +55,6 @@ class Slimes {
                 };
                 slime.isDead = false;
                 slime.canHit = true;
-                slime.jumps = 0;
             }
         }
 

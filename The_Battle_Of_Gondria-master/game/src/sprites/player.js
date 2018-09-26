@@ -355,7 +355,7 @@ export default class Player {
       let xdistance = enemy.x - this.sprite.body.x;
       let ydistance = enemy.y - this.sprite.body.y;
       if (enemy.canHit) {
-        if(enemy.jumps==0){
+        if(enemy.jumps==undefined){
           if ((ydistance < 72 && ydistance > -72)) {
             if (xdistance < 75 && xdistance > 0 && !this.lastLeftLast) {
               // console.log(enemy.lifes);
