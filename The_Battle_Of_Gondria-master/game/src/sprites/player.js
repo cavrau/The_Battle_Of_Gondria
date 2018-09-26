@@ -276,7 +276,6 @@ export default class Player {
         }
       }
     } //Fim da Criação da ponte
-    console.log(this.intoHouse);
     if (this.intoHouse == false&&this.hasIntoHouse ==false) {
 
       /*Parte que fará o jogador interagir com a casa*/

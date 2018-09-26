@@ -91,6 +91,10 @@ class Slimes {
         } else {
             slime.setVelocityX(0);
         }
+
+        player.setVelocityY(-150);
+        this.player.lifes -= 1;
+        this.player.hit.play();
     }
 
     update(player) {
