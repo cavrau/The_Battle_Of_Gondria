@@ -14,7 +14,7 @@ class Bandeira {
         this.player.deletaIntervalo();
         if(!this.ended){
             setTimeout(()=>{
-                this.scene.start('CalculaPontuacao',{player: this.player});
+                this.scene.start('Level_1_boss',{player: this.player});
             },
             2000);
         }
