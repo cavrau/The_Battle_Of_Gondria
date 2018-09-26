@@ -91,10 +91,13 @@ class Slimes {
         } else {
             slime.setVelocityX(0);
         }
+<<<<<<< HEAD
 
         player.setVelocityY(-150);
         this.player.lifes -= 1;
         this.player.hit.play();
+=======
+>>>>>>> 53e2ea8ce8048ed4fcee91cf65fc9c0b98096a6d
     }
 
     update(player) {
