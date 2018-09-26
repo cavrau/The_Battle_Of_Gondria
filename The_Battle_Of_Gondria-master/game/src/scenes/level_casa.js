@@ -1,5 +1,6 @@
 import Player from "../sprites/player.js";
 import Moeda from "../sprites/objects/Moeda.js";
+import Pocao from "../sprites/objects/pocao.js";
 
 class Level_casa extends Phaser.Scene {
 
@@ -27,13 +28,14 @@ class Level_casa extends Phaser.Scene {
 
     //Cria layers não colidivel
     map.createDynamicLayer('background', tilesetCasa, 0, 0);
-    map.createDynamicLayer('middleground', tilesetCasa, 0, 0);
-
+    
     //Cria e seta os blocos do tileset da layer 1
     this.layer1 = map.createDynamicLayer("foreground", tilesetCasa);
+    this.layer2 = map.createDynamicLayer('middleground', tilesetCasa);
 
     //Seta os blocos que serão colidiveis na layer 1
-    this.layer1.setCollision([3, 4, 5]);
+    this.layer1.setCollision(10,11,12);
+    this.layer2.setCollision(10,11,12);
 
     // /*INICIO - Debug para colisão */
     const debugGraphics = this.add.graphics().setAlpha(0.75);
@@ -61,6 +63,7 @@ class Level_casa extends Phaser.Scene {
     
     //Seta a colisão do player com a layer 1
     this.physics.add.collider(this.player.sprite, this.layer1);
+    this.physics.add.collider(this.player.sprite, this.layer2);
     
     //Cria uma camera que seguira o player
     this.cameras.main.startFollow(this.player.sprite);
@@ -75,6 +78,15 @@ class Level_casa extends Phaser.Scene {
     for (let i = 0; i < this.moedasObjetos.length; i++) {
       this.moeda = new Moeda(this, this.moedasObjetos[i].x, this.moedasObjetos[i].y);
       this.moeda.sprite.anims.play('giraMoeda');
+    }
+
+    /*Cria as Poções */
+    let PotionLayer = map.getObjectLayer("pocoes");
+    this.pocoesObjetos = PotionLayer.objects;
+
+    for (let i = 0; i < this.pocoesObjetos.length; i++) {
+        this.pocao = new Pocao(this, this.pocoesObjetos[i].x, this.pocoesObjetos[i].y);
+        this.pocao.sprite.anims.play('potionEffect');
     }
     
     //Cria o hud do jogador

@@ -90,7 +90,6 @@ class Level_1 extends Phaser.Scene {
 
         //Cria e seta os blocos do tileset da layer 2
         this.physics.add.collider(this.player.sprite, layer2);
-        console.log(this.cameras.main);
 
         // /*INICIO - Debug para colisão */
         // const debugGraphics = this.add.graphics().setAlpha(0.75);

@@ -151,6 +151,12 @@ class BootScene extends Phaser.Scene {
         this.load.audio("hit", 'assets/sounds/hit.mp3');
         this.load.audio("pegar", 'assets/sounds/pegar.mp3');
 
+        /*Faz load dos arquivos usados na cena Level_2 e outras cenas  */
+        this.load.tilemapTiledJSON('map_fase_2', 'assets/tilemap/map_fase_2.json');
+        this.load.image('fase_2_tileset', 'assets/tilesets/fase_2_tileset.png');
+        this.load.image('fase_2_sky', 'assets/background/fase_2_sky.png');
+        this.load.image('fase_2_montanhas', 'assets/background/fase_2_montanhas.png');
+
         /*Faz load dos arquivos usados na cena casa e outras cenas  */
         this.load.tilemapTiledJSON('map_casa', 'assets/tilemap/map_casa.json');
         this.load.image('fase_casa', 'assets/tilesets/fase_casa.png');

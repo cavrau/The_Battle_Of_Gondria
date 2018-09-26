@@ -54,7 +54,6 @@ class Slimes {
 
         player.setVelocityY(-150);
         this.player.lifes -= 1;
-        console.log(this.player.lifes + ' - player slime hit');
         this.player.hit.play();
     }
 

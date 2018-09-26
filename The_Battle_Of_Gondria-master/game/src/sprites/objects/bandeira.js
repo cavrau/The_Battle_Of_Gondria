@@ -11,7 +11,7 @@ class Bandeira {
 
     ending(bandeira, player){
         bandeira.anims.play('bandeira_verde_play',true);
-        this.player.deletaIntervalo();console.log(this.ended);
+        this.player.deletaIntervalo();
         if(!this.ended){
             setTimeout(()=>{
                 this.scene.start('CalculaPontuacao',{player: this.player});
