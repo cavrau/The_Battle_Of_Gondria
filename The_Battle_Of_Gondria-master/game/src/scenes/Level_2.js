@@ -99,7 +99,7 @@ class Level_2 extends Phaser.Scene {
 
         //Cria um player dentro da cena da fase, com coordenadas x e y
         this.player = new Player(this);
-        this.player.spawnPlayer(20, 0);
+        this.player.spawnPlayer(5408, 0);
 
         //Seta o bounce do player, escala de sprite e teclas de movimento
         this.player.sprite.setBounce(0.1);
@@ -135,28 +135,28 @@ class Level_2 extends Phaser.Scene {
         //Seta os limites do mapa que a camera acompanhará
         this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
-        // let spawnLayer = map.getObjectLayer("spawns");
-        // this.spawns = spawnLayer.objects;
+        let spawnLayer = map.getObjectLayer("spawns");
+        this.spawns = spawnLayer.objects;
 
-        // this.parado = true;
-        // this.slimes = new Slimes(this, layer1);
-        // for (let i = 0; i < this.spawns.length; i++) {
-        //     if (this.spawns[i].name === "Spawn_Flag") {
-        //         this.bandeira = new Bandeira(this, this.spawns[i].x, this.spawns[i].y, this.player);
-        //     }
-        //     if (this.spawns[i].name === "Spawn_aldeao") {
-        //         this.aldeao = new Aldeao(this, this.spawns[i].x, this.spawns[i].y);
-        //         this.aldeao.sprite.play('aldeaoMove');
-        //     }
-        // }
+        this.parado = true;
+        this.slimes = new Slimes(this, layer1);
+        for (let i = 0; i < this.spawns.length; i++) {
+            // if (this.spawns[i].name === "Spawn_Flag") {
+            //     this.bandeira = new Bandeira(this, this.spawns[i].x, this.spawns[i].y, this.player);
+            // }
+            if (this.spawns[i].name === "spawn_aldeao") {
+                this.aldeao = new Aldeao(this, this.spawns[i].x, this.spawns[i].y);
+                this.aldeao.sprite.play('aldeaoMove');
+            }
+        }
         // this.physics.add.collider(this.bandeira.sprite, layer1);
-        // this.physics.add.collider(this.aldeao.sprite, layer1);
+        this.physics.add.collider(this.aldeao.sprite, layer1);
 
 
-        //Criação da alavanca
-        // this.alavanca = map.createFromObjects('itensInteracao', 'alavanca', {
-        //     key: 'sprite_alavanca'
-        // });
+        // Criação da alavanca
+        this.alavanca = map.createFromObjects('itensInteracao', 'alavanca', {
+            key: 'sprite_alavanca'
+        });
 
         /*this.ponte recebe a layer que ficará a ponte e também as
         coordenas de onde a ponte começa e termina*/
@@ -169,32 +169,32 @@ class Level_2 extends Phaser.Scene {
         // };
 
         /*Cria as moedas */
-        // let coinLayer = map.getObjectLayer("moedas");
-        // this.moedasObjetos = coinLayer.objects;
+        let coinLayer = map.getObjectLayer("moedas");
+        this.moedasObjetos = coinLayer.objects;
 
-        // for (let i = 0; i < this.moedasObjetos.length; i++) {
-        //     this.moeda = new Moeda(this, this.moedasObjetos[i].x, this.moedasObjetos[i].y);
-        //     this.moeda.sprite.anims.play('giraMoeda');
-        // }
+        for (let i = 0; i < this.moedasObjetos.length; i++) {
+            this.moeda = new Moeda(this, this.moedasObjetos[i].x, this.moedasObjetos[i].y);
+            this.moeda.sprite.anims.play('giraMoeda');
+        }
 
         /*Cria as Poções */
-        // let PotionLayer = map.getObjectLayer("pocoes");
-        // this.pocoesObjetos = PotionLayer.objects;
+        let PotionLayer = map.getObjectLayer("pocao");
+        this.pocoesObjetos = PotionLayer.objects;
 
-        // for (let i = 0; i < this.pocoesObjetos.length; i++) {
-        //     this.pocao = new Pocao(this, this.pocoesObjetos[i].x, this.pocoesObjetos[i].y);
-        //     this.pocao.sprite.anims.play('potionEffect');
-        // }
+        for (let i = 0; i < this.pocoesObjetos.length; i++) {
+            this.pocao = new Pocao(this, this.pocoesObjetos[i].x, this.pocoesObjetos[i].y);
+            this.pocao.sprite.anims.play('potionEffect');
+        }
 
         /*Cria a chave */
-        // this.layerObjetos = map.getObjectLayer('itensInteracao');
-        // this.chave = null;
+        this.layerObjetos = map.getObjectLayer('itensInteracao');
+        this.chave = null;
 
-        // for (let i = 0; i < this.layerObjetos.objects.length; i++) {
-        //     if (this.layerObjetos.objects[i].name == 'chave') {
-        //         this.chave = new Chave(this, this.layerObjetos.objects[i].x, this.layerObjetos.objects[i].y, this.player);
-        //     }
-        // }
+        for (let i = 0; i < this.layerObjetos.objects.length; i++) {
+            if (this.layerObjetos.objects[i].name == 'chave') {
+                this.chave = new Chave(this, this.layerObjetos.objects[i].x, this.layerObjetos.objects[i].y, this.player);
+            }
+        }
 
         /*Criação da interação da casa*/
         // this.moved = false;
@@ -210,8 +210,8 @@ class Level_2 extends Phaser.Scene {
         // +' Voce so podera entrar na casa \n'
         // +' quando tiver chave consigo.';
 
-        // this.msg = 'Aldeao:\n'
-        // +' FALA MEU CHAPA';
+        this.msg = 'Aldeao:\n'
+        +' FALA MEU CHAPA 2';
 
         // Chama o método que cria o hud do player
         // this.player.createHUD();
@@ -225,8 +225,8 @@ class Level_2 extends Phaser.Scene {
     update() {
         this.player.update(null, this, null, null, null, null, null);
         // this.slimes.update(this.player.sprite, this.slimes);
-        // this.secs = this.player.mins * 60 + this.player.timersecs;
-        // this.aldeao.update(this, this.player, this.msg);
+        this.secs = this.player.mins * 60 + this.player.timersecs;
+        this.aldeao.update(this, this.player, this.msg);
     }
 
 }
