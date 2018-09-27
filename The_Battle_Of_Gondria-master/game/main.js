@@ -9,6 +9,7 @@ import Level_1 from './src/scenes/Level_1.js';
 import Level_1_boss from './src/scenes/Level_1_boss.js';
 import Level_2 from './src/scenes/Level_2.js';
 import CalculaPontuacao from './src/scenes/CalculaPontuacao.js';
+import Level_load from './src/scenes/Level_load.js';
 const config = {
     type: Phaser.WEBGL,
     parent: 'content',
@@ -27,6 +28,7 @@ const config = {
         MenuFases,
         MenuPause,
         AjudaScene,
+        Level_load,
         Level_1,
         Level_1_boss,
         Level_2,

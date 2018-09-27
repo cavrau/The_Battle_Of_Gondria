@@ -17,7 +17,7 @@ class Level_2 extends Phaser.Scene {
 
         // this.secs = 0;
         // this.load.tilemapTiledJSON("map_fase_1", "assets/tilemap/map_fase_1.json");
-        this.load.audio('music_2', 'assets/musics/music_level_2.mp3');
+        
         // this.load.audio('slime_jump', 'assets/sounds/slime_jump.mp3');
     }
 

@@ -16,7 +16,7 @@ class BootScene extends Phaser.Scene {
         this.load.on('complete', () => {
             progress.destroy();
             this.scene.start('MainMenu');
-        })
+        });
 
         /*Faz o load da fonte personalizada */
         this.load.bitmapFont('myfont', 'assets/fonts/font.png', 'assets/fonts/font.fnt');
@@ -111,39 +111,12 @@ class BootScene extends Phaser.Scene {
         this.load.image('btnVoltar', 'assets/images/botoes/btnVoltar.png');
         this.load.image('btnVoltarPress', 'assets/images/botoes/btnVoltarPress.png');
 
-        this.load.image("fase_1_tileset", "assets/tilesets/fase_1_tileset.png");
         this.load.image('fase_1_sky', 'assets/background/fase_1_sky.png');
         this.load.image('fase_1_montanhas', 'assets/background/fase_1_montanhas.png');
         this.load.image('fase_1_ponte', 'assets/images/itensCenario/ponte.png');
         
-        this.load.spritesheet('slime_verde', 'assets/images/mobs/slime_verde_walk.png', {
-            frameWidth: 18,
-            frameHeight: 21
-        });
+        this.load.image("fase_1_tileset", "assets/tilesets/fase_1_tileset.png");
 
-        this.load.spritesheet('slime_azul', 'assets/images/mobs/slime_azul_walk.png', {
-            frameWidth: 18,
-            frameHeight: 21
-        });
-
-        this.load.spritesheet('slime_vermelho', 'assets/images/mobs/slime_vermelho_walk.png', {
-            frameWidth: 18,
-            frameHeight: 21
-        });
-        this.load.spritesheet('slime_verde_hit', 'assets/images/mobs/slime_verde_hit.png', {
-            frameWidth: 16,
-            frameHeight: 12
-        });
-
-        this.load.spritesheet('slime_azul_hit', 'assets/images/mobs/slime_azul_hit.png', {
-            frameWidth: 16,
-            frameHeight: 12
-        });
-
-        this.load.spritesheet('slime_vermelho_hit', 'assets/images/mobs/slime_vermelho_hit.png', {
-            frameWidth: 16,
-            frameHeight: 12
-        });
 
         this.load.audio("jump", "assets/sounds/jump.mp3");
         this.load.audio("espada", 'assets/sounds/espada.mp3');
@@ -152,11 +125,7 @@ class BootScene extends Phaser.Scene {
         this.load.audio("pegar", 'assets/sounds/pegar.mp3');
         this.load.audio('vitoria','assets/sounds/victory.mp3');
 
-        /*Faz load dos arquivos usados na cena Level_2 e outras cenas  */
-        this.load.tilemapTiledJSON('map_fase_2', 'assets/tilemap/map_fase_2.json');
-        this.load.image('fase_2_tileset', 'assets/tilesets/fase_2_tileset.png');
-        this.load.image('fase_2_sky', 'assets/background/fase_2_sky.png');
-        this.load.image('fase_2_montanhas', 'assets/background/fase_2_montanhas.png');
+        
 
         /*Faz load dos arquivos usados na cena casa e outras cenas  */
         this.load.tilemapTiledJSON('map_casa', 'assets/tilemap/map_casa.json');
@@ -177,12 +146,7 @@ class BootScene extends Phaser.Scene {
 
         this.load.image('msg', 'assets/images/huds/msg.png');
         //sprite aldeão
-        this.load.spritesheet('goblin','assets/images/mobs/goblin.png',
-            {
-                frameWidth:63,
-                frameHeight:63
-            }
-        );
+        
 
     }
 }

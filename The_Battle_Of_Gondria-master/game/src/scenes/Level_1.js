@@ -15,10 +15,7 @@ class Level_1 extends Phaser.Scene {
 
     preload() {
         this.secs = 0;
-        this.load.tilemapTiledJSON("map_fase_1", "assets/tilemap/map_fase_1.json");
-        this.load.audio('music_1_1', 'assets/musics/music_level_1.mp3');
-        this.load.audio('music_1_2','assets/musics/music_level_1_2.mp3');
-        this.load.audio('slime_jump', 'assets/sounds/slime_jump.mp3');
+        
        
     }
 
