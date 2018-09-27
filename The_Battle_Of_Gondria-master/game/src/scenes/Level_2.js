@@ -101,7 +101,8 @@ class Level_2 extends Phaser.Scene {
         this.player = new Player(this);
         this.player.spawnPlayer(5408, 0);
 
-        //Seta o bounce do player, escala de sprite e teclas de movimento
+        //Seta o bounce do player, escala da sprite, teclas de movimento e 
+        //seta a colisão com os mobs como 'false'
         this.player.sprite.setBounce(0.1);
         this.player.sprite.setScale(0.5);
         this.player.criaKeys(this);
@@ -137,7 +138,7 @@ class Level_2 extends Phaser.Scene {
 
         let spawnLayer = map.getObjectLayer("spawns");
         this.spawns = spawnLayer.objects;
-        this.goblins =  new Goblins(this,layer1);
+        this.goblins =  new Goblins(this, layer1);
         // this.parado = true;
         // this.slimes = new Slimes(this, layer1);
         // for (let i = 0; i < this.spawns.length; i++) {

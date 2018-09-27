@@ -9,7 +9,7 @@ class Level_1_boss extends Phaser.Scene {
     });
   }
 
-  init(data){
+  init(data) {
     this.player = data.player;
     data.player.canStop = true;
     data.player.scene.music.stop();
@@ -18,23 +18,25 @@ class Level_1_boss extends Phaser.Scene {
     // console.log(this.player);
   }
   preload() {
-    this.load.audio('slime_boss','assets/sounds/slime_boss_jump.wav');
+    this.load.audio('slime_boss', 'assets/sounds/slime_boss_jump.wav');
     this.load.tilemapTiledJSON("map_1_boss", "assets/tilemap/map_fase_1_boss.json");
   }
 
 
   create() {
-    if(this.music==undefined){
-    this.music = this.sound.add('music_1_2');
-    this.music.setLoop(true);
-    this.music.setVolume(0.5);
-    this.music.play();
-}else{
-    this.music.stop();
-    this.music.play();
-}
+    if (this.music == undefined) {
+      this.music = this.sound.add('music_1_2');
+      this.music.setLoop(true);
+      this.music.setVolume(0.5);
+      this.music.play();
+    } else {
+      this.music.stop();
+      this.music.play();
+    }
     //Cria o mapa apartir do arquivos JSON que veio do Tiled
-    const mapBoss = this.make.tilemap({ key: "map_1_boss" });
+    const mapBoss = this.make.tilemap({
+      key: "map_1_boss"
+    });
 
     /* Parametros para tileset: const blocos = map.addTilesetImage("nome do tileset que está no tiled", "nome da key que foi carregada no phaser");*/
     let tilesetBlocos = mapBoss.addTilesetImage("fase_1_tileset", "fase_1_tileset");
@@ -46,17 +48,17 @@ class Level_1_boss extends Phaser.Scene {
     mapBoss.createDynamicLayer('middleground', middleground, 0, 0);
 
     //Cria e seta os blocos do tileset da layer 1
-    let layer1 = mapBoss.createStaticLayer("foreground_1", tilesetBlocos,0,0);
+    let layer1 = mapBoss.createStaticLayer("foreground_1", tilesetBlocos, 0, 0);
 
     //Cria e seta os blocos do tileset da layer 2
     let layer2 = mapBoss.createStaticLayer("foreground_2", tilesetBlocos, 0, 0);
 
-    
+
     //Seta os blocos que serão colidiveis na layer 1
     // layer1.setCollisionBetween(1, 6);
     layer1.forEachTile(tile => {
       // alert('oieeeee');
-      if(tile.index != -1){
+      if (tile.index != -1) {
         // console.log(tile);
         tile.collideDown = true;
         tile.collideUp = true;
@@ -67,7 +69,7 @@ class Level_1_boss extends Phaser.Scene {
     });
     layer2.forEachTile(tile => {
 
-      if(tile.index != -1){
+      if (tile.index != -1) {
         tile.collideDown = false;
         tile.collideUp = true;
         tile.collideLeft = false;
@@ -75,15 +77,13 @@ class Level_1_boss extends Phaser.Scene {
       }
 
     });
-    layer1.setCollisionByProperty({ collides: true });
-    layer2.setCollisionBetween(1,10);
-    // console.log(layer1.setCollisionByProperty({ collides: true }));
-    //Seta os blocos que serão colidiveis na layer 2
-    // layer2.setCollisionBetween(1, 6);
-
-    //Cria um player dentro da cena da fase, com coordenadas x e y
-    this.player.spawnPlayer(20, 90);
+    layer1.setCollisionByProperty({
+      collides: true
+    });
+    layer2.setCollisionBetween(1, 10);
     
+    this.player.spawnPlayer(20, 90);
+
     //Seta o bounce do player
     this.player.sprite.setBounce(0.1);
     this.player.sprite.setScale(0.5);
@@ -96,83 +96,18 @@ class Level_1_boss extends Phaser.Scene {
     // Cria e seta os blocos do tileset da layer 2
     this.physics.add.collider(this.player.sprite, layer2);
 
-    /*Desativa a colisão temporáriamente, pois o player poderá passar
-    entre os blocos dessa layer sem precisar pular, mas caso seja sua 
-    preferencia pular em cima a colisão é ativada no update() */
+    this.colisao = false;
 
-    // // /*INICIO - Debug para colisão */
-    // const debugGraphics = this.add.graphics().setAlpha(0.75);
-
-    // layer2.renderDebug(debugGraphics, {
-    //     tileColor: null, // Color of non-colliding tiles
-    //     collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-    //     faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-    // });
-
-    this.colisao= false;
-    // // layer2.renderDebug(debugGraphics, {
-    // //     tileColor: null, // Color of non-colliding tiles
-    // //     collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-    // //     faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-    // // });
-    // /*FIM - Debug para colisão */
-
-    
-    // this.cameras.main.width= 964;
     let spawnLayer = mapBoss.getObjectLayer("spawns");
     this.spawns = spawnLayer.objects;
     this.boss = new Slimes(this, this.spawns);
-    this.physics.add.collider(this.boss.boss,layer1);
+    this.physics.add.collider(this.boss.boss, layer1);
     this.slime_sound = this.sound.add('slime_boss');
     this.slime_sound.setVolume(0.3);
-    // //Criação da alavanca
-    // this.alavanca = map.createFromObjects('itensInteracao', 'alavanca', { key: 'sprite_alavanca' });
 
-    // /*this.ponte recebe a layer que ficará a ponte e também as
-    // coordenas de onde a ponte começa e termina*/
-    // this.ponte = {
-    //   layer: camada1,
-    //   pXi: 145,
-    //   pXf: 151,
-    //   pYcollision: 12,
-    //   pYnCollision: 11
-    // };
 
-    // /*Cria as moedas */
-    // let coinLayer = map.getObjectLayer("moedas");
-    // this.moedasObjetos = coinLayer.objects;
-
-    // for (let i = 0; i < this.moedasObjetos.length; i++) {
-    //   this.moeda = new Moeda(this, this.moedasObjetos[i].x, this.moedasObjetos[i].y);
-    //   this.moeda.sprite.anims.play('giraMoeda');
-    // }
-
-    // /*Cria a chave */
-    // this.layerObjetos = map.getObjectLayer('itensInteracao');
-    // this.chave;
-
-    // for (let i = 0; i < this.layerObjetos.objects.length; i++) {
-    //   if (this.layerObjetos.objects[i].name == 'chave') {
-    //     this.chave = new Chave(this, this.layerObjetos.objects[i].x, this.layerObjetos.objects[i].y);
-    //   }
-    // }
-
-    // /*Criação da interação da casa*/
-
-    // /*Coordenadas da porta da casa que o jogador
-    // terá que interagir */
-    // this.casa = {
-    //   x: 3200,
-    //   y: 352,
-    // };
-
-    // // Chama o método que cria o hud do player
-    // this.player.createHUD();
-    // this.player.criaIntervalo();
-    // this.cameras.main.backgroundColor.r=100;
-    
   }
-  
+
   update() {
     this.player.update(this.boss, this, this.alavanca, this.ponte, this.aldeao, this.casa, this.moedas);
     this.secs = this.player.mins * 60 + this.player.timersecs;
@@ -180,4 +115,5 @@ class Level_1_boss extends Phaser.Scene {
 
   }
 
-} export default Level_1_boss;
+}
+export default Level_1_boss;

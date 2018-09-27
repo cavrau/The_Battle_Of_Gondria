@@ -5,6 +5,8 @@ import Moeda from "../sprites/objects/Moeda.js";
 import Chave from "../sprites/objects/Chave.js";
 import Pocao from "../sprites/objects/pocao.js";
 import Aldeao from "../sprites/Aldeao.js";
+import Ponte from "../sprites/objects/ponte.js";
+import Casa from "../sprites/objects/casa.js";
 class Level_1 extends Phaser.Scene {
 
     constructor() {
@@ -22,12 +24,12 @@ class Level_1 extends Phaser.Scene {
 
     create() {
         this.ended = false;
-        if(this.music==undefined){
+        if (this.music == undefined) {
             this.music = this.sound.add('music_1_1');
             this.music.setLoop(true);
             this.music.setVolume(0.5);
             this.music.play();
-        }else{
+        } else {
             this.music.stop();
             this.music.play();
         }
@@ -83,7 +85,7 @@ class Level_1 extends Phaser.Scene {
 
         //Cria um player dentro da cena da fase, com coordenadas x e y
         this.player = new Player(this);
-        this.player.spawnPlayer(20, 52);
+        this.player.spawnPlayer(4028, 52);
 
         //Seta o bounce do player
         this.player.sprite.setBounce(0.1);
@@ -134,21 +136,43 @@ class Level_1 extends Phaser.Scene {
         this.physics.add.collider(this.bandeira.sprite, layer1);
         this.physics.add.collider(this.aldeao.sprite, layer1);
 
-
-        //Criação da alavanca
-        this.alavanca = map.createFromObjects('itensInteracao', 'alavanca', {
-            key: 'sprite_alavanca'
-        });
+        // Criação da alavanca
+        this.alavancas = {
+            alavanca_1: map.createFromObjects('itensInteracao', 'alavanca', {
+                key: 'sprite_alavanca'
+            }),
+            alavanca_2: null
+        }
 
         /*this.ponte recebe a layer que ficará a ponte e também as
         coordenas de onde a ponte começa e termina*/
-        this.ponte = {
+        this.ponteConfig = {
             layer: layer1,
-            pXi: 145,
-            pXf: 151,
-            pYcollision: 12,
-            pYnCollision: 11
+
+            xInicial_1: 145,
+            xFinal_1: 151,
+
+            yIndexColisao_1: 12,
+            yIndexNaoColisao_1: 11,
+
+            IndexBlocoDeColisao_1: 10,
+            IndexBlocoDeNaoColisao_1: 11,
+
+            /*Caso a fase tenha uma segunda ponte, é
+            aplicado uma segunda configuração */
+            xInicial_2: null,
+            xFinal_2: null,
+
+            yIndexColisao_2: null,
+            yIndexNaoColisao_2: null,
+
+            IndexBlocoDeColisao_2: null,
+            IndexBlocoDeNaoColisao_2: null
+
         };
+        // console.log(this.ponteConfig);
+
+        this.ponte = new Ponte(this.ponteConfig);
 
         /*Cria as moedas */
         let coinLayer = map.getObjectLayer("moedas");
@@ -182,18 +206,22 @@ class Level_1 extends Phaser.Scene {
         this.moved = false;
         /*Coordenadas da porta da casa que o jogador
         terá que interagir */
-        this.casa = {
+        this.casaConfig = {
             x: 3200,
             y: 352,
+            portaX: 864,
+            portaY: 244
         };
+
+        this.casa = new Casa(this.casaConfig, this, this.player);
 
         /*Manda a msg para aldeão */
         // this.msg = 'Aldeao:\n'
         // +' Voce so podera entrar na casa \n'
         // +' quando tiver chave consigo.';
 
-        this.msg = 'Aldeao:\n'
-        +' FALA MEU CHAPA';
+        this.msg = 'Aldeao:\n' +
+            ' FALA MEU CHAPA';
 
         // Chama o método que cria o hud do player
         this.player.createHUD();
@@ -202,10 +230,12 @@ class Level_1 extends Phaser.Scene {
     }
 
     update() {
-        this.player.update(this.slimes, this, this.alavanca, this.ponte, this.aldeao, this.casa, this.moedas);
+        this.player.update(this.slimes, this, this.alavanca, this.ponte, this.aldeao, this.casa);
         this.slimes.update(this.player.sprite, this.slimes);
         this.secs = this.player.mins * 60 + this.player.timersecs;
         this.aldeao.update(this, this.player, this.msg);
+        this.ponte.update(this.player, this.alavancas);
+        this.casa.update(this.player, this);
     }
 
 }
