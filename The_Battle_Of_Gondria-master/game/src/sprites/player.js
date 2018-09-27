@@ -4,7 +4,10 @@ export default class Player {
     this.isAttacking = false;
     this.sceneMainMenu = false;
     this.isInteracting = false;
-    this.hasInteracted = false;
+
+    this.alavanca_1_Active = false;
+    this.alavanca_2_Active = false;
+
     this.intoHouse = false;
     this.oldScene = undefined;
     this.scene = scene;
@@ -166,6 +169,7 @@ export default class Player {
           colisao = false;
         }
 
+        //ERRORRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
         if (colisao == true) {
           // console.log(sprite.body.blocked.down);
           setTimeout(() => {
@@ -232,7 +236,7 @@ export default class Player {
           }
 
           if (keys.action.isDown && colisao == false) {
-            this.interaction(alavanca, ponte, aldeao, casa);
+            // this.interaction(alavanca, ponte, aldeao, casa);
             setTimeout(() => {
               sprite.anims.play('sprite_hero_c');
             }, 400);
@@ -248,104 +252,72 @@ export default class Player {
     this.sprite = this.scene.physics.add.sprite(x, y, "sprite_hero", 0);
   }
   //Método que faz a interação com as alavancas, com as portas e os aldeoes
-  interaction(alavanca, ponte, aldeao, casa) {
+  // interaction(alavanca, ponte, aldeao, casa) {
 
-    /*Pega a diferença da distancia entre o player e a alavanca */
-    let alavancaX;
-    let alavancaY;
-    if (alavanca != null) {
-      alavancaX = alavanca[0].x - this.sprite.body.x;
-      alavancaY = alavanca[0].y - this.sprite.body.y;
-    }
+    
 
-    /*Caso a diferença da distância seja Y < 52 e X < 50 e X > 0
-    a alavanca é atavida e é feita a construção da ponte */
-    if ((alavancaY < 72)) {
-      if ((alavancaX < 50 && alavancaX > 0) && this.hasInteracted == false) {
-        this.hasInteracted = true;
-        alavanca[0].anims.play('alavanca_ativa');
+  //   if (this.intoHouse == false&&this.hasIntoHouse ==false) {
 
-        let i;
-        let j = 2;
-        let tileXinicial = ponte.pXi;
-        let tileXfinal = ponte.pXf;
-
-        for (i = tileXinicial; i <= tileXfinal; i++) {
-          j = j + 3;
-          (function (i) {
-            setTimeout(function () {
-              ponte.layer.putTileAt(10, i, ponte.pYcollision);
-              ponte.layer.putTileAt(11, i, ponte.pYnCollision);
-            }, i * j);
-          })(i);
-
-        }
-      }
-    } //Fim da Criação da ponte
-    if (this.intoHouse == false&&this.hasIntoHouse ==false) {
-
-      /*Parte que fará o jogador interagir com a casa*/
-      let distanciaCasaX;
-      let distanciaCasaY;
-      if (casa != null) {
-        distanciaCasaX = casa.x - this.sprite.body.x;
-        distanciaCasaY = casa.y - this.sprite.body.y;
-      }
-      if (distanciaCasaY <= 64) {
-        if ((distanciaCasaX < 20) && (distanciaCasaX > -16) && (this.chave == 1)) {
-          this.intoHouse = true;
-          this.keys.action.isDown = false;
-          this.oldSprite = this.sprite;
-          this.oldScene = this.scene;
-          this.scene.scene.launch('Level_casa', {
-            scene: this.scene,
-            player: this
-          });
-          this.scene.scene.sendToBack(this.scene);
-          this.scene.scene.bringToTop('level_casa');
-          this.scene.scene.pause();
+  //     /*Parte que fará o jogador interagir com a casa*/
+  //     let distanciaCasaX;
+  //     let distanciaCasaY;
+  //     if (casa != null) {
+  //       distanciaCasaX = casa.x - this.sprite.body.x;
+  //       distanciaCasaY = casa.y - this.sprite.body.y;
+  //     }
+  //     if (distanciaCasaY <= 64) {
+  //       if ((distanciaCasaX < 20) && (distanciaCasaX > -16) && (this.chave == 1)) {
+  //         this.intoHouse = true;
+  //         this.keys.action.isDown = false;
+  //         this.oldSprite = this.sprite;
+  //         this.oldScene = this.scene;
+  //         this.scene.scene.launch('Level_casa', {
+  //           scene: this.scene,
+  //           player: this
+  //         });
+  //         this.scene.scene.sendToBack(this.scene);
+  //         this.scene.scene.bringToTop('level_casa');
+  //         this.scene.scene.pause();
           
-        }
-      }
+  //       }
+  //     }
       
-    } else {
+  //   } else {
 
-      /*Parte em que o jogador sai da casa */
-      let distanciaPortaX = 864 - this.sprite.body.x;
-      let distanciaPortaY = 244 - this.sprite.body.y;
+  //     /*Parte em que o jogador sai da casa */
+  //     let distanciaPortaX = 864 - this.sprite.body.x;
+  //     let distanciaPortaY = 244 - this.sprite.body.y;
 
-      if (distanciaPortaY <= 64) {
-        if ((distanciaPortaX < 15) && (distanciaPortaX > -16)) {
-          this.scene.scene.sendToBack(this.scene);
-          this.scene.scene.sleep(this.scene);            
-          this.sprite = this.oldSprite;
-          let cena = this.scene;
-          this.setScene(this.oldScene);
-          this.scene.scene.resume(this.scene);
-          this.intoHouse = false;
-          this.hasIntoHouse = true;
-          this.criaKeys(this.scene);
+  //     if (distanciaPortaY <= 64) {
+  //       if ((distanciaPortaX < 15) && (distanciaPortaX > -16)) {
 
+  //         this.scene.scene.sendToBack(this.scene);
+  //         this.scene.scene.sleep(this.scene);    
 
+  //         this.sprite = this.oldSprite;
 
-          //TO DO arrumar pro hud receber valores antigos;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-          this.createHUD();
+  //         let cena = this.scene;
+
+  //         this.setScene(this.oldScene);
+
+  //         this.scene.scene.resume(this.scene);
+
+  //         this.intoHouse = false;
+
+  //         this.hasIntoHouse = true;
+
+  //         this.criaKeys(this.scene);
+
+  //         this.createHUD();
           
-          
-          
-          
-          
-          cena.scene.stop();
-          // this.scene.scene.stop();
-          // this.scene.sendToBack();
-          // this.scene.scene.restart('Level_1');
-        }
-      }
+  //         cena.scene.stop();
+  //       }
+  //     }
       
-    }
+  //   }
     
     
-  }
+  // }
   
   // método que checa se o jogabor bateu em algum inimigo
   checkHit(enemies) {

@@ -13,6 +13,7 @@ class Level_casa extends Phaser.Scene {
   init(data) {
     this.name = data.scene;
     this.player = data.player;
+    this.casa = data.casa;
     // this.player.oldScene = data.scene_level;
   }
 
@@ -99,6 +100,7 @@ class Level_casa extends Phaser.Scene {
   update() {
     this.player.update(null, this, null, null, null, null, null);
     this.secs = this.player.mins * 60 + this.player.timersecs;
+    this.casa.update(this.player, this);
   }
 
 }
