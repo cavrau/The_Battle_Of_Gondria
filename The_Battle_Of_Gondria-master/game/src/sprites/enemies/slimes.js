@@ -105,7 +105,7 @@ class Slimes {
                     };
                     slime.lifes = -1;
                     setTimeout(
-                        () =>{ slime.destroy()
+                        () =>{ slime.destroy();
                             this.scene.player.victory.play();
                             this.scene.music.stop();
                         }, 2000);
@@ -170,14 +170,10 @@ class Slimes {
 
                 if (slime.isHit.left && slime.lifes > 0) {
                     slime.anims.play("slime_" + slime.cor + "_hit_left", true);
-                    setTimeout((slime) => {
                         slime.isHit.left = false;
-                    }, 466);
                 } else if (slime.isHit.right) {
                     slime.anims.play("slime_" + slime.cor + "_hit_right", true);
-                    setTimeout((slime) => {
-                        slime.isHit.right = false;
-                    }, 466);
+                        slime.isHit.right= false;
                 } else if (slime.x - player.x < 150 && slime.x - player.x > 0) {
                     if (slime.body.onFloor()) {
                         this.scene.slime_sound.play();

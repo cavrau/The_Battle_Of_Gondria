@@ -330,13 +330,14 @@ export default class Player {
         if(enemy.jumps==undefined){
           if ((ydistance < 72 && ydistance > -72)) {
             if (xdistance < 75 && xdistance > 0 && !this.lastLeftLast) {
-              // console.log(enemy.lifes);
               enemy.lifes--;
-              enemy.setVelocityX(140);
+              enemy.setVelocityX(160);
               enemy.setVelocityY(-130);
+              enemy.isHit.left = true;
             } else if (xdistance < 0 && xdistance > -75 && this.lastLeftLast) {
-              enemy.setVelocityX(-140);
+              enemy.setVelocityX(-160);
               enemy.setVelocityY(-130);
+              enemy.isHit.right = true;
               enemy.lifes--;
             }
           }

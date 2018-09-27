@@ -9,14 +9,24 @@ class Level_load extends Phaser.Scene {
     }
     preload() {
         this.load.image('load_escudo', 'assets/images/menus/escudo_load.png');
-        this.add.image(750, 425, 'load_escudo').setScale(2);
         this.switch();
+    }
+    create(){
+        this.add.image(750, 400, 'load_escudo').setScale(0.05);
+        let jogarBtn = this.add.image(432, 240, "btnJogar").setInteractive();
+        jogarBtn.setScale(0.65);
+        jogarBtn.setScrollFactor(0);
+        jogarBtn.on('pointerdown', () => {
+            this.scene.moveBelow(this, this.name);
+            this.scene.stop(this);
+            this.scene.launch(this.name);
+        });
+
     }
 
     switch () {
         switch (this.name) {
             case 'Level_1':
-                alert('hey')
                 this.load.tilemapTiledJSON("map_fase_1", "assets/tilemap/map_fase_1.json");
                 this.load.audio('music_1_1', 'assets/musics/music_level_1.mp3');
                 this.load.audio('music_1_2', 'assets/musics/music_level_1_2.mp3');
@@ -164,7 +174,6 @@ class Level_load extends Phaser.Scene {
                             frameRate: 15,
                             repeat: -1
                         });
-                        this.scene.start(this.name);
                     }
                 )
                 break;
@@ -181,9 +190,6 @@ class Level_load extends Phaser.Scene {
                 this.load.image('fase_2_sky', 'assets/background/fase_2_sky.png');
                 this.load.image('fase_2_montanhas', 'assets/background/fase_2_montanhas.png');
                 this.load.audio('music_2', 'assets/musics/music_level_2.mp3');
-                this.load.on('complete',()=>{
-                    this.scene.start(this.name);
-                })
             default:
                 break;
         }
