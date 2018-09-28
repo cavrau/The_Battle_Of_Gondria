@@ -61,6 +61,8 @@ class Level_1 extends Phaser.Scene {
         //Cria e seta os blocos do tileset da layer 1
         let layer1 = map.createDynamicLayer("foreground_1", blocos);
 
+        this.layer1 = layer1;
+
         //Cria e seta os blocos do tileset da layer 2
         let layer2 = map.createStaticLayer("foreground_2", blocos);
 
@@ -155,8 +157,8 @@ class Level_1 extends Phaser.Scene {
             yIndexColisao_1: 12,
             yIndexNaoColisao_1: 11,
 
-            IndexBlocoDeColisao_1: 10,
-            IndexBlocoDeNaoColisao_1: 11,
+            IndexBlocoDeColisao: 10,
+            IndexBlocoDeNaoColisao: 11,
 
             /*Caso a fase tenha uma segunda ponte, é
             aplicado uma segunda configuração */
@@ -165,9 +167,6 @@ class Level_1 extends Phaser.Scene {
 
             yIndexColisao_2: null,
             yIndexNaoColisao_2: null,
-
-            IndexBlocoDeColisao_2: null,
-            IndexBlocoDeNaoColisao_2: null
 
         };
         // console.log(this.ponteConfig);
@@ -230,7 +229,7 @@ class Level_1 extends Phaser.Scene {
     }
 
     update() {
-        this.player.update(this.slimes, this, this.alavanca, this.ponte, this.aldeao, this.casa);
+        this.player.update(this.slimes, this, this.layer1);
         this.slimes.update(this.player.sprite, this.slimes);
         this.secs = this.player.mins * 60 + this.player.timersecs;
         this.aldeao.update(this, this.player, this.msg);

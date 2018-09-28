@@ -146,6 +146,12 @@ class BootScene extends Phaser.Scene {
 
         this.load.image('msg', 'assets/images/huds/msg.png');
         //sprite aldeão
+
+        //Carrega a sprite de efeito quando um inimigo morre
+        this.load.spritesheet('inimigoDie', 'assets/images/itensCenario/inimigo_die.png', {
+            frameWidth: 32,
+            frameHeight: 32
+        });
         
 
     }

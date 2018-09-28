@@ -98,7 +98,7 @@ class Level_casa extends Phaser.Scene {
   }
 
   update() {
-    this.player.update(null, this, null, null, null, null, null);
+    this.player.update(null, this, this.layer1);
     this.secs = this.player.mins * 60 + this.player.timersecs;
     this.casa.update(this.player, this);
   }

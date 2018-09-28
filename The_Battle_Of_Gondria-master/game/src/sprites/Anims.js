@@ -202,6 +202,8 @@ class Anims {
         yoyo: true
       });
 
+      
+
 
 
     }

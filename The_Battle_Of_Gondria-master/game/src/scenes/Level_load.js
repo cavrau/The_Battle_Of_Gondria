@@ -11,7 +11,7 @@ class Level_load extends Phaser.Scene {
         this.load.image('load_escudo', 'assets/images/menus/escudo_load.png');
         this.switch();
     }
-    create(){
+    create() {
         this.add.image(750, 400, 'load_escudo').setScale(0.05);
         let jogarBtn = this.add.image(432, 240, "btnJogar").setInteractive();
         jogarBtn.setScale(0.65);
@@ -174,16 +174,23 @@ class Level_load extends Phaser.Scene {
                             frameRate: 15,
                             repeat: -1
                         });
+
+                        anims.create({
+                            key: 'dieEffect',
+                            frames: anims.generateFrameNumbers('inimigoDie', {
+                                start: 0,
+                                end: 8
+                            }),
+                            frameRate: 10,
+                        });
                     }
                 )
                 break;
             case 'Level_2':
-                this.load.spritesheet('goblin','assets/images/mobs/goblin.png',
-                    {
-                        frameWidth:63,
-                        frameHeight:63
-                    }
-                );
+                this.load.spritesheet('goblin', 'assets/images/mobs/goblin.png', {
+                    frameWidth: 63,
+                    frameHeight: 63
+                });
                 /*Faz load dos arquivos usados na cena Level_2 e outras cenas  */
                 this.load.tilemapTiledJSON('map_fase_2', 'assets/tilemap/map_fase_2.json');
                 this.load.image('fase_2_tileset', 'assets/tilesets/fase_2_tileset.png');

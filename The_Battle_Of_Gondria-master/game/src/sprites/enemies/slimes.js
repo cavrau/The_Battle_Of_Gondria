@@ -168,7 +168,10 @@ class Slimes {
                 }
             } else {
 
-                if (slime.isHit.left && slime.lifes > 0) {
+                if(slime.body.touching.up){
+                    slime.lifes = 0;
+                    player.setVelocityY(-100);
+                }else if (slime.isHit.left && slime.lifes > 0) {
                     slime.anims.play("slime_" + slime.cor + "_hit_left", true);
                         slime.isHit.left = false;
                 } else if (slime.isHit.right) {
@@ -192,6 +195,7 @@ class Slimes {
                     slime.setTexture('slime_' + slime.cor, 0);
                     slime.setVelocityX(0);
                 }
+
                 if (slime.lifes == 0) {
 
                     if (slime.isHit.left) {
@@ -204,6 +208,7 @@ class Slimes {
                     setTimeout(() => {
                         this.atualizaPontuacao();
                         slime.destroy();
+                        slime.anims.play('dieEffect');
                     }, 466);
 
 

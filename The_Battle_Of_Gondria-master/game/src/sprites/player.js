@@ -37,7 +37,7 @@ export default class Player {
     this.sprite = undefined;
     this.lifes = 4;
     this.score = 0;
-    this.chave = 0;
+    this.chave = 1;
     this.lastLeftLast = false;
     this.oldSprite = undefined;
     this.canStop = true;
@@ -93,7 +93,7 @@ export default class Player {
     this.timer = this.timer + 1;
   }
   
-  update(enemies, scene, alavanca, ponte, aldeao, casa, moedas) {
+  update(enemies, scene, layer) {
     this.updateHUD();
     let colisao = scene.colisao;
     let {
@@ -192,7 +192,7 @@ export default class Player {
 
             /*Ao apertar a seta a direita o personagem se move a direção
             e ativa o método de animção coerente com a direção */
-          } else if (keys.right.isDown && sprite.x < 6040) {
+          } else if (keys.right.isDown && sprite.x < layer.width) {
 
             sprite.setVelocityX(120);
             this.lastLeftLast = false;
@@ -251,73 +251,6 @@ export default class Player {
   spawnPlayer(x, y) {
     this.sprite = this.scene.physics.add.sprite(x, y, "sprite_hero", 0);
   }
-  //Método que faz a interação com as alavancas, com as portas e os aldeoes
-  // interaction(alavanca, ponte, aldeao, casa) {
-
-    
-
-  //   if (this.intoHouse == false&&this.hasIntoHouse ==false) {
-
-  //     /*Parte que fará o jogador interagir com a casa*/
-  //     let distanciaCasaX;
-  //     let distanciaCasaY;
-  //     if (casa != null) {
-  //       distanciaCasaX = casa.x - this.sprite.body.x;
-  //       distanciaCasaY = casa.y - this.sprite.body.y;
-  //     }
-  //     if (distanciaCasaY <= 64) {
-  //       if ((distanciaCasaX < 20) && (distanciaCasaX > -16) && (this.chave == 1)) {
-  //         this.intoHouse = true;
-  //         this.keys.action.isDown = false;
-  //         this.oldSprite = this.sprite;
-  //         this.oldScene = this.scene;
-  //         this.scene.scene.launch('Level_casa', {
-  //           scene: this.scene,
-  //           player: this
-  //         });
-  //         this.scene.scene.sendToBack(this.scene);
-  //         this.scene.scene.bringToTop('level_casa');
-  //         this.scene.scene.pause();
-          
-  //       }
-  //     }
-      
-  //   } else {
-
-  //     /*Parte em que o jogador sai da casa */
-  //     let distanciaPortaX = 864 - this.sprite.body.x;
-  //     let distanciaPortaY = 244 - this.sprite.body.y;
-
-  //     if (distanciaPortaY <= 64) {
-  //       if ((distanciaPortaX < 15) && (distanciaPortaX > -16)) {
-
-  //         this.scene.scene.sendToBack(this.scene);
-  //         this.scene.scene.sleep(this.scene);    
-
-  //         this.sprite = this.oldSprite;
-
-  //         let cena = this.scene;
-
-  //         this.setScene(this.oldScene);
-
-  //         this.scene.scene.resume(this.scene);
-
-  //         this.intoHouse = false;
-
-  //         this.hasIntoHouse = true;
-
-  //         this.criaKeys(this.scene);
-
-  //         this.createHUD();
-          
-  //         cena.scene.stop();
-  //       }
-  //     }
-      
-  //   }
-    
-    
-  // }
   
   // método que checa se o jogabor bateu em algum inimigo
   checkHit(enemies) {
