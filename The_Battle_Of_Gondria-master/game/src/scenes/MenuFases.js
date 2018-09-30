@@ -29,7 +29,7 @@ class MenuFases extends Phaser.Scene {
             }, 150);
         });
 
-        this.faseDisponivel = 2;
+        this.faseDisponivel = 3;
 
         //Fase 1
         if ((this.faseDisponivel == 1) || (this.faseDisponivel >= 1)) {
@@ -96,7 +96,7 @@ class MenuFases extends Phaser.Scene {
                 btn.setTexture("btnFase3Press");
                 setTimeout(() => {
                     btn.setTexture("btnFase3");
-                    this.scene.scene.start('Level_1');
+                    this.scene.scene.start('Level_3');
                 }, 150);
             });
 

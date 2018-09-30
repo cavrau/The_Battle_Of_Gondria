@@ -31,7 +31,7 @@ class MenuPause extends Phaser.Scene {
         voltarBtn.setScrollFactor(0);
         // console.log(this.player.scene);
         voltarBtn.on('pointerdown', () => {
-            this.name.music.stop();
+            // this.name.music.stop();
             this.player.sceneMainMenu = true;
             this.scene.sendToBack();
             this.scene.stop('MenuPause');
