@@ -151,7 +151,7 @@ export default class Player {
         jogarBtn.on("pointerdown", () => {
           this.lifes=4;
           this.isDead = false;
-          let data ={player :this} 
+          let data ={p :this} 
           this.scene.scene.restart(this.scene,data);
         });
 
@@ -178,8 +178,11 @@ export default class Player {
             }
           }, 200);
         }
-
-
+        if(layer == undefined){
+         layer ={
+            width : 864
+          };
+        }
         if (colisao == false) {
           /*Ao apertar a seta a esquerda o personagem se move a direção
           e ativa o método de animção coerente com a direção */

@@ -197,6 +197,7 @@ class Level_load extends Phaser.Scene {
                 this.load.image('fase_2_sky', 'assets/background/fase_2_sky.png');
                 this.load.image('fase_2_montanhas', 'assets/background/fase_2_montanhas.png');
                 this.load.audio('music_2', 'assets/musics/music_level_2.mp3');
+                this.load.audio('goblin_jump', 'assets/sounds/goblin_jump.wav');
             default:
                 break;
         }

@@ -34,6 +34,8 @@ class Level_2 extends Phaser.Scene {
             this.music.stop();
             this.music.play();
         }
+        this.goblin_jump = this.sound.add('goblin_jump');
+        this.goblin_jump.setVolume(0.1);
         // this.ended = false;
         // let music = this.sound.add('music_1_1');
         // music.setLoop(true);
@@ -121,7 +123,7 @@ class Level_2 extends Phaser.Scene {
 
         //Cria um player dentro da cena da fase, com coordenadas x e y
         this.player = new Player(this);
-        this.player.spawnPlayer(4160, 0);
+        this.player.spawnPlayer(8820, 0);
 
         //Seta o bounce do player, escala da sprite, teclas de movimento e 
         //seta a colisão com os mobs como 'false'
@@ -163,7 +165,8 @@ class Level_2 extends Phaser.Scene {
 
         let spawnLayer = map.getObjectLayer("spawns");
         this.spawns = spawnLayer.objects;
-        this.goblins =  new Goblins(this, layer1);
+        this.goblins =  new Goblins(this, layer1); 
+        this.physics.add.collider(this.goblins.boss,layerBoss);
         this.parado = true;
         for (let i = 0; i < this.spawns.length; i++) {
             // if (this.spawns[i].name === "Spawn_Flag") {

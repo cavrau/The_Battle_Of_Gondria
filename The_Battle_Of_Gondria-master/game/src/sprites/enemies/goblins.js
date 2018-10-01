@@ -3,7 +3,6 @@ class Goblins {
         this.scene = scene;
         let spawns = this.scene.spawns;
         this.array = this.scene.physics.add.group();
-        console.log('hey');
         for (let i = 0; i < spawns.length; i++) {
             if (spawns[i].name === "spawn_Goblin") {
 
@@ -11,6 +10,7 @@ class Goblins {
                 goblin.setScale(0.75);
                 goblin.lifes = 3;
                 goblin.hittedPlayer = true;
+                goblin.jump=0;
                 goblin.isHit = {
                     right: false,
                     left: false
@@ -18,6 +18,19 @@ class Goblins {
                 goblin.isDead = false;
                 goblin.canHit = true;
 
+            }else if (spawns[i].name==='Spawn_Boss'){
+                let goblin = this.array.create(spawns[i].x, spawns[i].y, 'goblin');
+                goblin.lifes = 5;
+                goblin.hittedPlayer = true;
+                goblin.jump=0;
+                goblin.isHit = {
+                    right: false,
+                    left: false
+                };
+                goblin.isDead = false;
+                goblin.canHit = false;
+                goblin.canMove = true;
+                this.boss = goblin;
             }
         }
         this.scene.physics.add.collider(this.array, camada1);
@@ -52,36 +65,112 @@ class Goblins {
         this.player = player;
         for (let i = 0; i < this.array.children.entries.length; i++) {
             let goblin = this.array.children.entries[i];
+            if (goblin === this.boss) {
+                console.log(goblin.lifes);
+                if (goblin.lifes == 0) {
+                    this.c_player.active = false;
+                    
+                    let data = {
+                        player: this.scene.player
+                    };
+                    goblin.lifes = -1;
+                    setTimeout(
+                        () =>{ goblin.destroy();
+                            this.scene.player.victory.play();
+                            this.scene.music.stop();
+                        }, 2000);
+                    this.scene.player.deletaIntervalo();
+                    setTimeout(() => {
+                        this.scene.scene.start('CalculaPontuacao', data);
+                    }, 5000);
+                } else if (goblin.canMove) {
+                    if (goblin.jump == 10 || goblin.jump == 20 || goblin.jump == 30) {
+                        goblin.canMove = false;
+                        goblin.canHit = true;
+                        goblin.stop = true;
+                        goblin.setVelocityX(0);
+                        goblin.setVelocityY(0);
+                        goblin.jump++;
+                        setTimeout(() => {
+                            goblin.canHit = false;
+                            goblin.canMove = true;
+                            goblin.stop = false;
+                        }, 5000);
 
-            if (goblin.lifes == 0) {
-                goblin.destroy();
-            } else if (goblin.y > 490) {
-                goblin.destroy();
-            } else if (player.y - goblin.y < 72 && player.y - goblin.y > -72 && this.scene.colisao == false) {
-               /* if (goblin.body.touching.up) {
-                    goblin.destroy();
-                    player.setVelocityY(-100);
-                } else*/ if (player.x - goblin.x < 200 && player.x - goblin.x > 0 && !goblin.isHit.right) {
-                    goblin.setVelocityX(100);
-                    if (player.y - goblin.y < -40) {
-                        goblin.setVelocityY(-150);
+                    } else if (goblin.jump > 30) {
+                        goblin.jump = 0;
+                    } else if (player.x > 8639 ) {
+                        if (player.x < goblin.x) {
+                            if (goblin.body.onFloor()) {
+                                this.scene.goblin_jump.play();
+                                goblin.jump++;
+                                if (goblin.canHit == false) {
+                                    this.scene.cameras.main.shake(50);
+                                }
+                                goblin.setVelocityX(-200);
+                                goblin.setVelocityY(-500);
+                            }
+                        } else if (player.x > goblin.x) {
+                            if (goblin.body.onFloor()) {
+                                goblin.jump++;
+                                this.scene.goblin_jump.play();
+                                if (goblin.canHit == false) {
+                                    this.scene.cameras.main.shake(50);
+                                }
+                                goblin.setVelocityX(200);
+                                goblin.setVelocityY(-500);
+                            }
+                        } else {
+                            if (goblin.body.onFloor()) {
+                                goblin.jumps++;        
+                                this.scene.goblin_sound.play();
+                                if (goblin.canHit == false) {
+                                    this.scene.cameras.main.shake(50);
+                                }
+                                goblin.setVelocityX(0);
+                                goblin.setVelocityY(-300);
+                            }
+                        }
                     }
-                } else if (player.x - goblin.x > -200 && player.x - goblin.x < 0 && !goblin.isHit.left) {
-                    goblin.setVelocityX(-100);
-                    if (player.y - goblin.y < -40) {
-                        goblin.setVelocityY(-150);
+                } else {
+
+                }
+            } else {
+
+                
+                if (goblin.lifes == 0) {
+                    goblin.destroy();
+                } else if (goblin.y > 490) {
+                    goblin.destroy();
+                } else if (player.y - goblin.y < 72 && player.y - goblin.y > -72 && this.scene.colisao == false) {
+                    /* if (goblin.body.touching.up) {
+                        goblin.destroy();
+                        player.setVelocityY(-100);
+                    } else*/ if (player.x - goblin.x < 200 && player.x - goblin.x > 0 && !goblin.isHit.right) {
+                        goblin.setVelocityX(100);
+                        if (player.y - goblin.y < -40) {
+                            goblin.setVelocityY(-150);
+                            this.scene.goblin_jump.play();
+                        }
+                    } else if (player.x - goblin.x > -200 && player.x - goblin.x < 0 && !goblin.isHit.left) {
+                        goblin.setVelocityX(-100);
+                        if (player.y - goblin.y < -40&&goblin.jump<15) {
+                            this.scene.goblin_jump.play();
+                            goblin.setVelocityY(-150);
+                            goblin.jump++;
+                        }
+                    } else if (!goblin.isHit.right && !goblin.isHit.left) {
+                        goblin.setVelocityX(0);
                     }
                 } else if (!goblin.isHit.right && !goblin.isHit.left) {
                     goblin.setVelocityX(0);
                 }
-            } else if (!goblin.isHit.right && !goblin.isHit.left) {
-                goblin.setVelocityX(0);
-            }
-            if (goblin.isHit.right) {
-                setTimeout(() => goblin.isHit.right = false, 500);
-            }
-            if (goblin.isHit.left) {
-                setTimeout(() => goblin.isHit.left = false, 500);
+                if (goblin.isHit.right) {
+                    setTimeout(() => goblin.isHit.right = false, 500);
+                }
+                if (goblin.isHit.left) {
+                    setTimeout(() => goblin.isHit.left = false, 500);
+                }
             }
         }
     }

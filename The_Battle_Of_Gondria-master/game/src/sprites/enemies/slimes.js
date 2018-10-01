@@ -114,6 +114,7 @@ class Slimes {
                         this.scene.scene.start('CalculaPontuacao', data);
                     }, 5000);
                 } else if (slime.canMove) {
+                    slime.setTexture('slime_' + slime.cor, 0);
                     if (slime.jumps == 10 || slime.jumps == 20 || slime.jumps == 30) {
                         slime.canMove = false;
                         slime.canHit = true;
