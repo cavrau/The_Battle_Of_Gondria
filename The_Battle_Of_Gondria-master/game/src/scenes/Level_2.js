@@ -163,7 +163,7 @@ class Level_2 extends Phaser.Scene {
 
         let spawnLayer = map.getObjectLayer("spawns");
         this.spawns = spawnLayer.objects;
-        this.goblins =  new Goblins(this, layer1);
+        // this.goblins =  new Goblins(this, layer1);
         this.parado = true;
         for (let i = 0; i < this.spawns.length; i++) {
             // if (this.spawns[i].name === "Spawn_Flag") {
@@ -275,7 +275,7 @@ class Level_2 extends Phaser.Scene {
 
     update() {
         this.player.update(this.goblins, this, this.layer1);
-        this.goblins.update(this.player.sprite);
+        // this.goblins.update(this.player.sprite);
         this.secs = this.player.mins * 60 + this.player.timersecs;
         this.aldeao.update(this, this.player, this.msg);
         this.ponte.update(this.player, this.alavancas);

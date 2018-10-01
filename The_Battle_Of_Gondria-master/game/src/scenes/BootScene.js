@@ -156,6 +156,9 @@ class BootScene extends Phaser.Scene {
         //Carrega imagens da fase 3
         this.load.image('fase_3_background', 'assets/background/fase_3_background.png');
         this.load.image('fase_3_tileset', 'assets/tilesets/fase_3_tileset.png');
+
+        //Carrega imagens da fase 3 
+        this.load.image('fase_4_tileset', 'assets/tilesets/fase_4_tileset.png');
         
 
     }

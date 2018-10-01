@@ -150,7 +150,7 @@ class Anims {
         key: 'alavanca_ativa',
         frames: anims.generateFrameNumbers('sprite_alavanca', {
           start: 0,
-          end: 4
+          end: 5
         }),
         frameRate: 4
       });
