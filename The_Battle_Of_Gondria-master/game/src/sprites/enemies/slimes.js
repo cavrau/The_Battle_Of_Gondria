@@ -103,6 +103,7 @@ class Slimes {
                     let data = {
                         player: this.scene.player
                     };
+                    slime.anims.play('morte');
                     slime.lifes = -1;
                     setTimeout(
                         () =>{ slime.destroy();
@@ -206,10 +207,11 @@ class Slimes {
                     }
 
                     slime.isDead = true;
+                    slime.lifes= -1;
+                    slime.anims.play('morte');
                     setTimeout(() => {
                         this.atualizaPontuacao();
                         slime.destroy();
-                        slime.anims.play('dieEffect');
                     }, 466);
 
 

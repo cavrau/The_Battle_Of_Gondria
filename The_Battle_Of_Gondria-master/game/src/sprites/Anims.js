@@ -201,6 +201,16 @@ class Anims {
         repeat: -1,
         yoyo: true
       });
+      anims.create({
+        key:'morte',
+        frames: anims.generateFrameNumbers('inimigo_die',{
+          start:0,
+          end:8
+        }),
+        frameRate: 18,
+        repeat:-1
+      });
+      console.log(anims)
 
       
 

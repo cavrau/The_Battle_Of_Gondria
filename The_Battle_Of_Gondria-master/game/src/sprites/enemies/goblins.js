@@ -73,6 +73,8 @@ class Goblins {
                     let data = {
                         player: this.scene.player
                     };
+                    
+                    goblin.anims.play('morte');
                     goblin.lifes = -1;
                     setTimeout(
                         () =>{ goblin.destroy();
@@ -139,7 +141,9 @@ class Goblins {
 
                 
                 if (goblin.lifes == 0) {
-                    goblin.destroy();
+                    goblin.anims.play('morte');
+                    goblin.lifes=-1;
+                    setTimeout(()=>goblin.destroy(),466);
                 } else if (goblin.y > 490) {
                     goblin.destroy();
                 } else if (player.y - goblin.y < 72 && player.y - goblin.y > -72 && this.scene.colisao == false) {

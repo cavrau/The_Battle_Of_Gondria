@@ -123,7 +123,7 @@ class Level_2 extends Phaser.Scene {
 
         //Cria um player dentro da cena da fase, com coordenadas x e y
         this.player = new Player(this);
-        this.player.spawnPlayer(8820, 0);
+        this.player.spawnPlayer(20, 200);
 
         //Seta o bounce do player, escala da sprite, teclas de movimento e 
         //seta a colisão com os mobs como 'false'
@@ -278,7 +278,7 @@ class Level_2 extends Phaser.Scene {
 
     update() {
         this.player.update(this.goblins, this, this.layer1);
-        // this.goblins.update(this.player.sprite);
+        this.goblins.update(this.player.sprite);
         this.secs = this.player.mins * 60 + this.player.timersecs;
         this.aldeao.update(this, this.player, this.msg);
         this.ponte.update(this.player, this.alavancas);

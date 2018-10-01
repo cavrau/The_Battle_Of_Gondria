@@ -197,7 +197,18 @@ class Level_load extends Phaser.Scene {
                 this.load.image('fase_2_sky', 'assets/background/fase_2_sky.png');
                 this.load.image('fase_2_montanhas', 'assets/background/fase_2_montanhas.png');
                 this.load.audio('music_2', 'assets/musics/music_level_2.mp3');
+                this.load.audio('music_2', 'assets/musics/music_level_2_2.mp3');
                 this.load.audio('goblin_jump', 'assets/sounds/goblin_jump.wav');
+                break;
+            case 'Level_3':{
+                this.load.spritesheet('goblin', 'assets/images/mobs/goblin.png', {
+                    frameWidth: 63,
+                    frameHeight: 63
+                });
+                this.load.tilemapTiledJSON("map_fase_3", "assets/tilemap/map_fase_3.json");
+                this.load.audio('goblin_jump', 'assets/sounds/goblin_jump.wav');
+                this.load.audio('music_3','assets/musics/music_level_3.mp3');
+            }
             default:
                 break;
         }

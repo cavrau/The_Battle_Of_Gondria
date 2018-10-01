@@ -14,21 +14,20 @@ class Level_3 extends Phaser.Scene {
   preload() {
 
     this.secs = 0;
-    this.load.tilemapTiledJSON("map_fase_3", "assets/tilemap/map_fase_3.json");
 
   }
 
 
   create() {
-    // if (this.music == undefined) {
-    //   this.music = this.sound.add('music_2');
-    //   this.music.setLoop(true);
-    //   this.music.setVolume(0.5);
-    //   this.music.play();
-    // } else {
-    //   this.music.stop();
-    //   this.music.play();
-    // }
+    if (this.music == undefined) {
+      this.music = this.sound.add('music_3');
+      this.music.setLoop(true);
+      this.music.setVolume(0.5);
+      this.music.play();
+    } else {
+      this.music.stop();
+      this.music.play();
+    }
     // this.ended = false;
     // let music = this.sound.add('music_1_1');
     // music.setLoop(true);
@@ -99,7 +98,9 @@ class Level_3 extends Phaser.Scene {
     this.player.sprite.setScale(0.5);
     this.player.criaKeys(this);
     this.colisao = false;
-
+    let spawnLayer = map.getObjectLayer("spawns");
+    this.spawns = spawnLayer.objects;
+    this.goblins =  new Goblins(this, layer1); 
     /*INICIO - Debug para colisão */
     // const debugGraphics = this.add.graphics().setAlpha(0.75);
 

@@ -77,7 +77,7 @@ class MenuFases extends Phaser.Scene {
                 }, 150);
             });
 
-            this.add.image(335, 230, 'fase_2_cor').setScale(0.170);
+            this.add.image(335, 230, 'fase_2_cor').setScale(0.115);
         }
 
         //Fase 3
@@ -92,11 +92,16 @@ class MenuFases extends Phaser.Scene {
             this.fase3.setInteractive();
 
             this.fase3.on('pointerdown', function () {
+                
+                this.scene.sound.sounds[0].stop();
                 let btn = this;
                 btn.setTexture("btnFase3Press");
                 setTimeout(() => {
-                    btn.setTexture("btnFase3");
-                    this.scene.scene.start('Level_3');
+                    btn.setTexture("btnFase2");
+                   let data = {
+                        scene : 'Level_3'
+                    }
+                    this.scene.scene.start('Level_load',data);
                 }, 150);
             });
 

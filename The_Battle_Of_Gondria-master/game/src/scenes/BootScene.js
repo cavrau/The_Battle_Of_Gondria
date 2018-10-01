@@ -62,7 +62,7 @@ class BootScene extends Phaser.Scene {
         this.load.image('btnVoltarPress', 'assets/images/botoes/btnVoltarPress.png');
 
         this.load.image('fase_1_cor', 'assets/images/menus/screenTBOG.png');
-        this.load.image('fase_2_cor', 'assets/images/menus/screenTBOG.png');
+        this.load.image('fase_2_cor', 'assets/images/menus/screenFase2.png');
         this.load.image('fase_2_pb', 'assets/images/menus/screenTBOGpreta.png');
         this.load.image('fase_3_cor', 'assets/images/menus/screenTBOG.png');
         this.load.image('fase_3_pb', 'assets/images/menus/screenTBOGpreta.png');
@@ -159,7 +159,10 @@ class BootScene extends Phaser.Scene {
 
         //Carrega imagens da fase 3 
         this.load.image('fase_4_tileset', 'assets/tilesets/fase_4_tileset.png');
-        
+        this.load.spritesheet('inimigo_die','assets/images/itensCenario/inimigo_die.png',{
+            frameWidth:32,
+            frameHeight:32
+        })
 
     }
 }
