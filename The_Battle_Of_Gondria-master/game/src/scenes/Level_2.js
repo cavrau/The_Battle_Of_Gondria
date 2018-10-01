@@ -165,12 +165,8 @@ class Level_2 extends Phaser.Scene {
 
         let spawnLayer = map.getObjectLayer("spawns");
         this.spawns = spawnLayer.objects;
-<<<<<<< HEAD
         this.goblins =  new Goblins(this, layer1); 
         this.physics.add.collider(this.goblins.boss,layerBoss);
-=======
-        // this.goblins =  new Goblins(this, layer1);
->>>>>>> a912b8c8b72a77ece71b12ee085b0a9251f8204a
         this.parado = true;
         for (let i = 0; i < this.spawns.length; i++) {
             // if (this.spawns[i].name === "Spawn_Flag") {
