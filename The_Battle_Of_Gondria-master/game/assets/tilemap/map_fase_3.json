@@ -61,7 +61,7 @@
                 {
                  "height":0,
                  "id":127,
-                 "name":"spawn_goblin",
+                 "name":"spawn_Goblin",
                  "point":true,
                  "rotation":0,
                  "type":"",
@@ -73,7 +73,7 @@
                 {
                  "height":0,
                  "id":128,
-                 "name":"spawn_goblin",
+                 "name":"spawn_Goblin",
                  "point":true,
                  "rotation":0,
                  "type":"",
@@ -109,7 +109,7 @@
                 {
                  "height":0,
                  "id":131,
-                 "name":"spawn_goblin",
+                 "name":"spawn_Goblin",
                  "point":true,
                  "rotation":0,
                  "type":"",
@@ -133,7 +133,7 @@
                 {
                  "height":0,
                  "id":133,
-                 "name":"spawn_goblin",
+                 "name":"spawn_Goblin",
                  "point":true,
                  "rotation":0,
                  "type":"",
@@ -169,7 +169,7 @@
                 {
                  "height":0,
                  "id":136,
-                 "name":"spawn_goblin",
+                 "name":"spawn_Goblin",
                  "point":true,
                  "rotation":0,
                  "type":"",
@@ -181,7 +181,7 @@
                 {
                  "height":0,
                  "id":137,
-                 "name":"spawn_goblin",
+                 "name":"spawn_Goblin",
                  "point":true,
                  "rotation":0,
                  "type":"",
@@ -193,7 +193,7 @@
                 {
                  "height":0,
                  "id":138,
-                 "name":"spawn_goblin",
+                 "name":"spawn_Goblin",
                  "point":true,
                  "rotation":0,
                  "type":"",
@@ -205,7 +205,7 @@
                 {
                  "height":0,
                  "id":139,
-                 "name":"spawn_goblin",
+                 "name":"spawn_Goblin",
                  "point":true,
                  "rotation":0,
                  "type":"",
@@ -217,7 +217,7 @@
                 {
                  "height":0,
                  "id":140,
-                 "name":"spawn_goblin",
+                 "name":"spawn_Goblin",
                  "point":true,
                  "rotation":0,
                  "type":"",
@@ -229,7 +229,7 @@
                 {
                  "height":0,
                  "id":141,
-                 "name":"spawn_goblin",
+                 "name":"spawn_Goblin",
                  "point":true,
                  "rotation":0,
                  "type":"",
@@ -253,7 +253,7 @@
                 {
                  "height":0,
                  "id":143,
-                 "name":"spawn_goblin",
+                 "name":"spawn_Goblin",
                  "point":true,
                  "rotation":0,
                  "type":"",
@@ -265,7 +265,7 @@
                 {
                  "height":0,
                  "id":144,
-                 "name":"spawn_goblin",
+                 "name":"spawn_Goblin",
                  "point":true,
                  "rotation":0,
                  "type":"",
@@ -301,7 +301,7 @@
                 {
                  "height":0,
                  "id":147,
-                 "name":"spawn_goblin",
+                 "name":"spawn_Goblin",
                  "point":true,
                  "rotation":0,
                  "type":"",
@@ -325,7 +325,7 @@
                 {
                  "height":0,
                  "id":149,
-                 "name":"spawn_goblin",
+                 "name":"spawn_Goblin",
                  "point":true,
                  "rotation":0,
                  "type":"",
@@ -337,7 +337,7 @@
                 {
                  "height":0,
                  "id":150,
-                 "name":"spawn_goblin",
+                 "name":"spawn_Goblin",
                  "point":true,
                  "rotation":0,
                  "type":"",
@@ -349,7 +349,7 @@
                 {
                  "height":0,
                  "id":151,
-                 "name":"spawn_goblin",
+                 "name":"spawn_Goblin",
                  "point":true,
                  "rotation":0,
                  "type":"",
@@ -385,19 +385,19 @@
                 {
                  "height":0,
                  "id":154,
-                 "name":"spawn_goblin",
+                 "name":"spawn_Goblin",
                  "point":true,
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":10708,
-                 "y":337
+                 "x":10715,
+                 "y":328
                 }, 
                 {
                  "height":0,
                  "id":155,
-                 "name":"spawn_goblin",
+                 "name":"spawn_Goblin",
                  "point":true,
                  "rotation":0,
                  "type":"",
@@ -433,7 +433,7 @@
                 {
                  "height":0,
                  "id":159,
-                 "name":"spawn_goblin",
+                 "name":"spawn_Goblin",
                  "point":true,
                  "rotation":0,
                  "type":"",
@@ -457,7 +457,7 @@
                 {
                  "height":0,
                  "id":161,
-                 "name":"spawn_goblin",
+                 "name":"spawn_Goblin",
                  "point":true,
                  "rotation":0,
                  "type":"",
