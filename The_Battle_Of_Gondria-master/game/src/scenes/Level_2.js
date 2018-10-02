@@ -106,20 +106,20 @@ class Level_2 extends Phaser.Scene {
             collides: true
         });
 
-        layerBoss.forEachTile(tile => {
-            if (tile.index != -1) {
-                tile.collideDown = true;
-                tile.collideUp = true;
-                tile.collideLeft = true;
-                tile.collideRight = true;
-            }
+        // layerBoss.forEachTile(tile => {
+        //     if (tile.index != -1) {
+        //         tile.collideDown = true;
+        //         tile.collideUp = true;
+        //         tile.collideLeft = true;
+        //         tile.collideRight = true;
+        //     }
 
-        });
+        // });
 
         //Seta os blocos que serão colidiveis na layer 2
-        layerBoss.setCollisionByProperty({
-            collides: true
-        });
+        // layerBoss.setCollisionByProperty({
+        //     collides: true
+        // });
 
         //Cria um player dentro da cena da fase, com coordenadas x e y
         this.player = new Player(this);
