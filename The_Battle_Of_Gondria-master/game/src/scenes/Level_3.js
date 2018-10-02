@@ -19,6 +19,8 @@ class Level_3 extends Phaser.Scene {
 
 
   create() {
+    this.goblin_jump = this.sound.add('goblin_jump');
+    this.goblin_jump.setVolume(0.1);
     if (this.music == undefined) {
       this.music = this.sound.add('music_3');
       this.music.setLoop(true);
@@ -170,7 +172,8 @@ class Level_3 extends Phaser.Scene {
   }
 
   update() {
-    this.player.update(null, this, this.layer1);
+    this.player.update(this.goblins, this, this.layer1);
+    this.goblins.update(this.player.sprite);
     // this.goblins.update(this.player.sprite);
     this.secs = this.player.mins * 60 + this.player.timersecs;
     // this.aldeao.update(this, this.player, this.msg);
