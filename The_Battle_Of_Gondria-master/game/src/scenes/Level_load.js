@@ -25,6 +25,17 @@ class Level_load extends Phaser.Scene {
     }
 
     switch () {
+        const progress = this.add.graphics();
+        this.load.on('progress', (value) => {
+            progress.clear();
+            progress.fillStyle(0xffffff, 1);
+            progress.fillRect(0, this.sys.game.config.height / 2, this.sys.game.config.width * value, 60);
+        });
+
+        this.load.on('complete', () => {
+            progress.destroy();
+        });
+
         switch (this.name) {
             case 'Level_1':
                 this.load.tilemapTiledJSON("map_fase_1", "assets/tilemap/map_fase_1.json");
@@ -184,12 +195,13 @@ class Level_load extends Phaser.Scene {
                             frameRate: 10,
                         });
                     }
-                )
+                );
                 break;
             case 'Level_2':
-                this.load.spritesheet('goblin', 'assets/images/mobs/goblin.png', {
-                    frameWidth: 63,
-                    frameHeight: 63
+                this.load.tilemapTiledJSON("map_2_boss", "assets/tilemap/map_fase_2_boss.json");
+                this.load.spritesheet('goblin', 'assets/images/mobs/goblin_spritesheet.png', {
+                    frameWidth: 42,
+                    frameHeight: 42
                 });
                 /*Faz load dos arquivos usados na cena Level_2 e outras cenas  */
                 this.load.tilemapTiledJSON('map_fase_2', 'assets/tilemap/map_fase_2.json');
@@ -197,8 +209,39 @@ class Level_load extends Phaser.Scene {
                 this.load.image('fase_2_sky', 'assets/background/fase_2_sky.png');
                 this.load.image('fase_2_montanhas', 'assets/background/fase_2_montanhas.png');
                 this.load.audio('music_2', 'assets/musics/music_level_2.mp3');
-                this.load.audio('music_2', 'assets/musics/music_level_2_2.mp3');
+                this.load.audio('music_boss', 'assets/musics/music_level_2_2.mp3');
                 this.load.audio('goblin_jump', 'assets/sounds/goblin_jump.wav');
+                this.load.on('complete',()=>{
+                    let anims = this.anims;
+                    anims.create({
+                        key: 'goblin_standing_right',
+                        frames: anims.generateFrameNumbers('goblin', {
+                            start: 0,
+                            end: 1
+                        }),
+                        frameRate: 4,
+                        repeat: -1
+                    });
+                    anims.create({
+                        key: 'goblin_runing_right',
+                        frames: anims.generateFrameNumbers('goblin', {
+                            start: 2,
+                            end: 11
+                        }),
+                        frameRate: 4,
+                        repeat: -1
+                    });
+                    anims.create({
+                        key: 'goblin_runing_left',
+                        frames: anims.generateFrameNumbers('goblin', {
+                            start: 11,
+                            end: 20
+                        }),
+                        frameRate: 6,
+                        repeat: -1
+                    });
+                    console.log(anims);
+                });
                 break;
             case 'Level_3':{
                 this.load.spritesheet('goblin', 'assets/images/mobs/goblin.png', {

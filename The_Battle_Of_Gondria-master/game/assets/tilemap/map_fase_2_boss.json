@@ -61,7 +61,7 @@
                 {
                  "height":0,
                  "id":1,
-                 "name":"spawn_goblinBoss",
+                 "name":"Spawn_Boss",
                  "point":true,
                  "rotation":0,
                  "type":"",

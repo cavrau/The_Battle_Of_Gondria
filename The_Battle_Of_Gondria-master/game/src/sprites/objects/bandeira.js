@@ -6,6 +6,9 @@ class Bandeira {
             
         this.sprite.anims.play('bandeira_branca_play',true);
         this.c_player = this.scene.physics.add.overlap(this.sprite, this.scene.player.sprite,this.ending,null,this.scene);
+        if(this.scene.ended==true){
+            this.scene.ended=false;
+        }
     }
 
     ending(bandeira, player){
@@ -14,13 +17,15 @@ class Bandeira {
         this.player.canStop = false;
         this.player.initBossSecs = this.player.secs;
         this.player.initBossMins = this.player.mins;
+        console.log(this.ended);
         if(!this.ended){
             setTimeout(()=>{
-                this.scene.start('Level_1_boss',{player: this.player});
+                this.scene.stop();
+                this.scene.launch(this.SceneBoss,{player: this.player});
             },
             2000);
         }
         this.ended = true;
     }
 }
-export default Bandeira
+export default Bandeira;

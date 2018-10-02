@@ -7,7 +7,7 @@ class Goblins {
             if (spawns[i].name === "spawn_Goblin") {
 
                 let goblin = this.array.create(spawns[i].x, spawns[i].y, 'goblin');
-                goblin.setScale(0.75);
+                // goblin.setScale(2);
                 goblin.lifes = 3;
                 goblin.jump = 0;
                 goblin.isHit = {
@@ -17,10 +17,11 @@ class Goblins {
                 goblin.isDead = false;
                 goblin.canHit = true;
                 goblin.canMove = true;
+                goblin.anims.play('goblin_standing_right',true);
 
             } else if (spawns[i].name === 'Spawn_Boss') {
                 let goblin = this.array.create(spawns[i].x, spawns[i].y, 'goblin');
-                goblin.lifes = 5;
+                goblin.lifes = 4;
                 goblin.jump = 0;
                 goblin.isHit = {
                     right: false,
@@ -30,6 +31,7 @@ class Goblins {
                 goblin.canHit = false;
                 goblin.canMove = true;
                 this.boss = goblin;
+                
             }
         }
         this.scene.physics.add.collider(this.array, camada1);
@@ -37,25 +39,28 @@ class Goblins {
     }
 
     goblinHit(goblin, player) {
-        this.colisao = true;
-        player.setVelocityX(0);
-        if (player.x - goblin.x <= 0) {
-            goblin.setVelocityX(200);
-        } else {
-            goblin.setVelocityX(-200);
+        if(goblin.stop==undefined||goblin.stop==false){
+
+            this.colisao = true;
+            player.setVelocityX(0);
+            if (player.x - goblin.x <= 0) {
+                goblin.setVelocityX(200);
+            } else {
+                goblin.setVelocityX(-200);
+            }
+            goblin.setVelocityY(-200);
+            if (goblin.body.velocity.x <= 0) {
+                player.setVelocityX(200);
+            } else {
+                player.setVelocityX(-200);
+            }
+            player.setVelocityY(-100);
+            this.player.lifes -= 1;
+            console.log(this.player.lifes + ' - player goblin hit');
+            this.player.hit.play();
+            player.setVelocityY(-150);
+            this.player.hit.play();
         }
-        goblin.setVelocityY(-200);
-        if (goblin.body.velocity.x <= 0) {
-            player.setVelocityX(200);
-        } else {
-            player.setVelocityX(-200);
-        }
-        player.setVelocityY(-100);
-        this.player.lifes -= 1;
-        console.log(this.player.lifes + ' - player goblin hit');
-        this.player.hit.play();
-        player.setVelocityY(-150);
-        this.player.hit.play();
 
     }
 
@@ -100,7 +105,7 @@ class Goblins {
 
                     } else if (goblin.jump > 30) {
                         goblin.jump = 0;
-                    } else if (player.x > 8639) {
+                    } else if (player.x > 32) {
                         if (player.x < goblin.x) {
                             if (goblin.body.onFloor()) {
                                 this.scene.goblin_jump.play();
@@ -159,6 +164,7 @@ class Goblins {
                                 goblin.setVelocityY(-150);
                                 this.scene.goblin_jump.play();
                             }
+                            goblin.anims.play('goblin_runing_right',true);
                             goblin.setVelocityX(100);
                         } else if (player.x - goblin.x > -200 && player.x - goblin.x < 0 && !goblin.isHit.left) {
                             if (player.y - goblin.y < -20 && goblin.jump < 15 && goblin.body.onFloor()) {
@@ -166,9 +172,12 @@ class Goblins {
                                 goblin.setVelocityY(-150);
 
                             }
+                            
+                            goblin.anims.play('goblin_runing_left',true);
                             goblin.setVelocityX(-100);
                         } else if (!goblin.isHit.right && !goblin.isHit.left) {
                             goblin.setVelocityX(0);
+                            console.log(goblin.anims);
                         }
                     } else if (!goblin.isHit.right && !goblin.isHit.left) {
                         goblin.setVelocityX(0);

@@ -88,7 +88,6 @@ class Slimes {
         } else {
             slime.setVelocityX(0);
         }
-        player.setVelocityY(-150);
         this.player.hit.play();
     }
 

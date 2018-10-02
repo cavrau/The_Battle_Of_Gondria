@@ -16,6 +16,8 @@ class Level_2 extends Phaser.Scene {
     }
 
     preload() {
+        
+        this.SceneBoss= 'Level_2_boss';
 
         // this.secs = 0;
         // this.load.tilemapTiledJSON("map_fase_1", "assets/tilemap/map_fase_1.json");
@@ -73,8 +75,7 @@ class Level_2 extends Phaser.Scene {
         //Cria e seta os blocos do tileset da layer 2
         let layer2 = map.createDynamicLayer("foreground_2", blocos);
 
-        //Cria e seta os blocos do tileset da layerBoss
-        let layerBoss = map.createDynamicLayer("foreground_boss", blocos);
+       
 
 
         //Seta os blocos que serão colidiveis na layer 1
@@ -123,7 +124,7 @@ class Level_2 extends Phaser.Scene {
 
         //Cria um player dentro da cena da fase, com coordenadas x e y
         this.player = new Player(this);
-        this.player.spawnPlayer(20, 200);
+        this.player.spawnPlayer(20, 20);
 
         //Seta o bounce do player, escala da sprite, teclas de movimento e 
         //seta a colisão com os mobs como 'false'
@@ -154,8 +155,7 @@ class Level_2 extends Phaser.Scene {
         //Cria e seta os blocos do tileset da layer 2
         this.physics.add.collider(layer2, this.player.sprite);
 
-        //Cria e seta os blocos do tileset da layer Boss
-        this.physics.add.collider(layerBoss, this.player.sprite);
+        
 
         //Cria uma camera que seguira o player
         this.cameras.main.startFollow(this.player.sprite);
@@ -166,20 +166,19 @@ class Level_2 extends Phaser.Scene {
         let spawnLayer = map.getObjectLayer("spawns");
         this.spawns = spawnLayer.objects;
         this.goblins =  new Goblins(this, layer1); 
-        this.physics.add.collider(this.goblins.boss,layerBoss);
         this.parado = true;
         for (let i = 0; i < this.spawns.length; i++) {
-            // if (this.spawns[i].name === "Spawn_Flag") {
-            //     this.bandeira = new Bandeira(this, this.spawns[i].x, this.spawns[i].y, this.player);
-            // }
+            if (this.spawns[i].name === "Spawn_Flag") {
+                this.bandeira = new Bandeira(this, this.spawns[i].x, this.spawns[i].y, this.player);
+            }
             if (this.spawns[i].name === "spawn_aldeao") {
                 this.aldeao = new Aldeao(this, this.spawns[i].x, this.spawns[i].y);
                 this.aldeao.sprite.play('aldeaoMove');
             }
         }
-        // this.physics.add.collider(this.bandeira.sprite, layer1);
+        this.physics.add.collider(this.bandeira.sprite, layer1);
         this.physics.add.collider(this.aldeao.sprite, layer1);
-
+        
         // Criação da alavanca
         this.alavancas = {
             alavanca_1: map.createFromObjects('itensInteracao', 'alavanca_1', {
@@ -213,7 +212,7 @@ class Level_2 extends Phaser.Scene {
             IndexBlocoDeNaoColisao: 816,
             
         };
-        // console.log(this.ponteConfig);
+        console.log(this.ponteConfig);
 
         this.ponte = new Ponte(this.ponteConfig);
 

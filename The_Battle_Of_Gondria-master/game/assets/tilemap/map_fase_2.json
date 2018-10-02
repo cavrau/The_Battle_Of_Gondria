@@ -120,18 +120,6 @@
                  "width":32,
                  "x":8096,
                  "y":416
-                }, 
-                {
-                 "height":0,
-                 "id":126,
-                 "name":"spawn_bandeira",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":8672,
-                 "y":90
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1115,6 +1103,18 @@
                  "width":0,
                  "x":4080.5,
                  "y":103.75
+                }, 
+                {
+                 "height":0,
+                 "id":127,
+                 "name":"Spawn_Flag",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":8591,
+                 "y":72
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1123,7 +1123,7 @@
          "y":0
         }],
  "nextlayerid":29,
- "nextobjectid":127,
+ "nextobjectid":128,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"2018.08.22",
