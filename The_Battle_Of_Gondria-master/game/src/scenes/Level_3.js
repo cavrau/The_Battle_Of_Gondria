@@ -3,6 +3,8 @@ import Goblins from "../sprites/enemies/goblins.js";
 import Moeda from "../sprites/objects/Moeda.js";
 import Chave from "../sprites/objects/Chave.js";
 import Pocao from "../sprites/objects/pocao.js";
+import Fantasmas from "../sprites/enemies/fantasmas.js";
+
 class Level_3 extends Phaser.Scene {
 
   constructor() {
@@ -103,6 +105,7 @@ class Level_3 extends Phaser.Scene {
     let spawnLayer = map.getObjectLayer("spawns");
     this.spawns = spawnLayer.objects;
     this.goblins =  new Goblins(this, layer1); 
+    this.fantasmas = new Fantasmas(this);
     /*INICIO - Debug para colisão */
     // const debugGraphics = this.add.graphics().setAlpha(0.75);
 
@@ -174,6 +177,7 @@ class Level_3 extends Phaser.Scene {
   update() {
     this.player.update(this.goblins, this, this.layer1);
     this.goblins.update(this.player.sprite);
+    
     // this.goblins.update(this.player.sprite);
     this.secs = this.player.mins * 60 + this.player.timersecs;
     // this.aldeao.update(this, this.player, this.msg);

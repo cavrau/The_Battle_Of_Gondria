@@ -101,7 +101,7 @@ class Level_2_boss extends Phaser.Scene {
 
     let spawnLayer = mapBoss.getObjectLayer("spawns");
     this.spawns = spawnLayer.objects;
-    this.boss = new Goblins(this, this.spawns);
+    this.goblins = new Goblins(this, this.spawns);
     console.log(this.boss)
     this.physics.add.collider(this.boss.boss, layer1);
     // this.slime_sound = this.sound.add('slime_boss');

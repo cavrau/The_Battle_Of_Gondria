@@ -203,6 +203,10 @@ class Level_load extends Phaser.Scene {
                     frameWidth: 42,
                     frameHeight: 42
                 });
+                this.load.spritesheet('goblin_hit', 'assets/images/mobs/goblin_hit.png', {
+                    frameWidth: 42,
+                    frameHeight: 42
+                });
                 /*Faz load dos arquivos usados na cena Level_2 e outras cenas  */
                 this.load.tilemapTiledJSON('map_fase_2', 'assets/tilemap/map_fase_2.json');
                 this.load.image('fase_2_tileset', 'assets/tilesets/fase_2_tileset.png');
@@ -214,6 +218,24 @@ class Level_load extends Phaser.Scene {
                 this.load.on('complete',()=>{
                     let anims = this.anims;
                     anims.create({
+                        key: 'goblin_hitted_right',
+                        frames: anims.generateFrameNumbers('goblin_hit', {
+                            start: 0,
+                            end: 4
+                        }),
+                        frameRate: 4,
+                        repeat: -1
+                    });
+                    anims.create({
+                        key: 'goblin_hitted_left',
+                        frames: anims.generateFrameNumbers('goblin_hit', {
+                            start: 5,
+                            end: 9
+                        }),
+                        frameRate: 4,
+                        repeat: -1
+                    });
+                    anims.create({
                         key: 'goblin_standing_right',
                         frames: anims.generateFrameNumbers('goblin', {
                             start: 0,
@@ -223,10 +245,19 @@ class Level_load extends Phaser.Scene {
                         repeat: -1
                     });
                     anims.create({
+                        key: 'goblin_standing_left',
+                        frames: anims.generateFrameNumbers('goblin', {
+                            start: 12,
+                            end: 13
+                        }),
+                        frameRate: 4,
+                        repeat: -1
+                    });
+                    anims.create({
                         key: 'goblin_runing_right',
                         frames: anims.generateFrameNumbers('goblin', {
-                            start: 2,
-                            end: 11
+                            start: 7,
+                            end: 10
                         }),
                         frameRate: 4,
                         repeat: -1
@@ -234,24 +265,126 @@ class Level_load extends Phaser.Scene {
                     anims.create({
                         key: 'goblin_runing_left',
                         frames: anims.generateFrameNumbers('goblin', {
-                            start: 11,
+                            start: 17,
                             end: 20
                         }),
-                        frameRate: 6,
+                        frameRate: 4,
+                        repeat: -1,
+                        yoyo:true
+                    });
+                    anims.create({
+                        key: 'goblin_hitting_left',
+                        frames: anims.generateFrameNumbers('goblin', {
+                            start: 25,
+                            end: 29
+                        }),
+                        frameRate: 3,
+                        repeat: -1
+                    });
+                    anims.create({
+                        key: 'goblin_hitting_right',
+                        frames: anims.generateFrameNumbers('goblin', {
+                            start: 30,
+                            end: 34
+                        }),
+                        frameRate: 3,
                         repeat: -1
                     });
                     console.log(anims);
                 });
                 break;
-            case 'Level_3':{
-                this.load.spritesheet('goblin', 'assets/images/mobs/goblin.png', {
-                    frameWidth: 63,
-                    frameHeight: 63
+            case 'Level_3':
+                this.load.spritesheet('goblin', 'assets/images/mobs/goblin_spritesheet.png', {
+                    frameWidth: 42,
+                    frameHeight: 42
                 });
+                this.load.spritesheet('goblin_hit', 'assets/images/mobs/goblin_hit.png', {
+                    frameWidth: 42,
+                    frameHeight: 42
+                });
+                this.load.spritesheet('fantasma','assets/images/mobs/fantasma_spritesheet',{
+                    frameWidth: 29,
+                    frameHeight: 25
+                })
                 this.load.tilemapTiledJSON("map_fase_3", "assets/tilemap/map_fase_3.json");
                 this.load.audio('goblin_jump', 'assets/sounds/goblin_jump.wav');
                 this.load.audio('music_3','assets/musics/music_level_3.mp3');
-            }
+                this.load.on('complete',()=>{
+                    let anims = this.anims;
+                    anims.create({
+                        key: 'goblin_hitted_right',
+                        frames: anims.generateFrameNumbers('goblin_hit', {
+                            start: 0,
+                            end: 4
+                        }),
+                        frameRate: 4,
+                        repeat: -1
+                    });
+                    anims.create({
+                        key: 'goblin_hitted_left',
+                        frames: anims.generateFrameNumbers('goblin_hit', {
+                            start: 5,
+                            end: 9
+                        }),
+                        frameRate: 4,
+                        repeat: -1
+                    });
+                    anims.create({
+                        key: 'goblin_standing_right',
+                        frames: anims.generateFrameNumbers('goblin', {
+                            start: 0,
+                            end: 1
+                        }),
+                        frameRate: 4,
+                        repeat: -1
+                    });
+                    anims.create({
+                        key: 'goblin_standing_left',
+                        frames: anims.generateFrameNumbers('goblin', {
+                            start: 12,
+                            end: 13
+                        }),
+                        frameRate: 4,
+                        repeat: -1
+                    });
+                    anims.create({
+                        key: 'goblin_runing_right',
+                        frames: anims.generateFrameNumbers('goblin', {
+                            start: 7,
+                            end: 10
+                        }),
+                        frameRate: 4,
+                        repeat: -1
+                    });
+                    anims.create({
+                        key: 'goblin_runing_left',
+                        frames: anims.generateFrameNumbers('goblin', {
+                            start: 17,
+                            end: 20
+                        }),
+                        frameRate: 4,
+                        repeat: -1,
+                        yoyo:true
+                    });
+                    anims.create({
+                        key: 'goblin_hitting_left',
+                        frames: anims.generateFrameNumbers('goblin', {
+                            start: 25,
+                            end: 29
+                        }),
+                        frameRate: 3,
+                        repeat: -1
+                    });
+                    anims.create({
+                        key: 'goblin_hitting_right',
+                        frames: anims.generateFrameNumbers('goblin', {
+                            start: 30,
+                            end: 34
+                        }),
+                        frameRate: 3,
+                        repeat: -1
+                    });
+                });
             default:
                 break;
         }
