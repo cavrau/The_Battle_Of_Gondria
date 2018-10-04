@@ -9,6 +9,7 @@ class Fantasmas {
                 fantasma.body.allowGravity = false;
                 console.log(fantasma);
                 fantasma.canHit = true;
+                fantasma.anims.play('ghost',true);
                 // goblin.setScale(2);
 
             }
@@ -33,7 +34,7 @@ class Fantasmas {
             },1000);
         }
         for(let i =0;i<this.array.children.entries.length;i++){
-            let ghost = this.array.children.entries[i];
+            let ghost = this.array.children.entries[i]
             if(player.x-ghost.x>-432&player.x-ghost.x<0){
                 ghost.setVelocityX(-150);
             }

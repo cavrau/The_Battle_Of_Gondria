@@ -384,6 +384,16 @@ class Level_load extends Phaser.Scene {
                         frameRate: 3,
                         repeat: -1
                     });
+                    anims.create({
+                        key: 'ghost',
+                        frames: anims.generateFrameNumbers('fantasma', {
+                            start: 0,
+                            end: 4
+                        }),
+                        frameRate: 8,
+                        repeat: -1
+                    });
+                    
                 });
             default:
                 break;

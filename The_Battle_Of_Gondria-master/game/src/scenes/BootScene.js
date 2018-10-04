@@ -24,7 +24,8 @@ class BootScene extends Phaser.Scene {
         /*Faz load dos arquivos usados na cena mainMenu e outras cenas  */
         this.load.image('btnJogar', 'assets/images/botoes/btnJogar.png');
         this.load.image('btnJogarPress', 'assets/images/botoes/btnJogarPress.png');
-
+        this.load.image('nuvem1','assets/images/itensCenario/nuvem_1.png');
+        this.load.image('nuvem2','assets/images/itensCenario/nuvem_2.png');
         this.load.image('btnAjuda', 'assets/images/botoes/btnAjuda.png');
         this.load.image('btnAjudaPress', 'assets/images/botoes/btnAjudaPress.png');
 
