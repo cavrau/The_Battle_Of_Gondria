@@ -302,9 +302,9 @@ class Level_load extends Phaser.Scene {
                     frameWidth: 42,
                     frameHeight: 42
                 });
-                this.load.spritesheet('fantasma','assets/images/mobs/fantasma_spritesheet',{
-                    frameWidth: 29,
-                    frameHeight: 25
+                this.load.spritesheet('fantasma','assets/images/mobs/fantasma_spritesheet.png',{
+                    frameWidth: 58,
+                    frameHeight: 50
                 })
                 this.load.tilemapTiledJSON("map_fase_3", "assets/tilemap/map_fase_3.json");
                 this.load.audio('goblin_jump', 'assets/sounds/goblin_jump.wav');

@@ -40,7 +40,7 @@ class Goblins {
     }
     
     goblinHit(goblin, player) {
-        if ((goblin.stop == undefined || goblin.stop == false)&&this.goblins.collides&&!goblin.isDead) {
+        if ((goblin.stop == undefined || goblin.stop == false)&&this.goblins.collides&&!goblin.lifes>0) {
             
             this.colisao = true;
             player.setVelocityX(0);
@@ -150,9 +150,9 @@ class Goblins {
 
                 
                 if (goblin.lifes == 0) {
+                    goblin.isDead = true;
                     goblin.anims.play('morte');
                     goblin.lifes = -1;
-                    goblin.isDead = true;
                     setTimeout(() => goblin.destroy(), 466);
                 }
                 if (!goblin.isDead) {
@@ -164,8 +164,10 @@ class Goblins {
                         if(player.x - goblin.x<64&&player.x-goblin.x>=0){
                             goblin.anims.play('goblin_hitting_left', true);
                             setTimeout(()=>{
-                                goblin.setVelocityX(100);
-                                this.collides=true;
+                                if(!goblin.isDead){
+                                    goblin.setVelocityX(100);
+                                    this.collides=true;
+                                }
                             },700);
                         }else if(player.x - goblin.x>-64&&player.x-goblin.x<0){
                             goblin.anims.play('goblin_hitting_right', true);
@@ -173,25 +175,23 @@ class Goblins {
                                 goblin.setVelocityX(-100);
                                 this.collides=true;
                             },700);
-                        }else if (player.x - goblin.x < 200 && player.x - goblin.x > 0 && !goblin.isHit.right) {
-                            if (player.y - goblin.y < -20 && goblin.body.onFloor()) {
-                                goblin.setVelocityY(-150);
-                                this.scene.goblin_jump.play();
-                            }
+                        }else if (player.x - goblin.x < 200 && player.x - goblin.x > 0 && !goblin.isHit.left&& goblin.body.onFloor()) {
                             goblin.anims.play('goblin_runing_right', true);
                             goblin.setVelocityX(100);
-                        } else if (player.x - goblin.x > -200 && player.x - goblin.x < 0 && !goblin.isHit.left) {
-                            if (player.y - goblin.y < -20 && goblin.jump < 15 && goblin.body.onFloor()) {
-                                this.scene.goblin_jump.play();
-                                goblin.setVelocityY(-150);
-                                
-                            }
+                            // if (player.y - goblin.y < -20 ) {
+                            //     goblin.setVelocityY(-150);
+                            //     this.scene.goblin_jump.play();
+                            // }
+                        } else if (player.x - goblin.x > -200 && player.x - goblin.x < 0 && !goblin.isHit.right&& goblin.body.onFloor()) {
                             
                             goblin.anims.play('goblin_runing_left', true);
                             goblin.setVelocityX(-100);
+                            // if (player.y - goblin.y < -20 && goblin.jump < 15) {
+                            //     this.scene.goblin_jump.play();
+                            //     goblin.setVelocityY(-150);
+                            // }
                         } else if (!goblin.isHit.right && !goblin.isHit.left) {
                             goblin.setVelocityX(0);
-                            console.log(goblin.anims);
                         }
                     } else if (!goblin.isHit.right && !goblin.isHit.left) {
                         goblin.setVelocityX(0);
@@ -207,7 +207,13 @@ class Goblins {
                     }
                 }
             } else if(!goblin.isDead){
-                setTimeout(()=>goblin.canMove =true,700)
+                if(!goblin.canMove){
+                    setTimeout(()=>{
+                        if(!goblin.isDead){
+                            goblin.canMove =true;
+                        }
+                    },1200);
+                }
             }
         }
     }

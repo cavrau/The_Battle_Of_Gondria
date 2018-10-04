@@ -177,6 +177,7 @@ class Level_3 extends Phaser.Scene {
   update() {
     this.player.update(this.goblins, this, this.layer1);
     this.goblins.update(this.player.sprite);
+    this.fantasmas.update(this.player.sprite);
     
     // this.goblins.update(this.player.sprite);
     this.secs = this.player.mins * 60 + this.player.timersecs;
