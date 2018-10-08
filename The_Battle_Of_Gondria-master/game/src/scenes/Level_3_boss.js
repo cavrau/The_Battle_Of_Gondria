@@ -1,7 +1,7 @@
 import Player from "../sprites/player.js";
 import Goblins from "../sprites/enemies/goblins.js";
 import Moeda from "../sprites/objects/Moeda.js";
-import Bandeira from "../sprites/objects/Bandeira.js";
+import Chave from "../sprites/objects/Chave.js";
 import Pocao from "../sprites/objects/pocao.js";
 import Fantasmas from "../sprites/enemies/fantasmas.js";
 import Goblin_caverna from "../sprites/enemies/goblin_caverna.js";
@@ -10,13 +10,21 @@ class Level_3 extends Phaser.Scene {
 
   constructor() {
     super({
-      key: 'Level_3'
+      key: 'Level_3_boss'
     });
   }
 
+  init(data) {
+    this.player = data.player;
+    data.player.canStop = true;
+    data.player.scene.music.stop();
+    this.player.setScene(this);
+
+    // console.log(this.player);
+  }
+
   preload() {
-    
-    this.SceneBoss= 'Level_3_boss';
+
     this.secs = 0;
 
   }
@@ -44,7 +52,7 @@ class Level_3 extends Phaser.Scene {
 
     // Cria o mapa apartir do arquivos JSON que veio do Tiled
     const map = this.make.tilemap({
-      key: "map_fase_3"
+      key: "map_fase_3_boss"
     });
 
     /* Parametros para tileset: const blocos = map.addTilesetImage("nome do tileset que está no tiled", "nome da key que foi carregada no phaser");*/
@@ -96,7 +104,7 @@ class Level_3 extends Phaser.Scene {
 
     //Cria um player dentro da cena da fase, com coordenadas x e y
     this.player = new Player(this);
-    this.player.spawnPlayer(13458, 156);
+    this.player.spawnPlayer(20, 0);
 
     //Seta o bounce do player, escala da sprite, teclas de movimento e 
     //seta a colisão com os mobs como 'false'
@@ -107,7 +115,7 @@ class Level_3 extends Phaser.Scene {
     let spawnLayer = map.getObjectLayer("spawns");
     this.spawns = spawnLayer.objects;
     this.goblins =  new Goblin_caverna(this, layer1); 
-    this.fantasmas = new Fantasmas(this);
+    // this.fantasmas = new Fantasmas(this);
     /*INICIO - Debug para colisão */
     // const debugGraphics = this.add.graphics().setAlpha(0.75/);
 
@@ -140,37 +148,36 @@ class Level_3 extends Phaser.Scene {
     // this.spawns = spawnLayer.objects;
     // this.goblins = new Goblins(this, layer1);
     // this.parado = true;
-    for (let i = 0; i < this.spawns.length; i++) {
-      if (this.spawns[i].name === "Spawn_Flag") {
-          this.bandeira = new Bandeira(this, this.spawns[i].x, this.spawns[i].y, this.player);
-      }
-    }
+    // for (let i = 0; i < this.spawns.length; i++) {
+      // if (this.spawns[i].name === "Spawn_Flag") {
+      //     this.bandeira = new Bandeira(this, this.spawns[i].x, this.spawns[i].y, this.player);
+      // }
       // if (this.spawns[i].name === "spawn_aldeao") {
         // this.aldeao = new Aldeao(this, this.spawns[i].x, this.spawns[i].y);
         // this.aldeao.sprite.play('aldeaoMove');
       // }
     // }
 
-    this.physics.add.collider(this.bandeira.sprite, layer1);
+    // this.physics.add.collider(this.bandeira.sprite, layer1);
     // this.physics.add.collider(this.aldeao.sprite, layer1);
 
     /*Cria as moedas */
-    let coinLayer = map.getObjectLayer("moedas");
-    this.moedasObjetos = coinLayer.objects;
+    // let coinLayer = map.getObjectLayer("moedas");
+    // this.moedasObjetos = coinLayer.objects;
 
-    for (let i = 0; i < this.moedasObjetos.length; i++) {
-      this.moeda = new Moeda(this, this.moedasObjetos[i].x, this.moedasObjetos[i].y);
-      this.moeda.sprite.anims.play('giraMoeda');
-    }
+    // for (let i = 0; i < this.moedasObjetos.length; i++) {
+    //   this.moeda = new Moeda(this, this.moedasObjetos[i].x, this.moedasObjetos[i].y);
+    //   this.moeda.sprite.anims.play('giraMoeda');
+    // }
 
-    /*Cria as Poções */
-    let PotionLayer = map.getObjectLayer("pocoes");
-    this.pocoesObjetos = PotionLayer.objects;
+    // /*Cria as Poções */
+    // let PotionLayer = map.getObjectLayer("pocoes");
+    // this.pocoesObjetos = PotionLayer.objects;
 
-    for (let i = 0; i < this.pocoesObjetos.length; i++) {
-      this.pocao = new Pocao(this, this.pocoesObjetos[i].x, this.pocoesObjetos[i].y);
-      this.pocao.sprite.anims.play('potionEffect');
-    }
+    // for (let i = 0; i < this.pocoesObjetos.length; i++) {
+    //   this.pocao = new Pocao(this, this.pocoesObjetos[i].x, this.pocoesObjetos[i].y);
+    //   this.pocao.sprite.anims.play('potionEffect');
+    // }
 
     this.player.createHUD();
 
@@ -180,7 +187,7 @@ class Level_3 extends Phaser.Scene {
   update() {
     this.player.update(this.goblins, this, this.layer1);
     this.goblins.update(this.player.sprite);
-    this.fantasmas.update(this.player.sprite);
+    // this.fantasmas.update(this.player.sprite);
     
     // this.goblins.update(this.player.sprite);
     this.secs = this.player.mins * 60 + this.player.timersecs;

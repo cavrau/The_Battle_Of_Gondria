@@ -294,11 +294,11 @@ class Level_load extends Phaser.Scene {
                 });
                 break;
             case 'Level_3':
-                this.load.spritesheet('goblin', 'assets/images/mobs/goblin_spritesheet.png', {
+                this.load.spritesheet('goblin_caverna', 'assets/images/mobs/goblin_caverna_spritesheet.png', {
                     frameWidth: 42,
                     frameHeight: 42
                 });
-                this.load.spritesheet('goblin_hit', 'assets/images/mobs/goblin_hit.png', {
+                this.load.spritesheet('goblin_caverna_hit', 'assets/images/mobs/goblin_caverna_hit.png', {
                     frameWidth: 42,
                     frameHeight: 42
                 });
@@ -306,14 +306,16 @@ class Level_load extends Phaser.Scene {
                     frameWidth: 58,
                     frameHeight: 50
                 })
+                
+                this.load.tilemapTiledJSON("map_fase_3_boss", "assets/tilemap/map_fase_3_boss.json");
                 this.load.tilemapTiledJSON("map_fase_3", "assets/tilemap/map_fase_3.json");
                 this.load.audio('goblin_jump', 'assets/sounds/goblin_jump.wav');
                 this.load.audio('music_3','assets/musics/music_level_3.mp3');
                 this.load.on('complete',()=>{
                     let anims = this.anims;
                     anims.create({
-                        key: 'goblin_hitted_right',
-                        frames: anims.generateFrameNumbers('goblin_hit', {
+                        key: 'goblin_caverna_hitted_right',
+                        frames: anims.generateFrameNumbers('goblin_caverna_hit', {
                             start: 0,
                             end: 4
                         }),
@@ -321,8 +323,8 @@ class Level_load extends Phaser.Scene {
                         repeat: -1
                     });
                     anims.create({
-                        key: 'goblin_hitted_left',
-                        frames: anims.generateFrameNumbers('goblin_hit', {
+                        key: 'goblin_caverna_hitted_left',
+                        frames: anims.generateFrameNumbers('goblin_caverna_hit', {
                             start: 5,
                             end: 9
                         }),
@@ -330,8 +332,8 @@ class Level_load extends Phaser.Scene {
                         repeat: -1
                     });
                     anims.create({
-                        key: 'goblin_standing_right',
-                        frames: anims.generateFrameNumbers('goblin', {
+                        key: 'goblin_caverna_standing_right',
+                        frames: anims.generateFrameNumbers('goblin_caverna', {
                             start: 0,
                             end: 1
                         }),
@@ -339,8 +341,8 @@ class Level_load extends Phaser.Scene {
                         repeat: -1
                     });
                     anims.create({
-                        key: 'goblin_standing_left',
-                        frames: anims.generateFrameNumbers('goblin', {
+                        key: 'goblin_caverna_standing_left',
+                        frames: anims.generateFrameNumbers('goblin_caverna', {
                             start: 12,
                             end: 13
                         }),
@@ -348,8 +350,8 @@ class Level_load extends Phaser.Scene {
                         repeat: -1
                     });
                     anims.create({
-                        key: 'goblin_runing_right',
-                        frames: anims.generateFrameNumbers('goblin', {
+                        key: 'goblin_caverna_runing_right',
+                        frames: anims.generateFrameNumbers('goblin_caverna', {
                             start: 7,
                             end: 10
                         }),
@@ -357,8 +359,8 @@ class Level_load extends Phaser.Scene {
                         repeat: -1
                     });
                     anims.create({
-                        key: 'goblin_runing_left',
-                        frames: anims.generateFrameNumbers('goblin', {
+                        key: 'goblin_caverna_runing_left',
+                        frames: anims.generateFrameNumbers('goblin_caverna', {
                             start: 17,
                             end: 20
                         }),
@@ -367,8 +369,8 @@ class Level_load extends Phaser.Scene {
                         yoyo:true
                     });
                     anims.create({
-                        key: 'goblin_hitting_left',
-                        frames: anims.generateFrameNumbers('goblin', {
+                        key: 'goblin_caverna_hitting_left',
+                        frames: anims.generateFrameNumbers('goblin_caverna', {
                             start: 25,
                             end: 29
                         }),
@@ -376,8 +378,8 @@ class Level_load extends Phaser.Scene {
                         repeat: -1
                     });
                     anims.create({
-                        key: 'goblin_hitting_right',
-                        frames: anims.generateFrameNumbers('goblin', {
+                        key: 'goblin_caverna_hitting_right',
+                        frames: anims.generateFrameNumbers('goblin_caverna', {
                             start: 30,
                             end: 34
                         }),
@@ -388,7 +390,16 @@ class Level_load extends Phaser.Scene {
                         key: 'ghost',
                         frames: anims.generateFrameNumbers('fantasma', {
                             start: 0,
-                            end: 4
+                            end: 3
+                        }),
+                        frameRate: 8,
+                        repeat: -1
+                    });
+                    anims.create({
+                        key: 'ghost_back',
+                        frames: anims.generateFrameNumbers('fantasma', {
+                            start: 4,
+                            end: 7
                         }),
                         frameRate: 8,
                         repeat: -1

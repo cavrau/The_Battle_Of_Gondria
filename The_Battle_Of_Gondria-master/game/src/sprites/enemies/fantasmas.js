@@ -34,15 +34,21 @@ class Fantasmas {
             },1000);
         }
         for(let i =0;i<this.array.children.entries.length;i++){
-            let ghost = this.array.children.entries[i]
+            let ghost = this.array.children.entries[i];
             if(player.x-ghost.x>-432&player.x-ghost.x<0){
-                ghost.setVelocityX(-150);
+                if(ghost.body.velocity.x!=-150){
+                    ghost.setVelocityX(-150);
+                    ghost.anims.play('ghost',true);
+                }
             }
             let ghostdistance = player.x-432-ghost.x;
             if(ghostdistance<10&&ghostdistance>-10){
                 let random = Math.floor(Math.random() * 100) + 1;  
                 if(random>=50){
-                    ghost.setVelocityX(150);
+                    if(ghost.body.velocity.x!=150){
+                        ghost.anims.play('ghost_back',true);
+                        ghost.setVelocityX(150);
+                    }
                 }else{
                     ghost.destroy();
                 }
