@@ -6,6 +6,7 @@ import Pocao from "../sprites/objects/pocao.js";
 import Aldeao from "../sprites/Aldeao.js";
 import Ponte from "../sprites/objects/ponte.js";
 import Casa from "../sprites/objects/casa.js";
+import Soldados from "../sprites/enemies/soldados.js";
 class Level_4 extends Phaser.Scene {
 
   constructor() {
@@ -24,6 +25,15 @@ class Level_4 extends Phaser.Scene {
 
 
   create() {
+    if (this.music == undefined) {
+      this.music = this.sound.add('music_4');
+      this.music.setLoop(true);
+      this.music.setVolume(0.5);
+      this.music.play();
+    } else {
+      this.music.stop();
+      this.music.play();
+    }
     // if (this.music == undefined) {
     //   this.music = this.sound.add('music_2');
     //   this.music.setLoop(true);
@@ -141,8 +151,7 @@ class Level_4 extends Phaser.Scene {
     //Seta os limites do mapa que a camera acompanhará
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
-    // let spawnLayer = map.getObjectLayer("spawns");
-    // this.spawns = spawnLayer.objects;
+    
     // this.goblins =  new Goblins(this, layer1);
     // this.parado = true;
     // for (let i = 0; i < this.spawns.length; i++) {
@@ -163,7 +172,7 @@ class Level_4 extends Phaser.Scene {
         key: 'sprite_alavanca'
       }),
       alavanca_2: null
-    }
+    };
 
     /*this.ponte recebe a layer que ficará a ponte e também as
     coordenas de onde a ponte começa e termina*/
@@ -219,6 +228,9 @@ class Level_4 extends Phaser.Scene {
         this.chave = new Chave(this, this.layerObjetos.objects[i].x, this.layerObjetos.objects[i].y, this.player);
       }
     }
+    let spawnLayer = map.getObjectLayer("spawns");
+    this.spawns = spawnLayer.objects;
+    this.soldados = new Soldados(this,layer1);
 
     /*Criação da interação da casa*/
     // this.moved = false;

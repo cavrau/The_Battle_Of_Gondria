@@ -13,7 +13,7 @@ import Level_3_boss from './src/scenes/Level_3_boss.js';
 import Level_2 from './src/scenes/Level_2.js';
 import Level_3 from './src/scenes/Level_3.js';
 import CalculaPontuacao from './src/scenes/CalculaPontuacao.js';
-import Level_4 from './src/scenes/Leval_4.js';
+import Level_4 from './src/scenes/Level_4.js';
 const config = {
     type: Phaser.WEBGL,
     parent: 'content',

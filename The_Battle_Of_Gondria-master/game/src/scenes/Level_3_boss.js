@@ -34,7 +34,7 @@ class Level_3 extends Phaser.Scene {
     this.goblin_jump = this.sound.add('goblin_jump');
     this.goblin_jump.setVolume(0.1);
     if (this.music == undefined) {
-      this.music = this.sound.add('music_3');
+      this.music = this.sound.add('music_3_2');
       this.music.setLoop(true);
       this.music.setVolume(0.5);
       this.music.play();

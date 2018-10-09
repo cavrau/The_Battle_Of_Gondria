@@ -215,7 +215,7 @@ class Level_load extends Phaser.Scene {
                 this.load.audio('music_2', 'assets/musics/music_level_2.mp3');
                 this.load.audio('music_boss', 'assets/musics/music_level_2_2.mp3');
                 this.load.audio('goblin_jump', 'assets/sounds/goblin_jump.wav');
-                this.load.on('complete',()=>{
+                this.load.on('complete', () => {
                     let anims = this.anims;
                     anims.create({
                         key: 'goblin_hitted_right',
@@ -270,7 +270,7 @@ class Level_load extends Phaser.Scene {
                         }),
                         frameRate: 4,
                         repeat: -1,
-                        yoyo:true
+                        yoyo: true
                     });
                     anims.create({
                         key: 'goblin_hitting_left',
@@ -302,16 +302,17 @@ class Level_load extends Phaser.Scene {
                     frameWidth: 42,
                     frameHeight: 42
                 });
-                this.load.spritesheet('fantasma','assets/images/mobs/fantasma_spritesheet.png',{
+                this.load.spritesheet('fantasma', 'assets/images/mobs/fantasma_spritesheet.png', {
                     frameWidth: 58,
                     frameHeight: 50
                 })
-                
+
                 this.load.tilemapTiledJSON("map_fase_3_boss", "assets/tilemap/map_fase_3_boss.json");
                 this.load.tilemapTiledJSON("map_fase_3", "assets/tilemap/map_fase_3.json");
                 this.load.audio('goblin_jump', 'assets/sounds/goblin_jump.wav');
-                this.load.audio('music_3','assets/musics/music_level_3.mp3');
-                this.load.on('complete',()=>{
+                this.load.audio('music_3', 'assets/musics/music_level_3.mp3');
+                this.load.audio('music_3_2', 'assets/musics/music_level_3_2.mp3');
+                this.load.on('complete', () => {
                     let anims = this.anims;
                     anims.create({
                         key: 'goblin_caverna_hitted_right',
@@ -366,7 +367,7 @@ class Level_load extends Phaser.Scene {
                         }),
                         frameRate: 4,
                         repeat: -1,
-                        yoyo:true
+                        yoyo: true
                     });
                     anims.create({
                         key: 'goblin_caverna_hitting_left',
@@ -404,8 +405,20 @@ class Level_load extends Phaser.Scene {
                         frameRate: 8,
                         repeat: -1
                     });
-                    
+
                 });
+                break;
+            case "Level_4":
+
+                //Carrega imagens da fase 3 
+                this.load.image('fase_4_tileset', 'assets/tilesets/fase_4_tileset.png');
+                this.load.audio('music_4', 'assets/musics/music_level_4.mp3');
+                this.load.audio('music_4_2', 'assets/musics/music_level_4_2.mp3');
+                this.load.spritesheet('soldado','assets/images/mobs/soldado.png',{
+                    frameHeight:84,
+                    frameWidth:60
+                });
+
             default:
                 break;
         }
